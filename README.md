@@ -1,28 +1,42 @@
-# Splice-decoder
+# What is main purpose of Splice-decoder?
+* Splice decoder can add biological information to your differential splicing or your interesting splicing target list.
+* This information contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on) and UTR alterations as their target transcript.
+* Finally you can use this additaional information to prioritize your differential splicing events 
 
+## Install & Usage
 **Quick start:**  
+* Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
 
-*   Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
+       bash install.sh
 
-        bash install.sh
+* Verify if splice-decoder is running:
 
-*   Verify if splice-decoder is running:
+       python ${splice-decoder}/code/00-1_add_exon_n.py --h
 
-        python ${splice-decode}/code/00-1_add_exon_n.py --h
+* If you use SLURM, modifying configure file and using this command
 
-*   If you use SLURM, modifying configure file is all
+       bash ${splice-decoder} 
   
 ## Make your own configuration file to run Splice-decoder
 - Using pre-exist paths.config file
-    > You only modify your Main path (where Splice-decoder main folder) and conda path (where conda folder, you can find "which conda")
+- You only modify your Main path (where Splice-decoder main folder) and conda path (where conda folder, you can find "which conda")
+  
 - If you finish the configuration, run bash script
 - Proc.sh > Mapp.sh > Sim_splicing.sh
 - All results were saved in ${input}/result
 
 ## INPUTS Format
-- rMATS output that processed by make_input.sh
-- gtf that was used in rMATS analysis
-- TPM file for all isoform of gtf
+* Splice-decoder requires your 
+
+* Splice-decoder use rMATS JECE outputs
+  
+       python make_input_from_rmats.py ${rMATS_outdir}
+
+* Splice-decoder also offers gtf processing and TPM calculate fucntion
+
+       bash gtf_proc.sh ${config}
+  
+
 
 ## How to USE
 

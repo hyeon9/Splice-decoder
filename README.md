@@ -2,7 +2,7 @@
 * Splice decoder can add biological information to your differential splicing or your interesting splicing target list.
 * This information contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on) and UTR alterations as their target transcript.
 * Finally you can use this additaional information to prioritize your differential splicing events
-* Now we only offer hg38 (hg19 will be supported soon)
+* Now we only support hg38 (hg19 will be supported soon)
 
 ## Install & Usage
 **Quick start:**  

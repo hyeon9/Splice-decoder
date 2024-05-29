@@ -39,9 +39,9 @@
        bash stringtie.sh ${config}
 
 ## Description for Main_output
-LongID: DS event ID
-Target_TX: Matched Transcript (==Ref_TX)
-occurred_event: Simulated event
+- LongID: DS event ID
+- Target_TX: Matched Transcript (==Ref_TX)
+= occurred_event: Simulated event
 ORF_priority: pORF1 has the highest coding potential
 Start: [Ref TX start codon-Sim TX start codon]
 Stop: [Ref TX stop codon-Sim TX stop codon]

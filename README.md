@@ -4,37 +4,47 @@
 * Finally you can use this additaional information to prioritize your differential splicing events
 * Now we only support hg38 (hg19 will be supported soon)
 
+## Workflow
+
+
 ## Install & Usage
 **Quick start:**  
 * Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
-
+* Before run the install script, user should install mamba or conda (we strongly recommend using mamba)
+* If you are using a mamba, run this commend
+  
        bash install.sh
+  
+* If you are using a conda, run this commend
+  
+       bash install_conda.sh
 
-* Verify if splice-decoder is running:
+* Verify if splice-decoder is running properly:
 
-       python ${splice-decoder}/code/00-1_add_exon_n.py --h
-       bash Main.sh paths.config {Make_input|DS_mapping|ORF_mapping|Simulation|Scoring}
+       mamba(or conda) activate splice-decoder
+       bash Main.sh paths.config all
 
 * If you use SLURM, modifying configure file and using this command
 
-       sbatch Main.sh paths.config {Make_input|DS_mapping|ORF_mapping|Simulation|Scoring}
+       sbatch Main.sh paths.config all
   
-## Make your own configuration file to run Splice-decoder
-- Using pre-exist paths.config file
-- You only modify your Main path (where Splice-decoder main folder) and conda path (where conda folder, you can find "which conda")
-  
-- If you finish the configuration, run bash script
+## Build your own configuration file to run Splice-decoder
+- You should prepare rMATS output file, gtf file (which was used in rMATS), and RNAseq bam file
+- If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file
+- If you used long-read RNA seq, you should check whether your gtf file has geneID or geneSymbol. Then set the geneID_type and seq_type of paths.config file
+- You should set your Main (where Splice-decoder main directory), conda (where conda directory), input, and rMATS_path of the paths.config file
 - All results were saved in ${input}/result
+- Your gtf file should be named as "main.gtf", using this
+
+       ln -s ${Your_gtf} ${Splice-decoder_input}/main.gtf
 
 ## Input Format
-* Splice-decoder requires your 
-
-* Splice-decoder use rMATS JECE outputs
+* Splice-decoder use rMATS JECE outputs, usnig this commend splice-decoder make proper input format from your rMATS output path
   
-       python NEW_make_input_from_rmats.py ${rMATS_outdir}
+       bash Main.sh Make_input
 
-* Splice-decoder also offers gtf processing and TPM calculate fucntion
-* each script needs own config file
+* If you want to modify significant level, you can change FDR and dPSI var
+* Splice-decoder also offers gtf processing and TPM calculate fucntion, each script requires own config file
 
        bash gtf_proc.sh ${config}
        bash stringtie.sh ${config}

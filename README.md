@@ -1,7 +1,8 @@
 # What is the main purpose of Splice-decoder?
 * Splice decoder can add biological information to your differential splicing or your interesting splicing target list.
 * This information contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on) and UTR alterations as their target transcript.
-* Finally you can use this additaional information to prioritize your differential splicing events 
+* Finally you can use this additaional information to prioritize your differential splicing events
+* Now we only offer hg38 (hg19 will be supported soon)
 
 ## Install & Usage
 **Quick start:**  
@@ -41,15 +42,15 @@
 ## Description for Main_output
 - LongID: DS event ID
 - Target_TX: Matched Transcript (==Ref_TX)
-= occurred_event: Simulated event
-ORF_priority: pORF1 has the highest coding potential
-Start: [Ref TX start codon-Sim TX start codon]
-Stop: [Ref TX stop codon-Sim TX stop codon]
-5'UTR: 5' UTR length difference (Ref TX - Sim TX)
-dAA: Amino acid length difference (Ref TX - Sim TX)
-3'UTR: 3' UTR length difference (Ref TX - Sim TX)
-Domain_integrity: (Sim_domain_length / Ref_domain_length) * 100
-Domain_change_ratio: Average domain change ratio (average of |Ref TX - Sim TX| / Ref TX for individual domain)
-Sim_domain_length: Total domain length of Sim TX
-Ref_domain_length: Total domain length of Ref TX
+- occurred_event: Simulated event
+- ORF_priority: pORF1 has the highest coding potential
+- Start: [Ref TX start codon-Sim TX start codon]
+- Stop: [Ref TX stop codon-Sim TX stop codon]
+- 5'UTR: 5' UTR length difference (Ref TX - Sim TX)
+- dAA: Amino acid length difference (Ref TX - Sim TX)
+- 3'UTR: 3' UTR length difference (Ref TX - Sim TX)
+- Domain_integrity: (Sim_domain_length / Ref_domain_length) * 100
+- Domain_change_ratio: Average domain change ratio (average of |Ref TX - Sim TX| / Ref TX for individual domain)
+- Sim_domain_length: Total domain length of Sim TX
+- Ref_domain_length: Total domain length of Ref TX
 pNMD: -1 = NMD, 1 = PTC remove, 0 = No NMD related event

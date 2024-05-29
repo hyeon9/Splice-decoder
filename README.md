@@ -12,34 +12,31 @@
 * Verify if splice-decoder is running:
 
        python ${splice-decoder}/code/00-1_add_exon_n.py --h
+       bash Main.sh paths.config {Make_input|DS_mapping|ORF_mapping|Simulation|Scoring}
 
 * If you use SLURM, modifying configure file and using this command
 
-       bash ${splice-decoder} 
+       sbatch Main.sh paths.config {Make_input|DS_mapping|ORF_mapping|Simulation|Scoring}
   
 ## Make your own configuration file to run Splice-decoder
 - Using pre-exist paths.config file
 - You only modify your Main path (where Splice-decoder main folder) and conda path (where conda folder, you can find "which conda")
   
 - If you finish the configuration, run bash script
-- Proc.sh > Mapp.sh > Sim_splicing.sh
 - All results were saved in ${input}/result
 
-## INPUTS Format
+## Input Format
 * Splice-decoder requires your 
 
 * Splice-decoder use rMATS JECE outputs
   
-       python make_input_from_rmats.py ${rMATS_outdir}
+       python NEW_make_input_from_rmats.py ${rMATS_outdir}
 
 * Splice-decoder also offers gtf processing and TPM calculate fucntion
+* each script needs own config file
 
        bash gtf_proc.sh ${config}
-  
-
-
-## How to USE
-
+       bash stringtie.sh ${config}
 
 ## Description for Main_output
 LongID: DS event ID

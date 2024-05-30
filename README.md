@@ -20,14 +20,21 @@
   
        bash install_conda.sh
 
-* Verify if splice-decoder is running properly:
+* Verify if splice-decoder is running properly
 
        mamba(or conda) activate splice-decoder
        bash Main.sh paths.config all
 
+* If you want to run certain step, specify certain step
+
+       mamba(or conda) activate splice-decoder
+       bash Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring}
+
 * If you use SLURM, modifying configure file and using this command
 
-       sbatch Main.sh paths.config all
+       sbatch Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all}
+
+* All your output will be saved to `${input}/result`
   
 ## Build your own configuration file to run Splice-decoder
 - You should prepare rMATS output file, gtf file (which was used in rMATS), and RNAseq bam file
@@ -37,7 +44,7 @@
 - All results were saved in ${input}/result
 - Your gtf file should be named as "main.gtf", using this
 
-       ln -s ${Your_gtf} ${Splice-decoder_input}/main.gtf
+       ln -s ${Your_gtf} ${input}/main.gtf
 
 ## Input Format
 * Splice-decoder use rMATS JECE outputs, usnig this commend splice-decoder make proper input format from your rMATS output path

@@ -4,7 +4,8 @@
 * Finally you can use this additaional information to prioritize your differential splicing events
 * Now we only support hg38 (hg19 will be supported soon)
 
-## Workflow
+## Workflow overview
+![image](https://github.com/hyeon9/Splice-decoder/assets/51947181/37692184-60f3-48d8-8e91-bc03f5596d69)
 
 
 ## Install & Usage
@@ -49,6 +50,12 @@
        bash gtf_proc.sh ${config}
        bash stringtie.sh ${config}
 
+## Simulation Output files
+* Simulation analysis makes three output files (Main_output.txt, NMD_check.txt, and Domain_integrity_indi.txt)
+* `Main_output.txt` contains overall information (e.g., NMD probability, average domain change ratio, UTR/CDS alteration, start/stop codon positions, and total domain length of each differential splicing (DS) and transcript (TX) pair
+* `NMD_check.txt` contains DS-TX pair ID, ORF, NMD score (if it is larger than 50, it is considered an NMD), total domain length, and TX type (Reference or Simulation)
+* `Domain_integrity_indi.txt` contains DS-TX pair ID, ORF, domain information, and domain change ratio (|Sim domain - Ref domain| / Ref domain) per domain block - The individual domain block change ratio measures relative change size by normalized reference domain block size
+
 ## Description for Main_output
 - LongID: DS event ID
 - Target_TX: Matched Transcript (==Ref_TX)
@@ -61,6 +68,6 @@
 - 3'UTR: 3' UTR length difference (Ref TX - Sim TX)
 - Domain_integrity: (Sim_domain_length / Ref_domain_length) * 100
 - Domain_change_ratio: Average domain change ratio (average of |Ref TX - Sim TX| / Ref TX for individual domain)
-- Sim_domain_length: Total domain length of Sim TX
 - Ref_domain_length: Total domain length of Ref TX
-pNMD: -1 = NMD, 1 = PTC remove, 0 = No NMD related event
+- Sim_domain_length: Total domain length of Sim TX
+- pNMD: -1 = NMD, 1 = PTC remove, 0 = No NMD related event

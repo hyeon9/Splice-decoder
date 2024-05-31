@@ -1,7 +1,7 @@
 # What is the main purpose of Splice-decoder?
-* Splice decoder can add biological information to your differential splicing or your interesting splicing target list.
-* This information contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on) and UTR alterations as their target transcript.
-* Finally you can use this additaional information to prioritize your differential splicing events
+* Splice decoder can add biological information to your differential splicing or your interesting splicing target list
+* This information contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on) and UTR alterations as their target transcript
+* You can use this additaional information to prioritize your differential splicing events in your analysis
 * Now we only support hg38 (hg19 will be supported soon)
 
 ## Workflow overview
@@ -57,7 +57,7 @@
        bash gtf_proc.sh ${config}
        bash stringtie.sh ${config}
 
-## Simulation Output files
+## Simulation output files
 * Simulation analysis makes three output files (Main_output.txt, NMD_check.txt, and Domain_integrity_indi.txt)
 * `Main_output.txt` contains overall information (e.g., NMD probability, average domain change ratio, UTR/CDS alteration, start/stop codon positions, and total domain length of each differential splicing (DS) and transcript (TX) pair
 * `NMD_check.txt` contains DS-TX pair ID, ORF, NMD score (if it is larger than 50, it is considered an NMD), total domain length, and TX type (Reference or Simulation)
@@ -78,3 +78,18 @@
 - Ref_domain_length: Total domain length of Ref TX
 - Sim_domain_length: Total domain length of Sim TX
 - pNMD: -1 = NMD, 1 = PTC remove, 0 = No NMD related event
+
+## Make DS comparison figure
+* Based on your Main_output file, you can pcik ceratin DS event to visualize it using this code
+
+         python code/02-3_Draw_consequence.py -i ${input} -s CA -g MPRIP -sim ES -t ENST00000341712.8
+![image](https://github.com/hyeon9/Splice-decoder/assets/51947181/507a44e8-be55-4be5-b187-35ca3f791d7d)
+
+
+* If you want to remove some information to save figure space, using `ri` option
+  
+         python code/02-3_Draw_consequence.py -i ${input} -s CA -g MPRIP -sim ES -t ENST00000341712.8 -ri coiled domain region
+![image](https://github.com/hyeon9/Splice-decoder/assets/51947181/45275f9c-8e21-4618-abc7-a4713122f3b0)
+
+
+* All figures will be saved at ${input}/figure/consequence/

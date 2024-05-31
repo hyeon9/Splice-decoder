@@ -64,20 +64,20 @@
 * `Domain_integrity_indi.txt` contains DS-TX pair ID, ORF, domain information, and domain change ratio (|Sim domain - Ref domain| / Ref domain) per domain block - The individual domain block change ratio measures relative change size by normalized reference domain block size
 
 ## Description for Main_output
-- LongID: DS event ID
-- Target_TX: Matched Transcript (==Ref_TX)
-- occurred_event: Simulated event
-- ORF_priority: pORF1 has the highest coding potential
-- Start: [Ref TX start codon-Sim TX start codon]
-- Stop: [Ref TX stop codon-Sim TX stop codon]
-- 5'UTR: 5' UTR length difference (Ref TX - Sim TX)
-- dAA: Amino acid length difference (Ref TX - Sim TX)
-- 3'UTR: 3' UTR length difference (Ref TX - Sim TX)
-- Domain_integrity: (Sim_domain_length / Ref_domain_length) * 100
-- Domain_change_ratio: Average domain change ratio (average of |Ref TX - Sim TX| / Ref TX for individual domain)
-- Ref_domain_length: Total domain length of Ref TX
-- Sim_domain_length: Total domain length of Sim TX
-- pNMD: -1 = NMD, 1 = PTC remove, 0 = No NMD related event
+- `LongID`: DS event ID
+- `Target_TX`: Matched Transcript (==Ref_TX)
+- `occurred_event`: Simulated event
+- `ORF_priority`: pORF1 has the highest coding potential
+- `Start`: [Ref TX start codon-Sim TX start codon]
+- `Stop`: [Ref TX stop codon-Sim TX stop codon]
+- `5'UTR`: 5' UTR length difference (Ref TX - Sim TX)
+- `dAA`: Amino acid length difference (Ref TX - Sim TX)
+- `3'UTR`: 3' UTR length difference (Ref TX - Sim TX)
+- `Domain_integrity`: (Sim_domain_length / Ref_domain_length) * 100
+- `Domain_change_ratio`: Average domain change ratio (average of |Ref TX - Sim TX| / Ref TX for individual domain)
+- `Ref_domain_length`: Total domain length of Ref TX
+- `Sim_domain_length`: Total domain length of Sim TX
+- `pNMD`: -1 = NMD, 1 = PTC remove, 0 = No NMD related event
 
 ## Make DS comparison figure
 * Based on your Main_output file, you can pcik ceratin DS event to visualize it using this code

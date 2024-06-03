@@ -6,7 +6,11 @@
 
 ## Workflow overview
 ![image](https://github.com/hyeon9/Splice-decoder/assets/51947181/37692184-60f3-48d8-8e91-bc03f5596d69)
-
+* It consist of four main parts
+  1. Make_input: This part makes proper format of input data from the output of event-based splicing tools
+  2. DS_mapping and ORF_mapping: This part explores the given transcriptome (GTF file) to find Reference TX (it contains perfectly matched exon structure for certain differential splicing event) and define Open-reading frame using CPAT2
+  3. Simulation: Using discovered Reference TXs (Ref-TXs) and their ORF, this part simulates their countuer-part splicing event (e.g., If the Ref-TX has exon inclusion form, this part makes exon skipped form)
+  4. Scoring: Using transcript usage, splicing likelihood, and ORF prioirty, this part calculate effect score to prioritize each differential splicing - transcript pair
 
 ## Install & Usage
 **Quick start:**  

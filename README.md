@@ -13,7 +13,7 @@
   4. Scoring: Using transcript usage, splicing likelihood, and ORF prioirty, this part calculate effect score to prioritize each differential splicing - transcript pair
 
 ## Install & Usage
-**Quick start:**  
+**Quick start**  
 * Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
 * Before run the install script, user should install mamba or conda (we strongly recommend using mamba)
 * If you are using a mamba, run this commend
@@ -45,10 +45,6 @@
 - If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file
 - If you used long-read RNA seq, you should check whether your gtf file has geneID or geneSymbol. Then set the geneID_type and seq_type of paths.config file
 - You should set your Main (where Splice-decoder main directory), conda (where conda directory), input, and rMATS_path of the paths.config file
-- All results were saved in ${input}/result
-- Your gtf file should be named as "main.gtf", using this
-
-       ln -s ${Your_gtf} ${input}/main.gtf
 
 ## Input Format
 * Splice-decoder use rMATS JECE outputs, usnig this commend splice-decoder make proper input format from your rMATS output path
@@ -56,6 +52,9 @@
        bash Main.sh Make_input
 
 * If you want to modify significant level, you can change FDR and dPSI var
+* Your gtf file should be named as `main.gtf` using this
+
+       ln -s ${Your_gtf} ${input}/main.gtf
 * Splice-decoder also offers gtf processing and TPM calculate fucntion, each script requires own config file
 
        bash gtf_proc.sh ${config}

@@ -64,7 +64,7 @@
 * Simulation analysis makes three output files (Main_output.txt, NMD_check.txt, and Domain_integrity_indi.txt)
 * `Main_output.txt` contains overall information (e.g., NMD probability, average domain change ratio, UTR/CDS alteration, start/stop codon positions, and total domain length of each differential splicing (DS) and transcript (TX) pair
 * `NMD_check.txt` contains DS-TX pair ID, ORF, NMD score (if it is larger than 50, it is considered an NMD), total domain length, and TX type (Reference or Simulation)
-* `Domain_integrity_indi.txt` contains DS-TX pair ID, ORF, domain information, and domain change ratio (|Sim domain - Ref domain| / Ref domain) per domain block - The individual domain block change ratio measures relative change size by normalized reference domain block size
+* `Domain_integrity_indi.txt` contains DS-TX pair ID, ORF, domain information, domain change ratio (|Sim domain - Ref domain| / Ref domain) per domain block, and effect direction (1: Gain of Function, -1: Loss of Function) - The individual domain block change ratio measures relative change size by normalized reference domain block size
 
 ## Description for Main_output
 - `LongID`: DS event ID

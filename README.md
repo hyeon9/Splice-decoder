@@ -4,7 +4,7 @@
 * You can use this additaional information to prioritize your differential splicing events in your analysis
 * Now we only support hg38 (hg19 will be supported soon)
 
-## Workflow overview
+# Workflow overview
 ![image](https://github.com/hyeon9/Splice-decoder/assets/51947181/37692184-60f3-48d8-8e91-bc03f5596d69)
 * It consist of four main parts
   1. Make_input: This part makes proper format of input data from the output of event-based splicing tools
@@ -12,36 +12,44 @@
   3. Simulation: Using discovered Reference TXs (Ref-TXs) and their ORF, this part simulates their countuer-part splicing event (e.g., If the Ref-TX has exon inclusion form, this part makes exon skipped form)
   4. Scoring: Using transcript usage, splicing likelihood, and ORF prioirty, this part calculate effect score to prioritize each differential splicing - transcript pair
 
-## Install & Usage
-**Quick start**  
+# Install & Usage
+**Quick start (For HPC users)**
+* You can run SplicDecoder without install
+
+      sbatch Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all}
+
+**Quick start (For Non-HPC users)**
 * Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
 * Before run the install script, user should install mamba or conda (we strongly recommend using mamba)
 * If you are using a mamba, run this commend
   
-       bash install.sh
+      bash install.sh
   
 * If you are using a conda, run this commend
   
-       bash install_conda.sh
+      bash install_conda.sh
 
 * Verify if splice-decoder is running properly
 
-       mamba(or conda) activate splice-decoder
-       bash Main.sh paths.config all
+      mamba(or conda) activate splice-decoder
+      bash Main.sh paths.config all
 
 * If you want to run certain step, specify certain step
 
-       mamba(or conda) activate splice-decoder
-       bash Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring}
+      mamba(or conda) activate splice-decoder
+      bash Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring}
 
 * If you use SLURM, modifying configure file and using this command
 
-       sbatch Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all}
+      sbatch Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all}
 
 * All your output will be saved to `${input}/result`
-  
+
 ## Build your own configuration file to run Splice-decoder
-- You should prepare rMATS output file, gtf file (which was used in rMATS), and RNAseq bam file
+**Make your input directory**
+- You should prepare rMATS output file, gtf file (which was used in rMATS), and RNAseq bam file (For the Effect Score calculation)
+- In this example, we used "SD_input" as a name of input directory
+      mkdir SD_input/
 - If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file
 - If you used long-read RNA seq, you should check whether your gtf file has geneID or geneSymbol. Then set the geneID_type and seq_type of paths.config file
 - You should set your Main (where Splice-decoder main directory), conda (where conda directory), input, and rMATS_path of the paths.config file
@@ -49,16 +57,17 @@
 ## Input Format
 * Splice-decoder use rMATS JECE outputs, usnig this commend splice-decoder make proper input format from your rMATS output path
   
-       bash Main.sh Make_input
+      bash Main.sh Make_input
 
 * If you want to modify significant level, you can change FDR and dPSI var
 * Your gtf file should be named as `main.gtf` using this
 
-       ln -s ${Your_gtf} ${input}/main.gtf
+      ln -s ${Your_gtf} ${input}/main.gtf
+  
 * Splice-decoder also offers gtf processing and TPM calculate fucntion, each script requires own config file
 
-       bash gtf_proc.sh ${config}
-       bash stringtie.sh ${config}
+      bash gtf_proc.sh ${config}
+      bash stringtie.sh ${config}
 
 ## Simulation output files
 * Simulation analysis makes three output files (`Main_output.txt`, `NMD_check.txt`, and `Domain_integrity_indi.txt`)
@@ -85,13 +94,13 @@
 ## Make DS comparison figure
 * Based on your Main_output file, you can pcik ceratin DS event to visualize it using this code
 
-         python code/02-3_Draw_consequence.py -i ${input} -s CA -g MPRIP -sim ES -t ENST00000341712.8
+      python code/02-3_Draw_consequence.py -i ${input} -s CA -g MPRIP -sim ES -t ENST00000341712.8
 ![image](https://github.com/hyeon9/Splice-decoder/assets/51947181/507a44e8-be55-4be5-b187-35ca3f791d7d)
 
 
 * If you want to remove some information to save figure space, using `ri` option
   
-         python code/02-3_Draw_consequence.py -i ${input} -s CA -g MPRIP -sim ES -t ENST00000341712.8 -ri coiled domain region
+      python code/02-3_Draw_consequence.py -i ${input} -s CA -g MPRIP -sim ES -t ENST00000341712.8 -ri coiled domain region
 ![image](https://github.com/hyeon9/Splice-decoder/assets/51947181/45275f9c-8e21-4618-abc7-a4713122f3b0)
 
 

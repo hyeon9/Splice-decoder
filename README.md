@@ -16,6 +16,7 @@
 **Quick start (For HPC users)**
 * You can run SplicDecoder without install
 
+      wget https://github.com/hyeon9/Splice-decoder/archive/refs/heads/main.zip
       sbatch Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all}
 
 **Quick start (For Non-HPC users)**
@@ -47,17 +48,42 @@
 
 ## Build your own configuration file to run Splice-decoder
 **Make your input directory**
-- You should prepare rMATS output file, gtf file (which was used in rMATS), and RNAseq bam file (For the Effect Score calculation)
+- You should prepare rMATS output file, gtf file (which was used in rMATS)
 - In this example, we used "SD_input" as a name of input directory
+  
+      cd ${SpliceDecoder_folder}
       mkdir SD_input/
-- If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file
-- If you used long-read RNA seq, you should check whether your gtf file has geneID or geneSymbol. Then set the geneID_type and seq_type of paths.config file
-- You should set your Main (where Splice-decoder main directory), conda (where conda directory), input, and rMATS_path of the paths.config file
 
-## Input Format
+- Then, make symbolic link of your rmat output and GTF file. They should have fixed name (e.g., rmat.csv and main.gtf).
+
+      cd SD_input
+      ln -s ${Your_rMATS} ./rmat.csv
+      ln -s ${Your_GTF} ./main.gtf
+  
+- If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file (It IS HIGHLY RECOMMENDED)
+
+      cd ${SpliceDecoder_folder}
+      cd SD_input
+      mkdir tpm
+      ln -s ${Your_TPM} ./matrix.tpm
+
+- If you used long-read RNA seq, you should check whether your gtf file has `geneID` or `geneSymbol`. Then set the geneID_type and seq_type of paths.config file
+- You should put your path for variables `Main` (Splice-decoder install directory), `conda` (conda path), `input` (${SpliceDecoder_folder}SD_input of the paths.config file
+- You can find your conda path
+
+      conda activate splice-decoder
+      conda info | grep "active env location"
+
+- If you find your conda path, just modify your paths.config
+
+      cd ${SpliceDecoder_folder}
+      vi paths.config
+
+
+## Post Processing rMATS output file (If you need)
 * Splice-decoder use rMATS JECE outputs, usnig this commend splice-decoder make proper input format from your rMATS output path
   
-      bash Main.sh Make_input
+      python ${SpliceDecoder_folder}/code/NEW_make_input_from_rmats.py ${Your_rMATS} ${SpliceDecoder_folder}/SD_input/
 
 * If you want to modify significant level, you can change FDR and dPSI var
 * Your gtf file should be named as `main.gtf` using this

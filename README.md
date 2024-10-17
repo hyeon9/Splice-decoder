@@ -61,7 +61,7 @@
       ln -s ${Your_rMATS} ./rmat.csv
       ln -s ${Your_GTF} ./main.gtf
 
-- If you don't have rmat.csv file, [you can make it](#Post-Processing-rMATS-output-file-(If-you-need)).
+- If you don't have rmat.csv file, [you can make it](#post-processing-rmats-output-file-(if-you-need)).
   
 - If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file (It IS HIGHLY RECOMMENDED)
 

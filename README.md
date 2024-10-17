@@ -62,7 +62,7 @@
       ln -s ${Your_GTF} ./main.gtf
 
 - If you don't have rmat.csv file,
-[you can make it](#post-processing-rmats-output-file-(if-you-need))
+[you can make it](#post-processing-rmats-output-file)
   
 - If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file (It IS HIGHLY RECOMMENDED)
 
@@ -84,7 +84,7 @@
       vi paths.config
 
 
-## Post Processing rMATS output file (If you need)
+## Post Processing rMATS output file
 * Splice-decoder use rMATS JECE outputs, usnig this commend splice-decoder make proper input format from your rMATS output path
   
       python ${SpliceDecoder_folder}/code/NEW_make_input_from_rmats.py ${Your_rMATS} ${SpliceDecoder_folder}/SD_input/

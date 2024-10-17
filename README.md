@@ -46,7 +46,7 @@
 
 * All your output will be saved to `${input}/result`
 
-## Build your own configuration file to run Splice-decoder
+## Build your configuration and input file
 **Make your input directory**
 - You should prepare rMATS output file, gtf file (which was used in rMATS)
 - In this example, we used "SD_input" as a name of input directory
@@ -59,6 +59,11 @@
       cd SD_input
       ln -s ${Your_rMATS} ./rmat.csv
       ln -s ${Your_GTF} ./main.gtf
+
+- If you don't have rmat.csv file, you can make it.
+
+      cd SD_input
+      python ${SpliceDecoder_folder}/code/NEW_make_input_from_rmats.py ${rMATS_path} ${SpliceDecoder_folder}/SD_input
   
 - If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file (It IS HIGHLY RECOMMENDED)
 
@@ -68,7 +73,7 @@
       ln -s ${Your_TPM} ./matrix.tpm
 
 - If you used long-read RNA seq, you should check whether your gtf file has `geneID` or `geneSymbol`. Then set the geneID_type and seq_type of paths.config file
-- You should put your path for variables `Main` (Splice-decoder install directory), `conda` (conda path), `input` (${SpliceDecoder_folder}SD_input of the paths.config file
+- You should put your path for variables `Main` (Splice-decoder install directory), `conda` (conda path), `input` (${SpliceDecoder_folder}/SD_input) of the paths.config file
 - You can find your conda path
 
       conda activate splice-decoder

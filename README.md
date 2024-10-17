@@ -56,13 +56,12 @@
       mkdir SD_input/
 
 - Then, make symbolic link of your rmat output and GTF file. They should have fixed name (e.g., rmat.csv and main.gtf).
+- If you don't have rmat.csv file,
+[you can make it](#post-processing-for-rmats-output-files)
 
       cd SD_input
       ln -s ${Your_rMATS} ./rmat.csv
       ln -s ${Your_GTF} ./main.gtf
-
-- If you don't have rmat.csv file,
-[you can make it](#post-processing-rmats-output-file)
   
 - If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file (It IS HIGHLY RECOMMENDED)
 
@@ -84,7 +83,7 @@
       vi paths.config
 
 
-## Post Processing rMATS output file
+## Post Processing for rMATS output files
 * Splice-decoder use rMATS JECE outputs, usnig this commend splice-decoder make proper input format from your rMATS output path
   
       python ${SpliceDecoder_folder}/code/NEW_make_input_from_rmats.py ${Your_rMATS} ${SpliceDecoder_folder}/SD_input/

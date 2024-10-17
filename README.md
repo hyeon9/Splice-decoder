@@ -14,20 +14,20 @@
   4. Scoring: Using transcript usage, splicing likelihood, and ORF prioirty, this part calculate effect score to prioritize each differential splicing - transcript pair
 
 # Install & Usage
-**Quick start (For HPC users)**
+**Quick start (`For HPC users`)**
 * You can run SplicDecoder without install
 
       wget https://github.com/hyeon9/Splice-decoder/archive/refs/heads/main.zip
       sbatch Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all}
 
-**Quick start (For Non-HPC users)**
+**Quick start (`For Non-HPC users`)**
 * Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
 * Before run the install script, user should install mamba or conda (we strongly recommend using mamba)
-* If you are using a mamba, run this commend
+* If you are using a mamba, you can run this commend
   
       bash install.sh
   
-* If you are using a conda, run this commend
+* If you are using a conda, you can run this commend
   
       bash install_conda.sh
 

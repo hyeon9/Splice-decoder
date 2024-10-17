@@ -5,7 +5,8 @@
 * Now we only support hg38 (hg19 will be supported soon)
 
 # Workflow overview
-![image](https://github.com/hyeon9/Splice-decoder/assets/51947181/37692184-60f3-48d8-8e91-bc03f5596d69)
+![image](https://github.com/user-attachments/assets/57495564-6112-4127-a4fb-3a79192af674)
+
 * It consist of four main parts
   1. Make_input: This part makes proper format of input data from the output of event-based splicing tools
   2. DS_mapping and ORF_mapping: This part explores the given transcriptome (GTF file) to find Reference TX (it contains perfectly matched exon structure for certain differential splicing event) and define Open-reading frame using CPAT2
@@ -60,10 +61,7 @@
       ln -s ${Your_rMATS} ./rmat.csv
       ln -s ${Your_GTF} ./main.gtf
 
-- If you don't have rmat.csv file, you can make it.
-
-      cd SD_input
-      python ${SpliceDecoder_folder}/code/NEW_make_input_from_rmats.py ${rMATS_path} ${SpliceDecoder_folder}/SD_input
+- If you don't have rmat.csv file, [you can make it](Post-Processing-rMATS-output-file-(If-you-need)).
   
 - If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file (It IS HIGHLY RECOMMENDED)
 

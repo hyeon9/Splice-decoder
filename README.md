@@ -64,6 +64,8 @@
       ln -s ${Your_GTF} ./main.gtf
   
 - If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file (It IS HIGHLY RECOMMENDED)
+- If you don't have TPM matrix,
+[you can make it](#post-processing-for-rmats-output-files)
 
       cd ${SpliceDecoder_folder}
       cd SD_input
@@ -88,7 +90,10 @@
   
       python ${SpliceDecoder_folder}/code/NEW_make_input_from_rmats.py ${Your_rMATS} ${SpliceDecoder_folder}/SD_input/
 
-* If you want to modify significant level, you can change FDR and dPSI var
+* You can make TPM matrix by using BAM files (
+
+      bash ${SpliceDecoder_folder}/code/stringtie.sh ${SpliceDecoder_folder}/main.gtf ${bam_list} ${SpliceDecoder_folder}/SD_input/
+      
 * Your gtf file should be named as `main.gtf` using this
 
       ln -s ${Your_gtf} ${input}/main.gtf

@@ -19,14 +19,18 @@
   3. Simulation: Using discovered Reference TXs (Ref-TXs) and their ORF, this part simulates their countuer-part splicing event (e.g., If the Ref-TX has exon inclusion form, this part makes exon skipped form)
   4. Scoring: Using transcript usage, splicing likelihood, and ORF prioirty, this part calculate effect score to prioritize each differential splicing - transcript pair
 
+<br>
+
 # Install & Usage
-**Quick start (`For HPC users`)**
+## Quick start (`For HPC users`)
 * You can run SplicDecoder without install
 
       wget https://github.com/hyeon9/Splice-decoder/archive/refs/heads/main.zip
       sbatch Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all}
+  
+<br>
 
-**Quick start (`For Non-HPC users`)**
+## Quick start (`For Non-HPC users`)
 * Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
 * Before run the install script, user should install mamba or conda (we strongly recommend using mamba)
 * If you are using a mamba, you can run this commend
@@ -53,19 +57,21 @@
 
 * All your output will be saved to `${input}/result`
 
+<br>
+
 ## Build your configuration and input file
 **Make your input directory**
 - You should prepare rMATS output file, gtf file (which was used in rMATS)
-- In this example, we used "SD_input" as a name of input directory
+- In this example, we used "DS_input" as a name of input directory
   
       cd ${SpliceDecoder_folder}
-      mkdir SD_input/
+      mkdir DS_input/
 
 - Then, make symbolic link of your rmat output and GTF file. They should have fixed name (e.g., rmat.csv and main.gtf).
 - If you don't have rmat.csv file,
 [you can make it](#post-processing-for-rmats-output-files)
 
-      cd SD_input
+      cd DS_input
       ln -s ${Your_rMATS} ./rmat.csv
       ln -s ${Your_GTF} ./main.gtf
   
@@ -74,12 +80,13 @@
 [you can make it](#post-processing-for-rmats-output-files)
 
       cd ${SpliceDecoder_folder}
-      cd SD_input
+      cd DS_input
       mkdir tpm
+      cd tpm
       ln -s ${Your_TPM} ./matrix.tpm
 
 - If you used long-read RNA seq, you should check whether your gtf file has `geneID` or `geneSymbol`. Then set the geneID_type and seq_type of paths.config file
-- You should put your path for variables `Main` (Splice-decoder install directory), `conda` (conda path), `input` (${SpliceDecoder_folder}/SD_input) of the paths.config file
+- You should put your path for variables `Main` (Splice-decoder install directory), `conda` (conda path), `input` (${SpliceDecoder_folder}/DS_input) of the paths.config file
 - You can find your conda path
 
       conda activate splice-decoder
@@ -90,15 +97,16 @@
       cd ${SpliceDecoder_folder}
       vi paths.config
 
+<br>
 
 ## Post Processing for rMATS output files
 * Splice-decoder use rMATS JECE outputs, usnig this commend splice-decoder make proper input format from your rMATS output path
   
-      python ${SpliceDecoder_folder}/code/NEW_make_input_from_rmats.py ${Your_rMATS} ${SpliceDecoder_folder}/SD_input/
+      python ${SpliceDecoder_folder}/code/NEW_make_input_from_rmats.py ${Your_rMATS} ${SpliceDecoder_folder}/DS_input/
 
 * You can make TPM matrix by using BAM files (
 
-      bash ${SpliceDecoder_folder}/code/stringtie.sh ${SpliceDecoder_folder}/main.gtf ${bam_list} ${SpliceDecoder_folder}/SD_input/
+      bash ${SpliceDecoder_folder}/code/stringtie.sh ${SpliceDecoder_folder}/main.gtf ${bam_list} ${SpliceDecoder_folder}/DS_input/
       
 * Your gtf file should be named as `main.gtf` using this
 
@@ -109,39 +117,80 @@
       bash gtf_proc.sh ${config}
       bash stringtie.sh ${config}
 
-## Simulation output files
-* Simulation analysis makes three output files (`Main_output.txt`, `NMD_check.txt`, and `Domain_integrity_indi.txt`)
-* `Main_output.txt` contains overall information (e.g., NMD probability, average domain change ratio, UTR/CDS alteration, start/stop codon positions, and total domain length of each differential splicing (DS) and transcript (TX) pair
-* `NMD_check.txt` contains `DS-TX pair ID`, `ORF priority`, `NMD score (if it is larger than 50, it is considered an NMD)`, `total domain length`, and `TX type (Reference or Simulation)`
-* `Domain_integrity_indi.txt` contains `DS-TX pair ID`, `ORF priority`, `domain information`, `domain change ratio (|Sim domain - Ref domain| / Ref domain) per domain block`, and `Change direction` (1: Gain of Function, -1: Loss of Function) - The individual domain block change ratio measures relative change size by normalized reference domain block size
+<br>
 
-## Description for Main_output
-- `LongID`: DS event ID
-- `Target_TX`: Matched Transcript (==Ref_TX)
-- `occurred_event`: Simulated event
-- `ORF_priority`: pORF1 has the highest coding potential
-- `Start`: [Ref TX start codon-Sim TX start codon]
-- `Stop`: [Ref TX stop codon-Sim TX stop codon]
-- `5'UTR`: 5' UTR length difference (Ref TX - Sim TX)
-- `dAA`: Amino acid length difference (Ref TX - Sim TX)
-- `3'UTR`: 3' UTR length difference (Ref TX - Sim TX)
+## Description for output files
+
+* You can ckech Summary HTML in `${SpliceDecoder_folder}/DS_input/figure`
+  
+![image](https://github.com/user-attachments/assets/fdfff5a3-b923-45d7-b5aa-4dfcd932c767)
+
+* After completing the entire process successfully, you can find several output files in `${SpliceDecoder_folder}/DS_input/result`
+  * `*Main_output.txt`
+  * `*NMD_check.txt`
+  * `*Domain_integrity_indi.txt`
+  * `Whole_DS_score_Whole.txt`
+
+* First of all, check `Whole_DS_score_Whole.txt`, which contains [You can find more details here](#description-for-output):
+  * `Effect_Score`
+  * `Domain_change_rate`
+  * `Probability_of_NMD`
+  * `DOA_direction`
+  
+
+* The `Domain_integrity_indi.txt` includes:
+  * `DS-TX pair ID`
+  * `ORF priority`
+  * `Domain information`
+  * `Domain change ratio` (|Sim domain - Ref domain| / Ref domain) per domain block
+  * `Change direction` (1: Gain of Function, -1: Loss of Function)
+  
+  The individual domain block change ratio measures the relative change size normalized by the reference domain block size.
+
+
+## Description for Output
+*Example of important values of `Whole_DS_score_Whole.txt`*
+![image](https://github.com/user-attachments/assets/957b665a-829e-4885-afed-ea02a7a9cf8e)
+
+### Key Metrics
+
+- **`LongID`**: DS event ID
+- **`gene`**: Gene Symbol
+- **`Reference_transcript`**: Matched Transcript (==Ref_TX)
+- **`Simulated_event`**: Simulated event
+- **`Effect_Score`**: **A score to prioritize your DS events**
+- **`Domain_change_rate`**: Average rate of domain changes in Sim-TX compared to Ref-TX
+- **`Probability_of_NMD`**: NMD **(-1)**, PTC removal **(1)**, No NMD related event **(0)**
+- **`DOA_direction`**: GoD (Gain of Domain), LoD (Loss of Domain), NMD, no_change, and other_retions_diff (e.g., UTRs and unannot CDS)
+- **`Delta_PSI`**: PSI difference (group2 - group1), it came from rMATS
+- **`Transcript_usage`**: Proportion of expression of reference transcript for each gene
+
+---
+### Supplementary Metrics
+- `ORF`: Used ORF (This file only contains ORF with the highest potential)
+- `AUG (Ref-Sim)`: Start codon position on the Ref TX and Sim TX (Ref-Sim)
+- `Stop`: Stop codon position on the Ref TX and Sim TX (Ref-Sim)
+- `Delta_Amino_acid`: Amino acid length difference (Ref TX - Sim TX)
+- `5'UTR_difference`: 5' UTR length difference (Ref TX - Sim TX)
+- `3'UTR_difference`: 3' UTR length difference (Ref TX - Sim TX)
 - `Domain_integrity`: (Sim_domain_length / Ref_domain_length) * 100
-- `Domain_change_ratio`: Average domain change ratio (average of |Ref TX - Sim TX| / Ref TX for individual domain)
-- `Ref_domain_length`: Total domain length of Ref TX
-- `Sim_domain_length`: Total domain length of Sim TX
-- `pNMD`: -1 = NMD, 1 = PTC remove, 0 = No NMD related event
+- `Length_of_simulated_tx_domain`: Total domain length of Sim TX
+- `Length_of_referece_tx_domain`: Total domain length of Ref TX
+- `rMATS_FDR(-log10)`: -Log10 scale FDR, it came from rMATS
 
-## Make DS comparison figure
+## Visualize your DS simulation
 * Based on your Main_output file, you can pcik ceratin DS event to visualize it using this code
 
-      python code/02-3_Draw_consequence.py -i ${input} -s CA -g MPRIP -sim ES -t ENST00000341712.8
-![image](https://github.com/hyeon9/Splice-decoder/assets/51947181/507a44e8-be55-4be5-b187-35ca3f791d7d)
+      cd ${SpliceDecoder_folder}
+      python code/02-3_v2_Draw_consequence.py --input `pwd`/DS_input/ --splicing_event CA --gene SPG7 --sim_splicing_event EI --transcript ENST00000561911.5
+![image](https://github.com/user-attachments/assets/d700e8c1-efb6-40a9-bb12-b6576b955ef1)
 
 
-* If you want to remove some information to save figure space, using `ri` option
+* If you want to `remove some information` in figure space, using `ri` option
   
-      python code/02-3_Draw_consequence.py -i ${input} -s CA -g MPRIP -sim ES -t ENST00000341712.8 -ri coiled domain region
-![image](https://github.com/hyeon9/Splice-decoder/assets/51947181/45275f9c-8e21-4618-abc7-a4713122f3b0)
+      python code/02-3_v2_Draw_consequence.py --input `pwd`/DS_input/ --splicing_event CA --gene SPG7 --sim_splicing_event EI --transcript ENST00000561911.5 -ri region
+![image](https://github.com/user-attachments/assets/f5866dfd-2ca5-4bf5-a40d-54ad3bf6e827)
+
 
 
 * All figures will be saved at ${input}/figure/consequence/

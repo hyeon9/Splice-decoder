@@ -176,6 +176,7 @@
 * Based on your Main_output file, you can pcik ceratin DS event to visualize it using this code
 
       cd ${SpliceDecoder_folder}
+  
       python code/02-3_v2_Draw_consequence.py --input `pwd`/DS_input/ --splicing_event CA --gene SPG7 --sim_splicing_event EI --transcript ENST00000561911.5
 ![image](https://github.com/user-attachments/assets/d700e8c1-efb6-40a9-bb12-b6576b955ef1)
 
@@ -187,4 +188,4 @@
 
 
 
-* All figures will be saved at ${input}/figure/consequence/
+* All figures will be saved at `${input}/figure/consequence/`

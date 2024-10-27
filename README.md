@@ -1,5 +1,10 @@
 ## TO DO
 -[] running time
+-[X] Add description for outputs
+-[X] Add description for vis function
+-[X] Add HTML summary function
+-[X] TPM part update
+
 
 # What is the main purpose of Splice-decoder?
 * Splice decoder can add biological information to your differential splicing or your interesting splicing target list

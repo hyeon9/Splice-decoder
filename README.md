@@ -1,9 +1,9 @@
 ## TO DO
--[] running time
--[X] Add description for outputs
--[X] Add description for vis function
--[X] Add HTML summary function
--[X] TPM part update
+- [] running time
+- [X] Add description for outputs
+- [X] Add description for vis function
+- [X] Add HTML summary function
+- [X] TPM part update
 
 
 # What is the main purpose of Splice-decoder?

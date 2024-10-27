@@ -1,9 +1,3 @@
-# TO DO
-- [] Make a detailed dscription for output files
-- [X] Make HTML summary using sort of figures
-- [] Make a description for vis function
-
-
 # What is the main purpose of Splice-decoder?
 * Splice decoder can add biological information to your differential splicing or your interesting splicing target list
 * This information contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on) and UTR alterations as their target transcript

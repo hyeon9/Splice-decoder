@@ -1,3 +1,6 @@
+## TO DO
+-[] running time
+
 # What is the main purpose of Splice-decoder?
 * Splice decoder can add biological information to your differential splicing or your interesting splicing target list
 * This information contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on) and UTR alterations as their target transcript
@@ -53,64 +56,18 @@
 
 <br>
 
-## Build your configuration and input file
-**Make your input directory**
-- You should prepare rMATS output file, gtf file (which was used in rMATS)
-- In this example, we used "DS_input" as a name of input directory
-  
-      cd ${SpliceDecoder_folder}
-      mkdir DS_input/
-
-- Then, make symbolic link of your rmat output and GTF file. They should have fixed name (e.g., rmat.csv and main.gtf).
-- If you don't have rmat.csv file,
-[you can make it](#post-processing-for-rmats-output-files)
-
-      cd DS_input
-      ln -s ${Your_rMATS} ./rmat.csv
-      ln -s ${Your_GTF} ./main.gtf
-  
-- If you want to use tpm normalized counts in the effect score calculation step, you should set the tpm as Y of paths.config file (It IS HIGHLY RECOMMENDED)
-- If you don't have TPM matrix,
-[you can make it](#post-processing-for-rmats-output-files)
-
-      cd ${SpliceDecoder_folder}
-      cd DS_input
-      mkdir tpm
-      cd tpm
-      ln -s ${Your_TPM} ./matrix.tpm
-
-- If you used long-read RNA seq, you should check whether your gtf file has `geneID` or `geneSymbol`. Then set the geneID_type and seq_type of paths.config file
-- You should put your path for variables `Main` (Splice-decoder install directory), `conda` (conda path), `input` (${SpliceDecoder_folder}/DS_input) of the paths.config file
-- You can find your conda path
+## Build your configuration and input file  
+- You should set your path for variables `Main` (Splice-decoder install directory), `conda` (conda path), `input` (${SpliceDecoder_folder}/DS_input) of the paths.config file
+- If you use your own conda, you should find it and update config file
 
       conda activate splice-decoder
+  
       conda info | grep "active env location"
-
-- If you find your conda path, just modify your paths.config
-
-      cd ${SpliceDecoder_folder}
-      vi paths.config
-
-<br>
-
-## Post Processing for rMATS output files
-* Splice-decoder use rMATS JECE outputs, usnig this commend splice-decoder make proper input format from your rMATS output path
   
-      python ${SpliceDecoder_folder}/code/NEW_make_input_from_rmats.py ${Your_rMATS} ${SpliceDecoder_folder}/DS_input/
+- If you have your own TPM matrix (sample * transcript) you should set the `tpm` as `Y_own`. Otherwise, set the `tpm` as `Y` in the paths.config file
+- You should check whether your gtf file has `geneID` or `geneSymbol`. Then set the `geneID_type` in the paths.config file
 
-* You can make TPM matrix by using BAM files (
-
-      bash ${SpliceDecoder_folder}/code/stringtie.sh ${SpliceDecoder_folder}/main.gtf ${bam_list} ${SpliceDecoder_folder}/DS_input/
       
-* Your gtf file should be named as `main.gtf` using this
-
-      ln -s ${Your_gtf} ${input}/main.gtf
-  
-* Splice-decoder also offers gtf processing and TPM calculate fucntion, each script requires own config file
-
-      bash gtf_proc.sh ${config}
-      bash stringtie.sh ${config}
-
 <br>
 
 ## Description for output files

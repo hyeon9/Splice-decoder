@@ -75,7 +75,7 @@
       
 <br>
 
-## Description for output files
+## Overview for output files
 
 * You can ckech Summary HTML in `${SpliceDecoder_folder}/DS_input/figure`
   

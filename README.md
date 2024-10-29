@@ -1,5 +1,5 @@
 ## TO DO
-- [] running time
+- [] running time - add function between sub-jobs in Main.sh
 - [X] Add description for outputs
 - [X] Add description for vis function
 - [X] Add HTML summary function

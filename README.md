@@ -105,10 +105,9 @@
 
 
 ## Description for Output
+### Key Metrics
 *Example of important values of `Whole_DS_score_Whole.txt`*
 ![image](https://github.com/user-attachments/assets/957b665a-829e-4885-afed-ea02a7a9cf8e)
-
-### Key Metrics
 
 - **`LongID`**: DS event ID
 - **`gene`**: Gene Symbol

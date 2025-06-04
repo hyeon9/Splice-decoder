@@ -1,7 +1,7 @@
-# What is the main purpose of Splice-decoder?
-* Splice decoder can add biological information to your differential splicing or your interesting splicing target list
-* This information contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on) and UTR alterations as their target transcript
-* You can use this additaional information to prioritize your differential splicing events in your analysis
+# What is the Splice-decoder?
+* Splice decoder provides functional annotation for your differential splicing events (DESs) or your interesting splicing target list
+* The functional annotation contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on), CDS/UTR alterations, and Effect Score
+* You can use the effect score to prioritize your DSEs
 * Now we only support hg38 (hg19 will be supported soon)
 
 # Workflow overview

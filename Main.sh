@@ -6,10 +6,8 @@
 #SBATCH -e ./%u-%x-%j.err
 #SBATCH --time=72:00:00
 
-## Usage
-## sbatch Main.sh {Make_input|DS_mapping|ORF_mapping|Simulation|Scoring|all}
 ## Load conda
-source /projects/anczukow-lab/kangh/miniforge-pypy3/bin/activate base
+source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate splice-decoder
 
 input_var=$1

@@ -7,11 +7,12 @@
 # Workflow overview
 <img width="1401" alt="image" src="https://github.com/user-attachments/assets/bf9fcb4d-d8ae-499c-8a1c-25eb232f520d" />
 
-* It consist of four main parts
-  1. Make_input: This part makes proper format of input data from the output of event-based splicing tools
-  2. DS_mapping and ORF_mapping: This part explores the given transcriptome (GTF file) to find Reference TX (it contains perfectly matched exon structure for certain differential splicing event) and define Open-reading frame using CPAT2
-  3. Simulation: Using discovered Reference TXs (Ref-TXs) and their ORF, this part simulates their countuer-part splicing event (e.g., If the Ref-TX has exon inclusion form, this part makes exon skipped form)
-  4. Scoring: Using transcript usage, splicing likelihood, and ORF prioirty, this part calculate effect score to prioritize each differential splicing - transcript pair
+* It consist of five  main steps
+  1. Processing input (Generate All Possible Splicing Cases): This step makes proper format of input data from the output of event-based splicing tools
+  2. Mapping DSEs and ORFs (Map Splicing Cases): This step explores the given transcriptome (.GTF) to find Ref-TX (Reference transcript, it contains perfectly matched exon structure for the given DSE) and assign the best three open reading frames (ORFs)
+  3. Simulation (Simulate Splicing Events): Based on the Ref-TXs and their ORFs, this step perform simulation of alternative splicing (e.g., if the Ref-TX has exon inclusion (EI) form, this step makes a simulated transcript (Sim-TX) with exon skipped (ES) form)
+  4. Annotation (Functional Annotation): Based on the Uniprot DB, SpliceDecoder assigns known functional domains and estimates functional changes between Ref-TX and Sim-TX
+  5. Scoring (DSEs with Effect Score): SpliceDecoder assigns an effect score to each DSE based on multiple biological factors, enabling prioritization of your DESs
 
 <br>
 

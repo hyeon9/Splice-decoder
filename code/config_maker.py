@@ -3,11 +3,6 @@ import questionary
 import os
 import sys
 
-if len(sys.argv) == 1:
-    output_prefix = "test"
-else:
-    output_prefix = sys.argv[1]
-
 config = {}
 
 output_prefix = questionary.text("Specify your config file name").ask()
@@ -26,13 +21,9 @@ config['PSI'] = questionary.text("Enter a |dPSI| cut off for your rMATS").ask()
 config['njobs'] = questionary.text("Enter a number of cpu in splice-decoder job").ask()
 config['tpm'] = questionary.text("Specify your TPM option e.g., Y (Calculate TPM by using SpliceDecoder), Y_own (Using your own TPM matrix), and N (Not using TPM)").ask()
 
-#config['conda'] = questionary.text("Enter your conda path copy the active env location of `conda info`").ask()+"/"
-## '/envs/splice-decoder/bin' should be checked before add cpat and bedtools
-#config['cpat'] = os.path.join(config['conda'], "envs/splice-decoder/bin/", "cpat")
-#config['bedtools'] = os.path.join(config['conda'], "envs/splice-decoder/bin/", "bedtools")
-config['conda'] = "/projects/anczukow-lab/kangh/miniforge-pypy3/envs/splice-decoder/bin/"
-config['cpat'] = os.path.join(config['conda'], "cpat")
-config['bedtools'] = os.path.join(config['conda'], "bedtools")
+config['conda'] = sys.argv[1]
+config['cpat'] = os.path.join(config['conda'], "bin/cpat")
+config['bedtools'] = os.path.join(config['conda'], "bin/bedtools")
 with open(f"{config['Main']}{output_prefix}.config", "w") as f:
     for key, value in config.items():
         f.write(f'{key}="{value}"\n')

@@ -5,7 +5,7 @@
 * Now we only support hg38 (hg19 will be supported soon)
 
 # Workflow overview
-![image](https://github.com/user-attachments/assets/2170bd5c-c9b4-483d-8c30-c1a9032d3044)
+<img width="1401" alt="image" src="https://github.com/user-attachments/assets/bf9fcb4d-d8ae-499c-8a1c-25eb232f520d" />
 
 * It consist of four main parts
   1. Make_input: This part makes proper format of input data from the output of event-based splicing tools

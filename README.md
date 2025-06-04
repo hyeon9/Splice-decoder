@@ -28,7 +28,7 @@
 
       vi paths.config  # Update several variables
   
-      sbatch Main.sh Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all  # You can use all or specifiy certain function e.g., Make_input
+      sbatch Main.sh Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all ${Your_config}  # You can use all or specifiy certain function e.g., Make_input
   
 * If you need some information to update `paths.config` file, [you can find it](#build-your-configuration-and-input-file):
   

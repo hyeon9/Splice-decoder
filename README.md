@@ -119,7 +119,7 @@
 - **`Effect_Score`**: **A score to prioritize your DS events**
 - **`Domain_change_rate`**: Average rate of domain changes in Sim-TX compared to Ref-TX
 - **`Probability_of_NMD`**: NMD **(-1)**, PTC removal **(1)**, No NMD related event **(0)**
-- **`DOA_direction`**: GoD (Gain of Domain), LoD (Loss of Domain), NMD, no_change, and other_retions_diff (e.g., UTRs and unannot CDS)
+- **`DOA_direction`**: GoD (Gain of Domain), LoD (Loss of Domain), NMD, no_change, CDS_alts, and UTR_alts)
 - **`Delta_PSI`**: PSI difference (group2 - group1), it came from rMATS
 - **`Transcript_usage`**: Proportion of expression of reference transcript for each gene
 

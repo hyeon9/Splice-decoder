@@ -98,4 +98,3 @@ dependencies:
   - pybedtools
   - subread
   - parallel
-prefix: /projects/anczukow-lab/kangh/miniforge-pypy3/envs/splice-decoder

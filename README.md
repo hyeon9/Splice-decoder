@@ -36,23 +36,20 @@
 
 ## Quick start (`For Non-HPC users`)
 * Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
-* Before run the install script, user should install mamba or conda (we strongly recommend using mamba)
-* If you are using a mamba, you can run this commend
+* Before run the install script, user should install conda
+* By using a conda, you can run this commend to install required packages
+* You should specify your OS (Mac or linux)
   
-      bash install.sh
-  
-* If you are using a conda, you can run this commend
-  
-      bash install_conda.sh
+      bash install_conda.sh ${your_OS}
 
 * Verify if splice-decoder is running properly
 
-      mamba(or conda) activate splice-decoder
+      conda activate splice-decoder
       bash Main.sh paths.config all
 
 * If you want to run certain step, specify certain step
 
-      mamba(or conda) activate splice-decoder
+      conda activate splice-decoder
       bash Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring}
 
 * If you use SLURM, modifying configure file and using this command

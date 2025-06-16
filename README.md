@@ -27,7 +27,7 @@
 
       conda activate splice-decoder
 
-* Build your configuration file (Your.config) by using interactive way
+* Build your configuration file (Your.config) through an interactive way
 
       cd code/
       bash Make_config.sh

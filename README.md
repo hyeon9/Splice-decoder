@@ -38,9 +38,9 @@
 * Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
 * Before run the install script, user should install conda
 * By using a conda, you can run this commend to install required packages
-* You should specify your OS (Mac or linux)
+* You should specify your specific yml file as For_Mac_user.yml or For_Linux_user.yml)
   
-      bash install_conda.sh ${your_OS}
+      bash install_conda.sh ${yml}
 
 * Verify if splice-decoder is running properly
 

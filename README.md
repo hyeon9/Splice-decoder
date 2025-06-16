@@ -32,7 +32,7 @@
       cd code/
       bash Make_config.sh
 
-* If you made appropriate configuration file, now you can run SpliceDecoder
+* If you made `Your.config`, now you can run SpliceDecoder
 * The steps are intended to be executed in order. If needed, you can run a specific step by selecting one of the following: `Make_input`, `DS_mapping`, `ORF_mapping`, `Simulation` and `Scoring`
 
       bash Main.sh all ${Your.config}

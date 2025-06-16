@@ -17,7 +17,36 @@
 <br>
 
 # Install & Usage
-## Quick start (`For HPC users`)
+## Quick start (Before install SpliceDecoder, user should install conda first)
+* Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
+* To install SpliceDecoder, you should specify propoer specific yml file for your OS (`For_Mac_user.yml` or `For_Linux_user.yml`)
+  
+      bash install_conda.sh ${yml}
+
+* Verify if splice-decoder is installed properly
+
+      conda activate splice-decoder
+
+* Build your configuration file (Your.config) by using interactive way
+
+      cd code/
+      bash Make_config.sh
+
+* If you made appropriate configuration file, now you can run SpliceDecoder
+* The steps are intended to be executed in order. If needed, you can run a specific step by selecting one of the following: `Make_input`, `DS_mapping`, `ORF_mapping`, `Simulation` and `Scoring`
+
+      bash Main.sh all ${Your.config}
+      bash Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring} ${Your.config}
+
+* If you use SLURM, modifying configure file and using this command
+
+      sbatch Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all} ${Your.config}
+
+* All your output will be saved to `${input}/result`
+
+<br>
+
+## If you are JAX users
 * You can run SplicDecoder without install
 
       wget https://github.com/hyeon9/Splice-decoder/archive/refs/heads/main.zip
@@ -28,51 +57,11 @@
 
       vi paths.config  # Update several variables
   
-      sbatch Main.sh Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all ${Your_config}  # You can use all or specifiy certain function e.g., Make_input
+      sbatch Main.sh Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all ${Your_config}
   
-* If you need some information to update `paths.config` file, [you can find it](#build-your-configuration-and-input-file):
   
 <br>
 
-## Quick start (`For Non-HPC users`)
-* Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
-* Before run the install script, user should install conda
-* By using a conda, you can run this commend to install required packages
-* You should specify your specific yml file as For_Mac_user.yml or For_Linux_user.yml)
-  
-      bash install_conda.sh ${yml}
-
-* Verify if splice-decoder is running properly
-
-      conda activate splice-decoder
-      bash Main.sh paths.config all
-
-* If you want to run certain step, specify certain step
-
-      conda activate splice-decoder
-      bash Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring}
-
-* If you use SLURM, modifying configure file and using this command
-
-      sbatch Main.sh paths.config {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all}
-
-* All your output will be saved to `${input}/result`
-
-<br>
-
-## Build your configuration and input file
-- You should specify your paths for variables `Main` (Splice-decoder install directory), `conda` (Conda path), `input` (It points your working directory: all processed files and outputs will be created here) in the `paths.config` file
-- If you are using your own conda, you can find it using the command below and update `conda` variable in the `config file`
-
-      conda activate splice-decoder
-  
-      conda info | grep "active env location"
-  
-- You should check whether your gtf file has `geneID` or `geneSymbol`. Then set the `geneID_type` in the paths.config file (doesn't need it anymore)
-- You should specifiy the `species` as either `human` or `mouse` and specify the `seq_type` as either `SR` or `LR`
-- If you have your own TPM matrix (sample * transcript) you should specify the `tpm` as `Y_own`. Otherwise, set the `tpm` as `Y` in the `paths.config` file
-      
-<br>
 
 ## Overview for output files
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-
-mamba create --name testenv --file requirements.txt -k &&
-mamba actrivate testenv &&
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda create --name testenv -f yml -k &&
+conda activate testenv &&
 pip install -r requirements_pip.txt

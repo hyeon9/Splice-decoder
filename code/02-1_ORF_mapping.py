@@ -317,7 +317,7 @@ def Estimate(id, final_set, key):
                 
             ## Find ORF
             cmd = args.cpat + " -x " + args.cpatdb + args.species + "_Hexamer.tsv" + \
-                    " -d " + args.cpatdb + args.species + "*.logit*RData" + \
+                    " -d " + args.cpatdb + args.species + "*_logit*RData" + \
                     " --min-orf 1" + " --top-orf={}".format(n_orf) + \
                     " -g "+ fasta_DIR+key+"_"+input+"_cpat.fa" + \
                     " -o" + cpat_DIR+input+"_"+key+".orf"

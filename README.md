@@ -58,8 +58,48 @@
   
 <br>
 
-## Details for config file
-[TO DO]
+## Guide for making config file
+* Make_config.sh will ask..
+
+      ? Specify your config file name
+      > You just need to specify your config file (e.g. HGjob)
+
+      ? Enter the path of SpliceDecoder
+      > You just need to specify the install path of SpliceDecoder (e.g. /User/usr/Tool/Splice-decoder-main/)
+  
+      ? Enter your working directory 
+      > You just need to specify your new working directory (e.g. /User/usr/Tool/Splice-decoder-main/project1)
+  
+      ? Enter your rMATS output path
+      > You just need to specify the rMATS output path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data)
+  
+      ? Enter your GTF file that you used in rMATS with its full path
+      > You just need to specify the full path + GTFfile (e.g. (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/manual2.filtered.gtf or /User/usr/Tool/Splice-decoder-main/toy_data/*.gtf))
+  
+      ? Enter your TPM matrix with full path ** need to check
+      > You just need to specify the full paht of your TPM matrix (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/tpm.tsv or N)
+  
+      ? Enter your bamlist which should contains bamfile with their full path in each line
+      > You just need to specify the full paht of your bam file list (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/bam_list.txt or N)
+  
+      ? Enter a species of your data
+      > You just need to specify the species of your data (e.g. human or mouse)
+  
+      ? Enter a sequencing type of your data e.g., SR (short-read) or LR (long-read)
+      > You just need to specify the sequencing method of your data (e.g. SR or LR)
+  
+      ? Enter a FDR cut off for your rMATS
+      > Specify rMATS FDR cut off (float [0-1], default 0.05)
+  
+      ? Enter a |dPSI| cut off for your rMATS
+      > Specify rMATS FDR cut off (float [0-1], default 0.1)
+  
+      ? Enter a number of cpu in splice-decoder job
+      > Specify a number of cpu will be used in your job (int [0-?])
+  
+      ? Specify your TPM option e.g., Y (Calculate TPM by using SpliceDecoder), Y_own (Using your own TPM matrix), and N (Not using TPM)
+      > You can choose one of the following options: Y, Y_own or N
+
 
 <br>
 

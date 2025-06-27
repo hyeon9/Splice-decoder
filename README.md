@@ -48,12 +48,8 @@
 
 <br>
 
-## If you are JAX users
+## For JAX users
 * You can run SplicDecoder without install
-
-      wget https://github.com/hyeon9/Splice-decoder/archive/refs/heads/main.zip
-
-      OR
 
       cp -r /projects/anczukow-lab/kangh/Tool/Splice-decoder_git ./
 
@@ -65,13 +61,13 @@
 <br>
 
 
-## Overview for output files
+# Overview for output files
 
 * You can ckech Summary HTML in `${SpliceDecoder_folder}/DS_input/figure`
   
 ![image](https://github.com/user-attachments/assets/fdfff5a3-b923-45d7-b5aa-4dfcd932c767)
 
-* After completing the entire process successfully, you can find several output files in `${SpliceDecoder_folder}/DS_input/result`
+* After running the entire process successfully, you can find several output files in your `${SpliceDecoder_folder}/DS_input/result`
   * `*Main_output.txt`
   * `*NMD_check.txt`
   * `*Domain_integrity_indi.txt`
@@ -89,7 +85,7 @@
   * `ORF priority`
   * `Domain information`
   * `Domain change ratio` (|Sim domain - Ref domain| / Ref domain) per domain block
-  * `Change direction` (1: Gain of Function, -1: Loss of Function)
+  * `Change direction` (1 represents `Gain of Function` and -1 represents `Loss of Function`)
   
   The individual domain block change ratio measures the relative change size normalized by the reference domain block size.
 
@@ -113,9 +109,11 @@
 
 ---
 ### Supplementary Metrics
+- `Delta_PSI`: PSI difference (group2 - group1), it came from rMATS
+- `Transcript_usage`: Proportion of expression of reference transcript for each gene
 - `ORF`: Used ORF (This file only contains ORF with the highest potential)
 - `AUG (Ref-Sim)`: Start codon position on the Ref TX and Sim TX (Ref-Sim)
-- `Stop`: Stop codon position on the Ref TX and Sim TX (Ref-Sim)
+- `Stop_codon (Ref-Sim)`: Stop codon position on the Ref TX and Sim TX (Ref-Sim)
 - `Delta_Amino_acid`: Amino acid length difference (Ref TX - Sim TX)
 - `5'UTR_difference`: 5' UTR length difference (Ref TX - Sim TX)
 - `3'UTR_difference`: 3' UTR length difference (Ref TX - Sim TX)

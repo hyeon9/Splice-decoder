@@ -84,15 +84,15 @@
   * `DS-TX pair ID`
   * `ORF priority`
   * `Domain information`
-  * `Domain change ratio` (|Sim domain - Ref domain| / Ref domain) per domain block
-  * `Change direction` (1 represents `Gain of Function` and -1 represents `Loss of Function`)
+  * `Domain change ratio`
+  * `Change direction`
   
   The individual domain block change ratio measures the relative change size normalized by the reference domain block size.
 
 
-## Description for Output
+## Descriptions for Outputs
 *Example of important values of `Whole_DS_score_Whole.txt`*
-![image](https://github.com/user-attachments/assets/957b665a-829e-4885-afed-ea02a7a9cf8e)
+![image](https://github.com/user-attachments/assets/da4dca2d-7c94-4277-b155-8261bd57a8ad)
 
 ### Key Metrics
 
@@ -101,7 +101,7 @@
 - **`Reference_transcript`**: Matched Transcript (==Ref_TX)
 - **`Simulated_event`**: Simulated event
 - **`Effect_Score`**: **A score to prioritize your DS events**
-- **`Domain_change_rate`**: Average rate of domain changes in Sim-TX compared to Ref-TX
+- **`∆L (Functional_change_ratio)`**: Average rate of domain changes in Sim-TX compared to Ref-TX
 - **`Probability_of_NMD`**: NMD **(-1)**, PTC removal **(1)**, No NMD related event **(0)**
 - **`DOA_direction`**: GoD (Gain of Domain), LoD (Loss of Domain), NMD, no_change, CDS_alts, and UTR_alts)
 
@@ -119,6 +119,16 @@
 - `Length_of_simulated_tx_domain`: Total domain length of Sim TX
 - `Length_of_referece_tx_domain`: Total domain length of Ref TX
 - `rMATS_FDR(-log10)`: -Log10 scale FDR, it came from rMATS
+
+*Example of important values of `Domain_integrity_indi.txt`*
+![image](https://github.com/user-attachments/assets/266bcdec-d4aa-4e5b-a0bb-3bf0db247a14)
+
+### Key Metrics
+- **`DS-TX pair ID`**: It contains, in order Long_ID, Ref-TX ID, and simulated event type
+- **`ORF priority`**: A priority of the used reading frame in simulation
+- **`Domain information`**: A name of altered domain by the simulated alternative splicing event
+- **`Functional_change_ratio (∆L)`**: A difference of functional change ratio for simulated alternative splicing
+- **`Change direction`**: It indicates whether the altered domain is a gain (1) or a loss of domain (-1)
 
 ## Visualize your DS simulation
 * Based on your Main_output file, you can pcik ceratin DS event to visualize it using this code

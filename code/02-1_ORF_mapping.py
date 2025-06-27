@@ -290,7 +290,7 @@ def Estimate(id, final_set, key):
             cmd = args.bedtools + " getfasta -fi " + args.genomefa + \
                 " -bed " + sim_bed + key + "_"+input+".bed" + \
                 " -fo " + fasta_DIR + key + "_"+input+".fa" + \
-                " -s"
+                " -s > /dev/null 2>>" + fasta_DIR +"/getfasta.log"
             subprocess.call(cmd, shell=True, stdout=subprocess.DEVNULL)
 
             files = open(fasta_DIR + key + "_"+input+".fa", "r")
@@ -320,7 +320,7 @@ def Estimate(id, final_set, key):
                     " -d " + args.cpatdb + args.species + "*_logit*RData" + \
                     " --min-orf 1" + " --top-orf={}".format(n_orf) + \
                     " -g "+ fasta_DIR+key+"_"+input+"_cpat.fa" + \
-                    " -o" + cpat_DIR+input+"_"+key+".orf"
+                    " -o" + cpat_DIR+input+"_"+key+".orf > /dev/null 2>>" + cpat_DIR +"/cpat.log"
             subprocess.call(cmd, shell=True, stdout=subprocess.DEVNULL)
     
             try:    # Best ORF does not exist, fill zeros

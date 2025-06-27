@@ -128,7 +128,7 @@ if __name__ == "__main__":
     if not os.path.exists(OUT):
         os.mkdir(OUT)
     # args.organism = organism
-    
+    print(args.input)
     ## Run code
     k = 0
     for splice_type in ["CA", "RI", "A3SS", "A5SS", "MXE"]:

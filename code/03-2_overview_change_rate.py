@@ -122,7 +122,7 @@ if __name__ == "__main__":
         print("Run with -h!!")
         sys.exit(1)
     args, parser = parse_args(sys.argv[1:])
-    if not args.input.endswith("result/"):
+    if not args.input.endswith("/result/"):
         args.input = args.input+"/result/"
     OUT = args.input+"figure/"
     if not os.path.exists(OUT):

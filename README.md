@@ -36,15 +36,15 @@
 * If you successfully created `Your.config`, now you can run SpliceDecoder
 * The steps are intended to be executed in order, so it is recommended to use 'all')
 
-      bash Main.sh ${Your.config} all
+      bash Main.sh all ${Your.config}
 
 * If needed, you can run a specific step by selecting one of the following: `Make_input`, `DS_mapping`, `ORF_mapping`, `Simulation` and `Scoring`
 
-      bash Main.sh ${Your.config} {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring}
+      bash Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring} ${Your.config}
 
 * If you use SLURM, modifying configure file and using this command
 
-      sbatch Main.sh ${Your.config} {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all}
+      sbatch Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all} ${Your.config}
 
 * All your output will be saved to `${input}/result`
 

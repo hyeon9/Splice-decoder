@@ -23,17 +23,19 @@
   
       bash install_conda.sh ${yml}
 
-* Verify if splice-decoder is installed properly
+* To verify if splice-decoder is installed properly, you can do a test run with the toy_data (subset of rMATS and GTF file)
 
       conda activate splice-decoder
+      unzip toy_data.zip
 
-* Build your configuration file (Your.config) through an interactive way
+* To run SpliceDecoder with the toy_data build your configuration file through an interactive way
 
       cd code/
       bash Make_config.sh
 
-* If you made `Your.config`, now you can run SpliceDecoder
-* The steps are intended to be executed in order. If needed, you can run a specific step by selecting one of the following: `Make_input`, `DS_mapping`, `ORF_mapping`, `Simulation` and `Scoring`
+* If you successfully created `Your.config`, now you can run SpliceDecoder
+* The steps are intended to be executed in order (Recommend)
+* If needed, you can run a specific step by selecting one of the following: `Make_input`, `DS_mapping`, `ORF_mapping`, `Simulation` and `Scoring`
 
       bash Main.sh all ${Your.config}
       bash Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring} ${Your.config}

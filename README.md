@@ -38,12 +38,12 @@
 * The steps are intended to be executed in order (Recommend)
 * If needed, you can run a specific step by selecting one of the following: `Make_input`, `DS_mapping`, `ORF_mapping`, `Simulation` and `Scoring`
 
-      bash Main.sh all ${Your.config}
-      bash Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring} ${Your.config}
+      bash Main.sh ${Your.config} all
+      bash Main.sh ${Your.config} {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring}
 
 * If you use SLURM, modifying configure file and using this command
 
-      sbatch Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all} ${Your.config}
+      sbatch Main.sh ${Your.config} {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all}
 
 * All your output will be saved to `${input}/result`
 

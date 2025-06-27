@@ -28,7 +28,6 @@
 * To verify if splice-decoder is installed properly, you can do a test run with the toy_data (subset of rMATS and GTF file)
 
       conda activate splice-decoder
-      unzip toy_data.zip
 
 * To run SpliceDecoder with the toy_data build your configuration file through an interactive way
 

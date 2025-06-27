@@ -19,7 +19,7 @@
 # Install & Usage
 ## Quick start (Before install SpliceDecoder, user should install conda first)
 * Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
-* To install SpliceDecoder, you should specify propoer specific yml file for your OS (`For_Mac_user.yml` or `For_Linux_user.yml`)
+* To install SpliceDecoder, you should specify propoer yml file for your OS (`For_Mac_user.yml` or `For_Linux_user.yml`)
 * It only takes less than 5 min
   
       bash install_conda.sh ${yml}

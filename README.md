@@ -77,10 +77,10 @@
       > You just need to specify the full path + GTFfile (e.g. (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/manual2.filtered.gtf or /User/usr/Tool/Splice-decoder-main/toy_data/*.gtf))
   
       ? Enter your TPM matrix with full path ** need to check
-      > You just need to specify the full paht of your TPM matrix (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/tpm.tsv or N)
+      > Specify the full path to your TPM matrix, or enter 'N' if you don’t have one (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/tpm.tsv or N)
   
       ? Enter your bamlist which should contains bamfile with their full path in each line
-      > You just need to specify the full paht of your bam file list (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/bam_list.txt or N)
+      > If you don’t have a TPM matrix, specify the full path to your BAM list file, or enter 'N'. (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/bam_list.txt or N)
   
       ? Enter a species of your data
       > You just need to specify the species of your data (e.g. human or mouse)

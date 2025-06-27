@@ -1,4 +1,6 @@
 # What is the Splice-decoder?
+![image](https://github.com/user-attachments/assets/72f18865-945d-4506-afb4-9632cddf2c85)
+
 * Splice decoder provides functional annotation for your differential splicing events (DESs)
 * The functional annotation contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on), CDS/UTR alterations, and effect score
 * You can use the effect score to prioritize your DSEs
@@ -147,3 +149,13 @@
 
 
 * All figures will be saved at `${input}/figure/consequence/`
+
+<br>
+
+## Create 3D Protein structure based on simulated 
+* You can use `Make_aa_fa.py` to extract amino acid sequences from your interesting targets
+* You can find the ${input} variable in your `.config` file
+
+      python code/Make_aa_fa.py -i ${input} -r human -t ENST00000438015.6 -e ES
+
+* You can copy and paste the amino acid sequences into the Alphafold server (https://alphafoldserver.com) as input

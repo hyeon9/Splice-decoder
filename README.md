@@ -25,10 +25,7 @@
       bash install_conda.sh ${yml}
 
 * To verify if splice-decoder is installed properly, you can do a test run with the toy_data (subset of rMATS and GTF file)
-
-      conda activate splice-decoder
-
-* To run SpliceDecoder with the toy_data build your configuration file through an interactive way
+* To to this you should build your configuration file through an interactive way
 
       cd code/
       bash Make_config.sh

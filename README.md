@@ -71,7 +71,7 @@
   * `*Domain_integrity_indi.txt`
   * `Whole_DS_score_Whole.txt`
 
-* First of all, check `Whole_DS_score_Whole.txt`, which contains [You can find more details here](#description-for-output):
+* First of all, check `Whole_DS_score_Whole.txt`, which contains [You can find more details here](#descriptions-for-outputs):
   * `Effect_Score`
   * `Domain_change_rate`
   * `Probability_of_NMD`

@@ -101,7 +101,7 @@
 - **`Effect_Score`**: **A score to prioritize your DS events**
 - **`∆L (Functional_change_ratio)`**: Average rate of domain changes in Sim-TX compared to Ref-TX
 - **`Probability_of_NMD`**: NMD **(-1)**, PTC removal **(1)**, No NMD related event **(0)**
-- **`DOA_direction`**: GoD (Gain of Domain), LoD (Loss of Domain), NMD, no_change, CDS_alts, and UTR_alts)
+- **`DOA_direction`**: It contains the following functional classes: GoD (Gain of Domain), LoD (Loss of Domain), NMD, no_change, CDS_alts, and UTR_alts
   
 ### Supplementary Metrics
 - `Delta_PSI`: PSI difference (group2 - group1), it came from rMATS

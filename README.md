@@ -9,13 +9,11 @@
 
 ## Workflow overview
 <img width="1401" alt="image" src="https://github.com/user-attachments/assets/bf9fcb4d-d8ae-499c-8a1c-25eb232f520d" />
-
-* It consist of five  main steps
-  1. Processing input (Generate All Possible Splicing Cases): This step makes proper format of input data from the output of event-based splicing tools
-  2. Mapping DSEs and ORFs (Map Splicing Cases): This step explores the given transcriptome (.GTF) to find Ref-TX (Reference transcript, it contains perfectly matched exon structure for the given DSE) and assign the best three open reading frames (ORFs)
-  3. Simulation (Simulate Splicing Events): Based on the Ref-TXs and their ORFs, this step perform simulation of alternative splicing (e.g., if the Ref-TX has exon inclusion (EI) form, this step makes a simulated transcript (Sim-TX) with exon skipped (ES) form)
-  4. Annotation (Functional Annotation): Based on the Uniprot DB, SpliceDecoder assigns known functional domains and estimates functional changes between Ref-TX and Sim-TX
-  5. Scoring (DSEs with Effect Score): SpliceDecoder assigns an effect score to each DSE based on multiple biological factors, enabling prioritization of your DESs
+  1. Generate All Possible Splicing Cases (Processing input) : This step makes proper format of input data from the output of event-based splicing tools
+  2. Map Splicing Cases (Mapping DSEs and ORFs): This step explores the given transcriptome (.GTF) to find Ref-TX (Reference transcript, it contains perfectly matched exon structure for the given DSE) and assign the best three open reading frames (ORFs)
+  3. Simulate Splicing Events (Simulation): Based on the Ref-TXs and their ORFs, this step perform simulation of alternative splicing (e.g., if the Ref-TX has exon inclusion (EI) form, this step makes a simulated transcript (Sim-TX) with exon skipped (ES) form)
+  4. Functional Annotation (Annotation): Based on the Uniprot DB, SpliceDecoder assigns known functional domains and estimates functional changes between Ref-TX and Sim-TX
+  5. DSEs with Effect Score (Scoring): SpliceDecoder assigns an effect score to each DSE based on multiple biological factors, enabling prioritization of your DESs
 
 <br>
 

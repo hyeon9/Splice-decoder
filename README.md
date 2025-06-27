@@ -1,5 +1,6 @@
 # What is the Splice-decoder?
-![image](https://github.com/user-attachments/assets/72f18865-945d-4506-afb4-9632cddf2c85)
+![image](https://github.com/user-attachments/assets/fe9dde61-83e3-4208-9fb2-d3887266b004)
+
 
 * Splice decoder provides functional annotation for your differential splicing events (DESs)
 * The functional annotation contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on), CDS/UTR alterations, and effect score

@@ -61,45 +61,44 @@
 ## Guide for making config file
 * Make_config.sh will ask..
 
-      ? Specify your config file name
-      > You just need to specify your config file (e.g. HGjob)
+      ? Specify your config file name (e.g. HGjob)
+      > You just need to specify your config file
 
-      ? Enter the path of SpliceDecoder
-      > You just need to specify the install path of SpliceDecoder (e.g. /User/usr/Tool/Splice-decoder-main/)
+      ? Enter the path of SpliceDecoder (e.g. /User/usr/Tool/Splice-decoder-main/)
+      > You just need to specify the install path of SpliceDecoder
   
-      ? Enter your working directory 
-      > You just need to specify your new working directory (e.g. /User/usr/Tool/Splice-decoder-main/project1)
+      ? Enter your working directory (e.g. /User/usr/Tool/Splice-decoder-main/project1)
+      > You just need to specify your new working directory
   
-      ? Enter your rMATS output path
-      > You just need to specify the rMATS output path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data)
+      ? Enter your rMATS output path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data)
+      > You just need to specify the rMATS output path
   
-      ? Enter your GTF file that you used in rMATS with its full path
-      > You just need to specify the full path + GTFfile (e.g. (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/manual2.filtered.gtf or /User/usr/Tool/Splice-decoder-main/toy_data/*.gtf))
-  
-      ? Enter your TPM matrix with full path ** need to check
-      > Specify the full path to your TPM matrix, or enter 'N' if you don’t have one (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/tpm.tsv or N)
-  
-      ? Enter your bamlist which should contains bamfile with their full path in each line
-      > If you don’t have a TPM matrix, specify the full path to your BAM list file, or enter 'N'. (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/bam_list.txt or N)
-  
-      ? Enter a species of your data
-      > You just need to specify the species of your data (e.g. human or mouse)
-  
-      ? Enter a sequencing type of your data e.g., SR (short-read) or LR (long-read)
-      > You just need to specify the sequencing method of your data (e.g. SR or LR)
-  
-      ? Enter a FDR cut off for your rMATS
-      > Specify rMATS FDR cut off (float [0-1], default 0.05)
-  
-      ? Enter a |dPSI| cut off for your rMATS
-      > Specify rMATS FDR cut off (float [0-1], default 0.1)
-  
-      ? Enter a number of cpu in splice-decoder job
-      > Specify a number of cpu will be used in your job (int [0-?])
-  
-      ? Specify your TPM option e.g., Y (Calculate TPM by using SpliceDecoder), Y_own (Using your own TPM matrix), and N (Not using TPM)
-      > You can choose one of the following options: Y, Y_own or N
+      ? Enter your GTF file that you used in rMATS with its full path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/toy.gtf or /User/usr/Tool/Splice-decoder-main/toy_data/*.gtf))
+      > You just need to specify the full path + GTFfile
 
+      ? Do you want to calculate the effect score? [yes/no]
+      > Simply type yes or no. If you type "yes", SpliceDecoder will ask TPM matrix or bamfile path to calculate the effect score
+
+      ? Enter your TPM matrix with full path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/tpm.tsv or N)
+      > Specify the full path to your TPM matrix, or enter 'N' if you don’t have one
+  
+      ? Enter your bamlist which should contains bamfile with their full path in each line (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/bam_list.txt or N)
+      > If you don’t have a TPM matrix, specify the full path to your BAM list file, or enter 'N'
+  
+      ? Enter a species of your data (e.g. human or mouse)
+      > You just need to specify the species of your data
+  
+      ? Enter a sequencing type of your data e.g., SR (short-read) or LR (long-read) (e.g. SR or LR)
+      > You just need to specify the sequencing method of your data
+  
+      ? Enter a FDR cut off for your rMATS (float [0-1], default 0.05)
+      > Specify rMATS FDR cut off
+  
+      ? Enter a |dPSI| cut off for your rMATS (float [0-1], default 0.1)
+      > Specify rMATS FDR cut off
+  
+      ? Enter a number of cpu in splice-decoder job (int [0-?])
+      > Specify a number of cpu will be used in your job
 
 <br>
 

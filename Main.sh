@@ -125,8 +125,8 @@ case ${input_var} in
     DS_mapping)
 	echo "Running the DS Mapping"
 	## Mapping
-	python ${code}/01-1_exon_coordinate_v5.py -i ${input}
-	python ${code}/01-2_stat_exon_coor_result.py -i ${input}
+	python -W ignore ${code}/01-1_exon_coordinate_v5.py -i ${input}
+	python -W ignore ${code}/01-2_stat_exon_coor_result.py -i ${input}
 	
 	echo "Finished the DS Mapping"
 	;;
@@ -147,14 +147,6 @@ case ${input_var} in
     Simulation)
 	echo "Running Splicing simulation"
 	## Splicing simulation
-#	for i in `ls ${input}/sim_bed/ | grep merged | cut -f 2 -d "_" | sed 's/[0-9]\+$//g' | sort -u` 
-#	for i in A3SS A5SS
-#	do
-#           echo "Start ${i} Simulation"
-#           python -W ignore ${code}02-2_SimTX.py -s $i -i ${input} -t "all" -p ${Main}${config} -c ${code} &
-#	done
-
-#	wait
 	ls ${input}/sim_bed/ | grep merged | cut -f 2 -d "_" | sed 's/[0-9]\+$//g' | sort -u | \
 	parallel --jobs 5 '
 	    echo "Start {} Simulation"
@@ -164,18 +156,18 @@ case ${input_var} in
 	;;
 
     Scoring)
-        echo "Calculated effect score"
-	python ${code}03-2_overview_change_rate.py -i ${input}
-	python ${code}03-3_scoring_function.py -i ${input} -t ${tpm}
-	python ${code}Make_summary.py -i ${input}
-        echo "Finished"
+	if [ ${get_score} == "Yes" ] || [ ${get_score} == "yes" ]
+	then
+	        echo "Calculated effect score"
+		python ${code}03-2_overview_change_rate.py -i ${input}
+		python ${code}03-3_scoring_function.py -i ${input} -t ${tpm}
+		python ${code}Make_summary.py -i ${input}
+	        echo "Finished"
+	fi
 	;;
 
     all)
         echo "Running input processing"
-
-	 ## Make processed rMATS output
-#        python ${code}NEW_make_input_from_rmats.py ${rMATS_path} ${input} ${geneID_type}
 
         ## CLEAN UP pre-existed gtf
         ls ${input}*gtf | grep exon | while read file
@@ -222,8 +214,8 @@ case ${input_var} in
        
         echo "Running the DS Mapping"
         ## Mapping
-        python ${code}/01-1_exon_coordinate_v5.py -i ${input}
-        python ${code}/01-2_stat_exon_coor_result.py -i ${input}
+        python -W ignore ${code}/01-1_exon_coordinate_v5.py -i ${input}
+        python -W ignore ${code}/01-2_stat_exon_coor_result.py -i ${input}
         echo "Finished the DS Mapping"
 
 
@@ -241,12 +233,6 @@ case ${input_var} in
  
         echo "Running Splicing simulation"
         ## Splicing simulation
-#	for i in `ls ${input}/sim_bed/ | grep merged | cut -f 2 -d "_" | sed 's/[0-9]\+$//g' | sort -u`
-#        do
-#	    echo "Start ${i} Simulation"
-#            python -W ignore ${code}02-2_SimTX.py -s $i -i ${input} -t "all" -p ${Main}${config} -c ${code}
-#        done
-#        echo "Finished Splicing simulation"
         ls ${input}/sim_bed/ | grep merged | cut -f 2 -d "_" | sed 's/[0-9]\+$//g' | sort -u | \
         parallel --jobs 5 '
             echo "Start {} Simulation"
@@ -254,11 +240,14 @@ case ${input_var} in
         '
         echo "Finished Splicing simulation"
 
-        echo "Calculated effect score"
-        python ${code}03-2_overview_change_rate.py -i ${input}
-        python ${code}03-3_scoring_function.py -i ${input} -t ${tpm}
-        python ${code}Make_summary.py -i ${input}
-        echo "Finished"
+        if [ ${get_score} == "Yes" ] || [ ${get_score} == "yes" ]
+        then
+	        echo "Calculated effect score"
+	        python ${code}03-2_overview_change_rate.py -i ${input}
+	        python ${code}03-3_scoring_function.py -i ${input} -t ${tpm}
+	        python ${code}Make_summary.py -i ${input}
+	        echo "Finished"
+	fi
 	;;
 
     *)

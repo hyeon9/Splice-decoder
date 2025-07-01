@@ -17,12 +17,6 @@ matplotlib.rcParams['ps.fonttype'] = 42
 def parse_args(cmd_args=None, namespace=None):
     parser=argparse.ArgumentParser(description='''
  
- SSSSS   PPPP    L       III  CCC  EEEEE  DDDDD   EEEEE  CCCCC  OOO  DDDDD  EEEEE  RRRRR
-S        P   P   L        I  C   C E      D   D  E      C     O   O D   D  E      R    R
- SSSS    PPPP    L        I  C     EEEE   D   D  EEEE   C     O   O D   D  EEEE   RRRRRR
-    S    P       L        I  C   C E      D   D  E      C     O   O D   D  E      R   R
- SSSSS   P       LLLLL  III   CCC  EEEEE  DDDDD   EEEEE  CCCCC  OOO  DDDDD  EEEEE  R    R
-
 Description
     #########################################################
     This script draws transcript and domain level differences
@@ -57,7 +51,7 @@ def Load(stype):
     ref_result = pd.read_csv(args.input+f"all_{stype}_Main_output.txt",
                             sep="\t", 
                             skiprows=1)
-    ref_result.columns = ["LongID","ref_tx","event","ORF","Start","Stop","5'UTR","dAA","3'UTR","Domain_integrity","change_rate","Ref_Domain","Sim_Domain","Functional_class","pNMD"]
+    ref_result.columns = ["LongID","ref_tx","event","ORF","Start","Stop","5'UTR","dAA","3'UTR","Domain_integrity","change_rate","Ref_Domain","Sim_Domain","DOA_direction","pNMD"]
     ref_result["pair_ID"] = ref_result["LongID"] + "|" + ref_result["ref_tx"]
     ref_result["ComplexID"] = ref_result["LongID"] + "|" + ref_result["ref_tx"] + "|" + ref_result["event"]
     ref_result["gene"] = ref_result["LongID"].str.split(";").str[1]
@@ -77,26 +71,30 @@ def Add_UTR(df):
 def Add_UTR2(df):
     if df["change_rate"] == "inf":  # PTC remove
         return "Gain of domain (GOD)"
+    
     elif df["change_rate"] == "Frame loss":
-        return df["change_rate"]
+        return "Frame loss"
+    
     elif float(df["3'UTR"]) != 0 and float(df["change_rate"]) == 0.0:
-        if float(df["dAA"]) == 1:  # No difference in CDS length (Stop - Start)
+        if float(df["dAA"]) == 0:  # No difference in CDS length (Stop - Start)
             return "UTR alt"
         else:
             return "CDS alt"
+    
     elif float(df["5'UTR"]) != 0 and float(df["change_rate"]) == 0.0:
-        if float(df["dAA"]) == 1:
+        if float(df["dAA"]) == 0:
             return "UTR alt"
         else:
             return "CDS alt"
-    # elif float(df["change_rate"]) > 0.0 and \
-    #      float(df["Domain_integrity"]) > 100:
-    elif df["DOA_direction"] == "GoD":
+    
+    elif float(df["change_rate"]) > 0.0 and \
+         (float(df["Ref_Domain"]) - float(df["Sim_Domain"])) < 0:
         return "Gain of domain (GoD)"
-    # elif float(df["change_rate"]) > 0.0 and \
-    #      float(df["Domain_integrity"]) < 100:
-    elif df["DOA_direction"] == "LoD":
+    
+    elif float(df["change_rate"]) > 0.0 and \
+         (float(df["Ref_Domain"]) - float(df["Sim_Domain"])) > 0:
         return "Loss of domain (LoD)"
+    
     else:   # Unknown cases, 100 DI and non-zero change_rate
         return "CDS alt"    # Gain some domain as much as loss some domain
     
@@ -128,7 +126,7 @@ if __name__ == "__main__":
     if not os.path.exists(OUT):
         os.mkdir(OUT)
     # args.organism = organism
-    print(args.input)
+    
     ## Run code
     k = 0
     for splice_type in ["CA", "RI", "A3SS", "A5SS", "MXE"]:
@@ -251,6 +249,11 @@ if __name__ == "__main__":
         except:
             god = 0
 
+        try:
+            fl = input[event].loc["Frame loss"]
+        except:
+            fl = 0
+
         # Stacked bar chart
         axs[k].bar([0], nmd, color="#C54848")
         axs[k].bar([0], ptc_remove, color="#DBAAAA", bottom = nmd)
@@ -258,7 +261,7 @@ if __name__ == "__main__":
         axs[k].bar([0], god, color="#AABEDB", bottom = nmd+ptc_remove+lod)
         axs[k].bar([0], cds, color="#7B7B7B", bottom = nmd+ptc_remove+lod+god)
         axs[k].bar([0], utr, color="#B0B0B0", bottom = nmd+ptc_remove+lod+god+cds)
-        # axs[k].bar([0], fl, color="#DEDEDE", bottom = nmd+ptc_remove+lod+god+cds+utr)
+        axs[k].bar([0], fl, color="#DEDEDE", bottom = nmd+ptc_remove+lod+god+cds+utr)
         axs[k].set_xticklabels("", rotation=90)
         sns.despine(left=True)
         labels = ["NMD", "PTC remove", "LoD", "GoD", "CDS alt", "UTR alt", "FL"]

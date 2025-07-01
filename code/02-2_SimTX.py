@@ -18,12 +18,6 @@ pd.set_option('future.no_silent_downcasting', True)
 
 def parse_args(cmd_args=None, namespace=None):
     parser=argparse.ArgumentParser(description='''
- 
- SSSSS   PPPP    L       III  CCC  EEEEE  DDDDD   EEEEE  CCCCC  OOO  DDDDD  EEEEE  RRRRR
-S        P   P   L        I  C   C E      D   D  E      C     O   O D   D  E      R    R
- SSSS    PPPP    L        I  C     EEEE   D   D  EEEE   C     O   O D   D  EEEE   RRRRRR
-    S    P       L        I  C   C E      D   D  E      C     O   O D   D  E      R   R
- SSSSS   P       LLLLL  III   CCC  EEEEE  DDDDD   EEEEE  CCCCC  OOO  DDDDD  EEEEE  R    R
 
 Description
     #########################################################
@@ -598,7 +592,10 @@ if __name__ == "__main__":
                         final_whole_doa_direction = "NMD"
                     else:   # Non-NMD, load the saved functional category information,
                         if dom_change_ratio > 0:    # If there are non-zero change ratio, domain (LoD and GoD)
-                            final_whole_doa_direction = whole_doa_direction_dict[n][0]
+                            if whole_doa_direction_dict[n][0] == "no_changes":
+                                final_whole_doa_direction = "CDS_alt"
+                            else:
+                                final_whole_doa_direction = whole_doa_direction_dict[n][0]
                         elif dom_change_ratio == 0 and AA_diff != 0: # CDS alt
                             final_whole_doa_direction = "CDS_alt"
                         elif dom_change_ratio == 0 and AA_diff == 0 and (utr5_diff != 0 or utr3_diff != 0): # UTR alt

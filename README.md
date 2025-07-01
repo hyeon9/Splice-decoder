@@ -43,7 +43,7 @@
 
       bash Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring} ${Your.config}
 
-* If you use SLURM, modifying configure file and using this command
+* If you use SLURM, use this command to submit your job
 
       sbatch Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all} ${Your.config}
 

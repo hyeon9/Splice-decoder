@@ -253,7 +253,7 @@ if __name__ == "__main__":
     main_output.write("##Every diff is calculated by Ref TX - Sim TX"+"\n")
     main_output.write("LongID"+"\t"+"Target_TX"+"\t"+"occurred_event"+"\t"+"ORF_priority"+"\t"+"Start"+"\t"+"Stop"+\
                     "\t"+"5'UTR"+"\t"+"dAA"+"\t"+"3'UTR"+"\t"+"Domain_integrity"+"\t"+"Domain_change_ratio"+\
-                    "\t"+"Ref_domain_length"+"\t"+"Sim_domain_length"+"\t"+"DOA_direction"+"\t"+"pNMD"+"\n")
+                    "\t"+"Ref_domain_length"+"\t"+"Sim_domain_length"+"\t"+"Functional_class"+"\t"+"pNMD"+"\n")
     
     now = datetime.now()
     print(f"Performing a {args.splicing_event} simulation...")
@@ -460,30 +460,42 @@ if __name__ == "__main__":
             
             ## New for direction of Domain changes
             ## The whole_doa_direction will be chaned in line 532 depending on NMD value
+            ## Annotate functional categories that have different length, it is assigned to each ORF
             domain_only_df = comp_df[comp_df.index.str.contains(";domain;")]
             whole_doa_direction_dict = {}
-            for k,ORF_ in enumerate(comp_df.columns[:3]):   # k is for making the proper output file 
-                if not ORF_.startswith("ORF"):
+            for k, orf in enumerate(comp_df.columns[:3]):   # k is for making the proper output file 
+                if not orf.startswith("ORF"):
                     pass
                 else:
                     whole_doa_direction_dict[k] = []
-                    ref_domain_sum = domain_only_df[domain_only_df["key"]=="Ref"][ORF_].sum() 
-                    sim_domain_sum = domain_only_df[domain_only_df["key"]!="Ref"][ORF_].sum()
-                    if ref_domain_sum > sim_domain_sum:
+                    ref_domain_sum = domain_only_df[domain_only_df["key"]=="Ref"][orf].sum() 
+                    sim_domain_sum = domain_only_df[domain_only_df["key"]!="Ref"][orf].sum()
+                    ref_other_sum = comp_df[comp_df["key"]=="Ref"][orf].sum() 
+                    sim_other_sum = comp_df[comp_df["key"]!="Ref"][orf].sum()
+                    if ref_domain_sum > sim_domain_sum or \
+                       ref_other_sum > sim_other_sum:
                         whole_doa_direction = "LoD"
-                    elif ref_domain_sum < sim_domain_sum:
+                    elif ref_domain_sum < sim_domain_sum or \
+                         ref_other_sum < sim_other_sum:
                         whole_doa_direction = "GoD"
-                    else:   # It might be a subtle changes, it should be classified based on change_ratio into the no_change and minor changes (non-domain)
-                        whole_doa_direction = "other_regions_diff"
+                    # elif ref_other_sum != sim_other_sum:   # For non domain categories, such as motif, binding site etc
+                    #     whole_doa_direction = "other_regions_diff"
+                    else:   # No changes in any annotations
+                        whole_doa_direction = "no_changes"
                     whole_doa_direction_dict[k].append(whole_doa_direction)
                 
             ## Calculate change ratio for each ORF
+            ## Each ORF has functional category that has different length and their different length information
             whole_orf_diff = []
             for orf in comp_df.columns:
                 if orf.startswith("ORF"):   # Sometime ORF may not be 3
-                    indi_orf = comp_df[[orf,"key","NMD"]]
-                    if (indi_orf[indi_orf["key"]=="Ref"][orf].sum()) == 0 or \
-                        (indi_orf[indi_orf["key"]=="Sim"][orf].sum()) == 0:  # For NMD related cases
+                    indi_orf = comp_df[[orf,"key","NMD"]]   # Consider all categories
+                    if (indi_orf[indi_orf["key"]=="Ref"][orf].sum()) == 0 and \
+                       (indi_orf[indi_orf["key"]=="Sim"][orf].sum()) == 0:  # Non functional transcripts
+                        indi_diff = 0.0
+                    
+                    elif (indi_orf[indi_orf["key"]=="Ref"][orf].sum()) == 0 or \
+                         (indi_orf[indi_orf["key"]=="Sim"][orf].sum()) == 0:  # For NMD related cases
                         indi_diff = 1.0
                     
                     else:   # For DOA cases >> integrity_indi only has DOA cases, it does not have NMD cases
@@ -494,17 +506,23 @@ if __name__ == "__main__":
                             if len(temp["key"].unique()) == 2:   # If they have same domain
                                 r = float(temp[temp["key"]=="Ref"][orf].values[0])  # Whole length of certain domain of refTX
                                 s = float(temp[temp["key"]=="Sim"][orf].values[0])  # Whole length of certain domain of simTX
-                                if r > 0:
-                                    ratio = np.abs(s-r) / r
-                                elif r == 0:
-                                    if s == r:  # no differences
-                                        doa_dir = 0 # Direction of domain alteration
-                                        ratio = 0.0
-                                    else:
-                                        ratio = 1.0
+                                # if r > 0:
+                                #     ratio = abs(s-r) / r
+                                # elif r == 0:
+                                #     if s == r:  # no differences
+                                #         doa_dir = 0 # Direction of domain alteration
+                                #         ratio = 0.0
+                                #     else:
+                                #         ratio = 1.0
+                                if r == 0 and s == 0:
+                                    doa_dir = 0 # Direction of domain alteration
+                                    ratio = 0.0
+                                
+                                else:
+                                    ratio = abs(s-r) / max(r,s)
 
-                                if ratio > 1:   # Maximum value will be set to 1
-                                    ratio = 1.0
+                                # if ratio > 1:   # Maximum value will be set to 1
+                                #     ratio = 1.0
                                 indi_diff.append(ratio)
 
                                 if ratio >= 0:   # Only report changed cases    , it should be > 0
@@ -516,9 +534,17 @@ if __name__ == "__main__":
                                         doa_dir = 0
                                     integrity_indi.write(i+"\t"+str(orf)+"\t"+indi_dom+"\t"+str(ratio)+"\t"+str(doa_dir)+"\n")  # Save individual informaion for further analysis
                                     
-                            else:   # If the ref and sim do not have same domain
+                            elif len(temp["key"].unique()) == 1:   # If the ref and sim do not have same domain
+                                if temp["key"].unique() == "Sim":
+                                    doa_dir = 1
+                                    ratio = 1.0
+                                else:
+                                    doa_dir = -1
+                                    ratio = 1.0
+                                    
+                            elif len(temp["key"].unique()) == 0:   # If the ref and sim do not have same domain
                                 doa_dir = 0
-                                ratio = 1.0
+                                ratio = 0.0
 
 #                                integrity_indi.write(i+"\t"+str(orf)+"\t"+indi_dom+"\t"+str(ratio)+"\t"+str(doa_dir)+"\n")  # Save individual informaion for further analysis
 
@@ -527,7 +553,7 @@ if __name__ == "__main__":
                 
                 else:
                     pass
-
+                
             ## Write output
             ref_dom_per_orf = ref_dom_list.drop(["Sum","key","NMD"], axis=1).sum()  # Sum of all functional regions (domain + motif + binding + region)
             sim_dom_per_orf = sim_dom_list.drop(["Sum","key","NMD"], axis=1).sum()
@@ -541,8 +567,10 @@ if __name__ == "__main__":
                 sim_dom_length = sim_dom_per_orf[:3].iloc[n]
                 if sim_start[n]!="Loss":
                     utr5_diff = ref_start.tolist()[n] - sim_start[n]
-                    AA_diff = (sim_stop[n] - sim_start[n]) / \
-                              (ref_stop.tolist()[n] - ref_start.tolist()[n])    # SimTX / RefTX AA length 
+                    # AA_diff = (sim_stop[n] - sim_start[n]) / \
+                    #           (ref_stop.tolist()[n] - ref_start.tolist()[n])    # SimTX / RefTX AA length 
+                    AA_diff = (ref_stop.tolist()[n] - ref_start.tolist()[n]) - \
+                              (sim_stop[n] - sim_start[n])  # RefTX AA - SimTX AA length 
                     utr3_diff = (ref_total_length[n] - ref_stop.tolist()[n]) - \
                                 (sim_total_length[n] - sim_stop[n])
                     dom_intig = dom_per_orf[n]
@@ -561,11 +589,16 @@ if __name__ == "__main__":
                     
                     if nmd_diff != 0:
                         final_whole_doa_direction = "NMD"
-                    else:   # Non-NMD
-                        if dom_change_ratio > 0:    # If there are non-zero change ratio
+                    else:   # Non-NMD, load the saved functional category information,
+                        if dom_change_ratio > 0:    # If there are non-zero change ratio, domain (LoD and GoD)
                             final_whole_doa_direction = whole_doa_direction_dict[n][0]
-                        else:   # If there are zero change ratio > It should be specified into CDS/UTR_alt
-                            final_whole_doa_direction = "no_change"
+                        elif dom_change_ratio == 0 and AA_diff > 0: # CDS alt
+                            final_whole_doa_direction = "CDS_alt"
+                        elif dom_change_ratio == 0 and AA_diff == 0 and (utr5_diff != 0 or utr3_diff != 0): # UTR alt
+                            final_whole_doa_direction = "UTR_alt"
+                        else:
+                            final_whole_doa_direction = "no_changes"
+
 
                 else:   # No matched start and stop in simTX
                     utr5_diff = "Frame loss"

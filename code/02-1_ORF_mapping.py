@@ -211,33 +211,33 @@ def Estimate(id, final_set, key):
             index_num = temp[temp["best match tx"]==tx]["ID"].index[0]
           
             if form == "MXE1":   # E1,E2,E4
-                dos = dos.iloc[1:,:]    # Delete original 2nd exon
+                dos = dos.iloc[1:,:]    # Delete original 2nd exon (E3)
                 if insert[index_num][3] == "+":
-                    new_line = pd.DataFrame([insert[index_num][2],insert[index_num][8],insert[index_num][9],insert[index_num][3],tx],
-                                            index=["chr","start","end","strand","ENSTID"],
+                    new_line = pd.DataFrame([insert[index_num][2],insert[index_num][8],insert[index_num][9],insert[index_num][1],tx,insert[index_num][3]],
+                                            index=["chr","start","end","gene_symbol","ENSTID","strand"],
                                             columns=["INSERT"])
                 else:
-                    new_line = pd.DataFrame([insert[index_num][2],insert[index_num][9],insert[index_num][8],insert[index_num][3],tx],
-                                            index=["chr","start","end","strand","ENSTID"],
+                    new_line = pd.DataFrame([insert[index_num][2],insert[index_num][9],insert[index_num][8],insert[index_num][1],tx,insert[index_num][3]],
+                                            index=["chr","start","end","gene_symbol","ENSTID","strand"],
                                              columns=["INSERT"])
                 sim_form = "MXE2"
                 dos = pd.concat([new_line.T, dos])  # Insert counterpart exon (From other MXE)
                 output = pd.concat([ups, dos])
 
             elif form == "MXE2":   # E1,E3,E4
-                dos = dos.iloc[1:,:]    # Delete original 2nd exon
+                dos = dos.iloc[1:,:]    # Delete original 2nd exon (E2)
                 if insert[index_num][3] == "+":
-                    new_line = pd.DataFrame([insert[index_num][2],insert[index_num][6],insert[index_num][7],insert[index_num][3],tx],
-                                            index=["chr","start","end","strand","ENSTID"],
+                    new_line = pd.DataFrame([insert[index_num][2],insert[index_num][6],insert[index_num][7],insert[index_num][1],tx,insert[index_num][3]],
+                                            index=["chr","start","end","gene_symbol","ENSTID","strand"],
                                             columns=["INSERT"])
                 else:
-                    new_line = pd.DataFrame([insert[index_num][2],insert[index_num][7],insert[index_num][6],insert[index_num][3],tx],
-                                            index=["chr","start","end","strand","ENSTID"],
+                    new_line = pd.DataFrame([insert[index_num][2],insert[index_num][7],insert[index_num][6],insert[index_num][1],tx,insert[index_num][3]],
+                                            index=["chr","start","end","gene_symbol","ENSTID","strand"],
                                             columns=["INSERT"])
                 sim_form = "MXE1"
                 dos = pd.concat([new_line.T, dos])  # Insert counterpart exon (From other MXE)
                 output = pd.concat([ups, dos])
-
+                
 
         if len(mxe_ref) == 0:
             # sub_gtf = sub_gtf[["chr","start","end","ENSGID","gene_symbol","strand","ENSTID","exon_number"]]

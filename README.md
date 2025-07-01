@@ -1,4 +1,4 @@
-# What is the Splice-decoder?
+## What is the Splice-decoder?
 ![image](https://github.com/user-attachments/assets/e4d7ca26-ba2b-494b-aff5-c53591451ffd)
 
 * Splice decoder provides functional annotation for your differential splicing events (DESs)
@@ -17,7 +17,6 @@
 
 <br>
 
-# Install & Usage
 ## Quick start (Before install SpliceDecoder, user should install conda first)
 * Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
 * To install SpliceDecoder, you should specify propoer yml file for your OS (`For_Mac_user.yml` or `For_Linux_user.yml`)
@@ -106,8 +105,6 @@
       > Specify a number of cpu will be used in your job
 
 <br>
-
-# Overview for output files
 
 ## Summary stats for DES mapping and annotation
 * You can ckech Summary HTML in `${SpliceDecoder_folder}/DS_input/figure`

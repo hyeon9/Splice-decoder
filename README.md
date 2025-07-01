@@ -151,7 +151,7 @@
 ### Supplementary Metrics
 - `Delta_PSI`: PSI difference (group2 - group1), it came from rMATS
 - `Transcript_usage`: Proportion of expression of reference transcript for each gene
-- `ORF`: Used ORF (This file only contains ORF with the highest potential)
+- `ORF`: Used ORF (This file only contains pORF1 which has the highest coding potential)
 - `AUG (Ref-Sim)`: Start codon position on the Ref TX and Sim TX (Ref-Sim)
 - `Stop_codon (Ref-Sim)`: Stop codon position on the Ref TX and Sim TX (Ref-Sim)
 - `Delta_Amino_acid`: Amino acid length difference (Ref TX - Sim TX)

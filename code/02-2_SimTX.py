@@ -592,9 +592,9 @@ if __name__ == "__main__":
                     else:   # Non-NMD, load the saved functional category information,
                         if dom_change_ratio > 0:    # If there are non-zero change ratio, domain (LoD and GoD)
                             final_whole_doa_direction = whole_doa_direction_dict[n][0]
-                        elif dom_change_ratio == 0 and AA_diff > 0: # CDS alt
+                        elif dom_change_ratio == 0 and abs(AA_diff) > 0: # CDS alt
                             final_whole_doa_direction = "CDS_alt"
-                        elif dom_change_ratio == 0 and AA_diff == 0 and (utr5_diff != 0 or utr3_diff != 0): # UTR alt
+                        elif dom_change_ratio == 0 and abs(AA_diff) == 0 and (abs(utr5_diff) != 0 or abs(utr3_diff) != 0): # UTR alt
                             final_whole_doa_direction = "UTR_alt"
                         else:
                             final_whole_doa_direction = "no_changes"

@@ -57,7 +57,7 @@ def Load(stype):
     ref_result = pd.read_csv(args.input+f"all_{stype}_Main_output.txt",
                             sep="\t", 
                             skiprows=1)
-    ref_result.columns = ["LongID","ref_tx","event","ORF","Start","Stop","5'UTR","dAA","3'UTR","Domain_integrity","change_rate","Ref_Domain","Sim_Domain","DOA_direction","pNMD"]
+    ref_result.columns = ["LongID","ref_tx","event","ORF","Start","Stop","5'UTR","dAA","3'UTR","Domain_integrity","change_rate","Ref_Domain","Sim_Domain","Functional_class","pNMD"]
     ref_result["pair_ID"] = ref_result["LongID"] + "|" + ref_result["ref_tx"]
     ref_result["ComplexID"] = ref_result["LongID"] + "|" + ref_result["ref_tx"] + "|" + ref_result["event"]
     ref_result["gene"] = ref_result["LongID"].str.split(";").str[1]

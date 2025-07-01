@@ -51,17 +51,6 @@
 
 <br>
 
-## For JAX users
-* You can run SplicDecoder without install
-
-      cp -r /projects/anczukow-lab/kangh/Tool/Splice-decoder_git ./
-
-      vi paths.config  # Update several variables
-  
-      sbatch Main.sh Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all ${Your_config}
-  
-<br>
-
 ## Guide for making config file
 * Make_config.sh will ask..
 

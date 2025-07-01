@@ -91,11 +91,11 @@ def Run(key, input_gene_name, *sub_splicing):
         query = query[query["5'UTR_difference"]!="Frame loss"] # Filter out frame loss, because they donot have domain
         query = query[query["ORF"]=="pORF1"]
         query["ORF"] = query["ORF"].apply(lambda x : 3 if x =="pORF1" else (2 if x == "pORF2" else 1))
-        query = query[["LongID","occurred_event","Start","Stop","dAA","Target_TX","ORF_priority","Domain_change_ratio","DOA_direction","pNMD"]]
-        query["simStop"] = query["Stop"].str.split("-").str[1]
-        query["Stop"] = query["Stop"].str.split("-").str[0]
-        query["simStart"] = query["Start"].str.split("-").str[1]
-        query["Start"] = query["Start"].str.split("-").str[0]
+        query = query[["LongID","Simulated_event","AUG (Ref-Sim)","Stop (Ref-Sim)","Delta_Amino_acid","Reference_transcript","ORF","Domain_change_rate","Functional_class","Probability_of_NMD"]]
+        query["simStop"] = query["Stop (Ref-Sim)"].str.split("-").str[1]
+        query["Stop (Ref-Sim)"] = query["Stop (Ref-Sim)"].str.split("-").str[0]
+        query["simStart"] = query["AUG (Ref-Sim)"].str.split("-").str[1]
+        query["AUG (Ref-Sim)"] = query["AUG (Ref-Sim)"].str.split("-").str[0]
         query.columns = ["ID","event_type","Start","STOP","dAA","ENST","ORF","delta L","DOA_types","pNMD","simSTOP","simStart"]
         query["SID"] = query["ID"]
         query["ID"] = query["ID"]+"|"+query["ENST"]+"|"+query["Start"]+"|"+query["simStart"]
@@ -559,7 +559,7 @@ def Run(key, input_gene_name, *sub_splicing):
                     ref_bed, ref_domain, ref_dname = Make_query(ref, wo_pfam[wo_pfam[3]==n_domain[kinds_domain]])
                     sim_bed, sim_domain, sim_dname = Make_query(sim_tx, w_pfam[w_pfam[3]==n_domain[kinds_domain]])
 
-                    ## Chekc different exon block
+                    ## Check different exon block
                     if len(ref_bed) > 0:    # Markup changed regions
                         Make_fig = 0
                         for r,s in zip(ref_bed,sim_bed):
@@ -573,21 +573,22 @@ def Run(key, input_gene_name, *sub_splicing):
                         ################################
                         ## Make a prunned bed
                         ## Make a dataframe for subsequent analysis
-                        def Prunning(domain_bed, dname, st, end, diff_exon, space):
+                        def Prunning(domain_bed, dname, st, end, diff_exon, space, event):
                             ## Add truncated domain
                             ## Motif could be located on UTR regions
                             l_domain = []   # length
                             p_domain_bed = []   # domain position
-                            p_dname = []    # domain name)
+                            p_dname = []    # domain name
                             for index in range(len(domain_bed)):
-                                ## Adjust position of Protein in figure
-                                if int(domain_bed[index][0]) >= int(diff_exon[0]):   # if domain is located after diff exon
-                                    domain_bed[index][0] += space
-                                    domain_bed[index][1] += space
-                                elif int(domain_bed[index][0]) < int(diff_exon[0]) and \
-                                     int(domain_bed[index][1]) > int(diff_exon[0]):    # partial overlap
-                                    domain_bed[index][0] = int(diff_exon[0]) + int(space)   # domain_bed[index][0]~diff_exon[0] were not included
-                                    domain_bed[index][1] += space
+                                if not event.startswith('MXE'):
+                                    ## Adjust position of Protein in figure
+                                    if int(domain_bed[index][0]) >= int(diff_exon[0]):   # if domain is located after diff exon
+                                        domain_bed[index][0] += space
+                                        domain_bed[index][1] += space
+                                    elif int(domain_bed[index][0]) < int(diff_exon[0]) and \
+                                        int(domain_bed[index][1]) > int(diff_exon[0]):    # partial overlap
+                                        domain_bed[index][0] = int(diff_exon[0]) + int(space)   # domain_bed[index][0]~diff_exon[0] were not included
+                                        domain_bed[index][1] += space
 
                                 ## Prunning
                                 if domain_bed[index][0] >= st and \
@@ -634,12 +635,14 @@ def Run(key, input_gene_name, *sub_splicing):
                                                                                adj_ref_start, 
                                                                                adj_ref_stop,
                                                                                ref_bed[event_pos_ref],
-                                                                               space)
+                                                                               space,
+                                                                               fig_input["event_type"].unique()[0])
                             p_sim_domain, p_sim_dname, l_sim_domain = Prunning(sim_domain, sim_dname,
                                                                                adj_sim_start, 
                                                                                adj_sim_stop,
                                                                                [0,0],
-                                                                               0)
+                                                                               0,
+                                                                               fig_input["event_type"].unique()[0])
                             
                         elif fig_input["event_type"].unique()[0] in ["ES","Ori_A3SS"]:
 
@@ -660,12 +663,14 @@ def Run(key, input_gene_name, *sub_splicing):
                                                                                adj_ref_start, 
                                                                                adj_ref_stop,
                                                                                [0,0],
-                                                                               0)
+                                                                               0,
+                                                                               fig_input["event_type"].unique()[0])
                             p_sim_domain, p_sim_dname, l_sim_domain = Prunning(sim_domain, sim_dname,
                                                                                adj_sim_start, 
                                                                                adj_sim_stop,
                                                                                sim_bed[event_pos_query],
-                                                                               space)
+                                                                               space,
+                                                                               fig_input["event_type"].unique()[0])
                             
                         elif fig_input["event_type"].unique()[0] in ["Alt_A5SS","RI"]:
 
@@ -686,12 +691,14 @@ def Run(key, input_gene_name, *sub_splicing):
                                                                                adj_ref_start, 
                                                                                adj_ref_stop,
                                                                                [ref_bed[event_pos_ref][1]],
-                                                                               space)
+                                                                               space,
+                                                                               fig_input["event_type"].unique()[0])
                             p_sim_domain, p_sim_dname, l_sim_domain = Prunning(sim_domain, sim_dname,
                                                                                adj_sim_start, 
                                                                                adj_sim_stop,
                                                                                [0,0],
-                                                                               0)
+                                                                               0,
+                                                                               fig_input["event_type"].unique()[0])
  
                         elif fig_input["event_type"].unique()[0] in ["Ori_A5SS","SI"]:
 
@@ -712,12 +719,14 @@ def Run(key, input_gene_name, *sub_splicing):
                                                                                adj_ref_start, 
                                                                                adj_ref_stop,
                                                                                [0,0],
-                                                                               0)
+                                                                               0,
+                                                                               fig_input["event_type"].unique()[0])
                             p_sim_domain, p_sim_dname, l_sim_domain = Prunning(sim_domain, sim_dname,
                                                                                adj_sim_start, 
                                                                                adj_sim_stop,
                                                                                [sim_bed[event_pos_query][1]],
-                                                                               space)
+                                                                               space,
+                                                                               fig_input["event_type"].unique()[0])
 
                         else:   # MXE 1 or 2
                             if fig_input["event_type"].unique()[0] == "MXE2":
@@ -725,9 +734,10 @@ def Run(key, input_gene_name, *sub_splicing):
                                 mxe2_leng = np.abs(sim_bed[event_pos_query][0] - sim_bed[event_pos_query][1])
                                 space1 = mxe1_leng  # ref block
                                 space2 = mxe2_leng  # sim block
+                                end_of_MXE1 = ref_bed[event_pos_ref][1]
                                 mxe_bed = ref_bed[:event_pos_ref+1] + \
                                         [[sim_bed[event_pos_query][0]+space1, sim_bed[event_pos_query][1]+space1]] + \
-                                        [(i+space2) for i in ref_bed[event_pos_ref+1:]]
+                                        [(i+space2) for i in ref_bed[event_pos_ref+1:]] # Add all MXE to draw same length of Ref- and Sim-TX
 
                                 if fig_input["simStart"].values[0] >= ref_bed[event_pos_ref][0]:
                                     adj_sim_start = fig_input["simStart"].values[0]+space1
@@ -756,6 +766,7 @@ def Run(key, input_gene_name, *sub_splicing):
                                 mxe2_leng = np.abs(ref_bed[event_pos_ref][0] - ref_bed[event_pos_ref][1])
                                 space1 = mxe2_leng  # ref block
                                 space2 = mxe1_leng  # sim block
+                                end_of_MXE1 = sim_bed[event_pos_query][1]
                                 mxe_bed = ref_bed[:event_pos_ref] + \
                                         [[sim_bed[event_pos_query][0],sim_bed[event_pos_query][1]]] + \
                                         [(i+space2) for i in ref_bed[event_pos_ref:]]
@@ -782,18 +793,48 @@ def Run(key, input_gene_name, *sub_splicing):
                                     adj_ref_start = fig_input["Start"].values[0]
                                     adj_ref_stop = fig_input["STOP"].values[0]
                             
-                            p_ref_domain, p_ref_dname, l_ref_domain = Prunning(ref_domain, ref_dname,
+                            ## Set the domain position to compatible with the mxe_bed
+                            updated_sim_domain = []
+                            for uncorr in sim_domain:
+                                if uncorr[0] >= end_of_MXE1:
+                                    corr = list(uncorr+mxe2_leng)
+                                    updated_sim_domain.append(corr)
+                                elif uncorr[0] < end_of_MXE1 and uncorr[1] > end_of_MXE1:
+                                    corr1 = [uncorr[0], end_of_MXE1]
+                                    corr2 = [end_of_MXE1 + mxe2_leng, uncorr[1] + mxe2_leng]
+                                    updated_sim_domain.append(corr1)
+                                    updated_sim_domain.append(corr2)
+                                else:
+                                    updated_sim_domain.append(uncorr)
+                            
+                            updated_ref_domain = []
+                            for uncorr in ref_domain:
+                                if uncorr[0] >= end_of_MXE1:
+                                    corr = list(uncorr+mxe1_leng)
+                                    updated_ref_domain.append(corr)
+                                elif uncorr[0] <= end_of_MXE1 and uncorr[1] > end_of_MXE1:
+                                    corr1 = [uncorr[0], end_of_MXE1]
+                                    corr2 = [end_of_MXE1 + mxe1_leng, uncorr[1] + mxe1_leng]
+                                    updated_ref_domain.append(corr1)
+                                    updated_ref_domain.append(corr2)
+                                else:
+                                    updated_ref_domain.append(uncorr)
+                                    
+                            p_ref_domain, p_ref_dname, l_ref_domain = Prunning(updated_ref_domain, ref_dname,
                                                                                adj_ref_start, 
                                                                                adj_ref_stop,
                                                                                sim_bed[event_pos_query],
-                                                                               space2)
-                            p_sim_domain, p_sim_dname, l_sim_domain = Prunning(sim_domain, sim_dname,
+                                                                               space2,
+                                                                               fig_input["event_type"].unique()[0])
+                            p_sim_domain, p_sim_dname, l_sim_domain = Prunning(updated_sim_domain, sim_dname,
                                                                                adj_sim_start, 
                                                                                adj_sim_stop,
                                                                                ref_bed[event_pos_ref],
-                                                                               space1)
+                                                                               space1,
+                                                                               fig_input["event_type"].unique()[0])
+                          
                     ###################################
-                        if len(p_ref_domain) > 0 and fig_on == "on":
+                        if (len(p_ref_domain) > 0 or len(p_sim_domain) > 0) and fig_on == "on":
                             if n_row == 0:
                                 ## Main complex figure
                                 ref_axs = plt.subplot(2+(len(n_domain)*2), 1, 1)

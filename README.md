@@ -35,7 +35,7 @@
       bash Make_config.sh
 
 * If you successfully created `Your.config`, now you can run SpliceDecoder
-* The steps are intended to be executed in order, so it is recommended to use 'all')
+* The steps are intended to be executed in order, so it is recommended to use `all`
 
       bash Main.sh all ${Your.config}
 

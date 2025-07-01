@@ -303,6 +303,7 @@ def Exon_comp(temp, gene, event_type):
                     best_info.append(second)
                     best_info.append(third)
                     best_info.append(fourth)
+                    best_info.append(eventtype)
             
         if len(best_mat) > 0 and len(best_info) > 0:
             if len(ext) >= 6:
@@ -310,29 +311,29 @@ def Exon_comp(temp, gene, event_type):
                                 str(temp[ext[0]])+"\t"+str(temp[ext[1]])+"\t"+str(temp[ext[2]])+"\t"+str(temp[ext[3]])+"\t"+
                                 str(temp[ext[4]])+"\t"+str(temp[ext[5]])+"\t"+
                                 str(best_mat[0])+"\t"+str(best_info[0])+"\t"+str(best_info[1])+"\t"+str(best_info[2])+"\t"+
-                                str(best_info[3])+"\t"+str(best_info[4])+"\t"+str(best_info[5])+"\t"+eventtype+"\n")
+                                str(best_info[3])+"\t"+str(best_info[4])+"\t"+str(best_info[5])+"\t"+str(best_info[6])+"\n")
 
             elif len(ext) >= 4 and len(ext) < 6:
                 long_form.write(str(temp["long_ID"])+"\t"+temp[geneID]+"\t"+str(temp[ts1])+"\t"+str(temp[te1])+"\t"+
                                 str(temp[ext[0]])+"\t"+str(temp[ext[1]])+"\t"+str(temp[ext[2]])+"\t"+str(temp[ext[3]])+"\t"+
                                 str("NA")+"\t"+str("NA")+"\t"+
                                 str(best_mat[0])+"\t"+str(best_info[0])+"\t"+str(best_info[1])+"\t"+str(best_info[2])+"\t"+
-                                str(best_info[3])+"\t"+str(best_info[4])+"\t"+str(best_info[5])+"\t"+eventtype+"\n")
+                                str(best_info[3])+"\t"+str(best_info[4])+"\t"+str(best_info[5])+"\t"+str(best_info[6])+"\n")
     
             elif len(ext) >= 2 and len(ext) < 4:
                 long_form.write(str(temp["long_ID"])+"\t"+temp[geneID]+"\t"+str(temp[ts1])+"\t"+str(temp[te1])+"\t"+
                                 str("SKIP")+"\t"+str("SKIP")+"\t"+str(temp[ext[0]])+"\t"+str(temp[ext[1]])+"\t"+
                                 str("NA")+"\t"+str("NA")+"\t"+
                                 str(best_mat[0])+"\t"+str(best_info[0])+"\t"+str(best_info[1])+"\t"+str(best_info[2])+"\t"+
-                                str(best_info[3])+"\t"+str(best_info[4])+"\t"+str(best_info[5])+"\t"+eventtype+"\n")
+                                str(best_info[3])+"\t"+str(best_info[4])+"\t"+str(best_info[5])+"\t"+str(best_info[6])+"\n")
     
             else:
                 long_form.write(str(temp["long_ID"])+"\t"+temp[geneID]+"\t"+str(temp[ts1])+"\t"+str(temp[te1])+"\t"+
                                 str("RI")+"\t"+str("RI")+"\t"+str("RI")+"\t"+str("RI")+"\t"+
                                 str("NA")+"\t"+str("NA")+"\t"+
                                 str(best_mat[0])+"\t"+str(best_info[0])+"\t"+str(best_info[1])+"\t"+str(best_info[2])+"\t"+
-                                str(best_info[3])+"\t"+str(best_info[4])+"\t"+str(best_info[5])+"\t"+eventtype+"\n")
-
+                                str(best_info[3])+"\t"+str(best_info[4])+"\t"+str(best_info[5])+"\t"+str(best_info[6])+"\n")
+                
 
     #annot = gtf[gtf["gene_symbol"]==gene]   # Consider matched gene
     annot = gtf[(gtf["gene_symbol"]==gene) | (gtf["ENSGID"]==gene)]   # Consider matched gene

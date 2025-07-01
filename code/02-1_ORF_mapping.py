@@ -14,12 +14,6 @@ start_time = time.time()
 
 def parse_args(cmd_args=None, namespace=None):
     parser=argparse.ArgumentParser(description='''
- 
- SSSSS   PPPP    L       III  CCC  EEEEE  DDDDD   EEEEE  CCCCC  OOO  DDDDD  EEEEE  RRRRR
-S        P   P   L        I  C   C E      D   D  E      C     O   O D   D  E      R    R
- SSSS    PPPP    L        I  C     EEEE   D   D  EEEE   C     O   O D   D  EEEE   RRRRRR
-    S    P       L        I  C   C E      D   D  E      C     O   O D   D  E      R   R
- SSSSS   P       LLLLL  III   CCC  EEEEE  DDDDD   EEEEE  CCCCC  OOO  DDDDD  EEEEE  R    R
 
 Description
     #########################################################

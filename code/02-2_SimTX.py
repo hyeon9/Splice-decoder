@@ -251,9 +251,12 @@ if __name__ == "__main__":
     
     integrity_indi.write("Pair_info"+"\t"+"pORF"+"\t"+"altered_domain"+"\t"+"Domain_change_ratio"+"\t"+"Change_direction"+"\n")
     main_output.write("##Every diff is calculated by Ref TX - Sim TX"+"\n")
-    main_output.write("LongID"+"\t"+"Target_TX"+"\t"+"occurred_event"+"\t"+"ORF_priority"+"\t"+"Start"+"\t"+"Stop"+\
-                    "\t"+"5'UTR"+"\t"+"dAA"+"\t"+"3'UTR"+"\t"+"Domain_integrity"+"\t"+"Domain_change_ratio"+\
-                    "\t"+"Ref_domain_length"+"\t"+"Sim_domain_length"+"\t"+"Functional_class"+"\t"+"pNMD"+"\n")
+    # main_output.write("LongID"+"\t"+"Target_TX"+"\t"+"occurred_event"+"\t"+"ORF_priority"+"\t"+"Start"+"\t"+"Stop"+\
+    #                 "\t"+"5'UTR"+"\t"+"dAA"+"\t"+"3'UTR"+"\t"+"Domain_integrity"+"\t"+"Domain_change_ratio"+\
+    #                 "\t"+"Ref_domain_length"+"\t"+"Sim_domain_length"+"\t"+"Functional_class"+"\t"+"pNMD"+"\n")
+    main_output.write("LongID"+"\t"+"Reference_transcript"+"\t"+"Simulated_event"+"\t"+"ORF"+"\t"+"AUG (Ref-Sim)"+"\t"+"Stop (Ref-Sim)"+\
+                    "\t"+"5'UTR_difference"+"\t"+"Delta_Amino_acid"+"\t"+"3'UTR_difference"+"\t"+"Domain_integrity"+"\t"+"Domain_change_rate"+\
+                    "\t"+"Length_of_reference_tx_domain"+"\t"+"Length_of_simulated_tx_domain"+"\t"+"Functional_class"+"\t"+"Probability_of_NMD"+"\n")
     
     now = datetime.now()
     print(f"Performing a {args.splicing_event} simulation...")
@@ -535,19 +538,23 @@ if __name__ == "__main__":
                                     integrity_indi.write(i+"\t"+str(orf)+"\t"+indi_dom+"\t"+str(ratio)+"\t"+str(doa_dir)+"\n")  # Save individual informaion for further analysis
                                     
                             elif len(temp["key"].unique()) == 1:   # If the ref and sim do not have same domain
-                                if temp["key"].unique() == "Sim":
-                                    doa_dir = 1
-                                    ratio = 1.0
+                                if temp[temp["key"]==temp["key"].unique()][orf].values[0] > 0:  # It should have real length after prunning
+                                    if temp["key"].unique() == "Sim":
+                                        doa_dir = 1
+                                        ratio = 1.0
+                                    else:
+                                        doa_dir = -1
+                                        ratio = 1.0
+                                    integrity_indi.write(i+"\t"+str(orf)+"\t"+indi_dom+"\t"+str(ratio)+"\t"+str(doa_dir)+"\n")  # Save individual informaion for further analysis
                                 else:
-                                    doa_dir = -1
-                                    ratio = 1.0
+                                    doa_dir = 0
+                                    ratio = 0.0
                                     
                             elif len(temp["key"].unique()) == 0:   # If the ref and sim do not have same domain
                                 doa_dir = 0
                                 ratio = 0.0
 
 #                                integrity_indi.write(i+"\t"+str(orf)+"\t"+indi_dom+"\t"+str(ratio)+"\t"+str(doa_dir)+"\n")  # Save individual informaion for further analysis
-
                             indi_diff.append(ratio)
                     whole_orf_diff.append(np.mean(indi_diff))    # It contains 3 different mean ratios
                 
@@ -566,13 +573,13 @@ if __name__ == "__main__":
                 ref_dom_length = ref_dom_per_orf[:3].iloc[n]
                 sim_dom_length = sim_dom_per_orf[:3].iloc[n]
                 if sim_start[n]!="Loss":
-                    utr5_diff = ref_start.tolist()[n] - sim_start[n]
+                    utr5_diff = float(ref_start.tolist()[n] - sim_start[n])
                     # AA_diff = (sim_stop[n] - sim_start[n]) / \
                     #           (ref_stop.tolist()[n] - ref_start.tolist()[n])    # SimTX / RefTX AA length 
-                    AA_diff = (ref_stop.tolist()[n] - ref_start.tolist()[n]) - \
-                              (sim_stop[n] - sim_start[n])  # RefTX AA - SimTX AA length 
-                    utr3_diff = (ref_total_length[n] - ref_stop.tolist()[n]) - \
-                                (sim_total_length[n] - sim_stop[n])
+                    AA_diff = float(ref_stop.tolist()[n] - ref_start.tolist()[n]) - \
+                              float(sim_stop[n] - sim_start[n])  # RefTX AA - SimTX AA length 
+                    utr3_diff = float(ref_total_length[n] - ref_stop.tolist()[n]) - \
+                                float(sim_total_length[n] - sim_stop[n])
                     dom_intig = dom_per_orf[n]
                     dom_change_ratio = whole_orf_diff[n]
                     if str(sim_dom_list.columns.tolist()[n]).endswith("NMD"):
@@ -592,9 +599,9 @@ if __name__ == "__main__":
                     else:   # Non-NMD, load the saved functional category information,
                         if dom_change_ratio > 0:    # If there are non-zero change ratio, domain (LoD and GoD)
                             final_whole_doa_direction = whole_doa_direction_dict[n][0]
-                        elif dom_change_ratio == 0 and abs(AA_diff) > 0: # CDS alt
+                        elif dom_change_ratio == 0 and AA_diff != 0: # CDS alt
                             final_whole_doa_direction = "CDS_alt"
-                        elif dom_change_ratio == 0 and abs(AA_diff) == 0 and (abs(utr5_diff) != 0 or abs(utr3_diff) != 0): # UTR alt
+                        elif dom_change_ratio == 0 and AA_diff == 0 and (utr5_diff != 0 or utr3_diff != 0): # UTR alt
                             final_whole_doa_direction = "UTR_alt"
                         else:
                             final_whole_doa_direction = "no_changes"

@@ -88,9 +88,9 @@ def Run(key, input_gene_name, *sub_splicing):
         query = pd.read_csv(args.input+"result/all_{}_Main_output.txt".format(key),
                             sep="\t", skiprows=1)
         
-        query = query[query["5'UTR"]!="Frame loss"] # Filter out frame loss, because they donot have domain
-        query = query[query["ORF_priority"]=="pORF1"]
-        query["ORF_priority"] = query["ORF_priority"].apply(lambda x : 3 if x =="pORF1" else (2 if x == "pORF2" else 1))
+        query = query[query["5'UTR_difference"]!="Frame loss"] # Filter out frame loss, because they donot have domain
+        query = query[query["ORF"]=="pORF1"]
+        query["ORF"] = query["ORF"].apply(lambda x : 3 if x =="pORF1" else (2 if x == "pORF2" else 1))
         query = query[["LongID","occurred_event","Start","Stop","dAA","Target_TX","ORF_priority","Domain_change_ratio","DOA_direction","pNMD"]]
         query["simStop"] = query["Stop"].str.split("-").str[1]
         query["Stop"] = query["Stop"].str.split("-").str[0]

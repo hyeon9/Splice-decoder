@@ -5,4 +5,6 @@ source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate splice-decoder
 conda_path=`conda info --envs | grep '*' | awk '{print $NF}'`
 export PATH="`pwd`:$PATH"
-config_maker.py ${conda_path}
+toy_key="${1:-data}"
+
+config_maker.py ${conda_path} ${toy_key}

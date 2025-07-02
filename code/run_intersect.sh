@@ -5,7 +5,7 @@ source ${config_file}
 
 if [ ${species} == "human" ]
 then
-	pfam=${cpatdb}"/domain_info/modified_uniprot.bed"
+	pfam=${cpatdb}"/domain_info/small_modified_uniprot.bed"
 else
         pfam=${cpatdb}"/domain_info/mouse_modified_uniprot.bed"
 fi

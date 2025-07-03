@@ -240,8 +240,10 @@ def Multi_splicing_prop(score_df, stype, mode):
                     ind_SP = each_SP[each_SP["ref_tx"]==tx].copy()
                     # ind_SP["Mean_PSI"] = Ps # Updated 25.05.07
                     # ind_SP["Effect_Score"] = (Ps * ind_SP["TU"] * ind_SP["FS"].astype(float))
-                    ind_SP["Effect_Score"] = (np.abs(ind_SP["dPSI_2_minus_1"]) * ind_SP["TU"] * ind_SP["FS"].astype(float))
+                    # ind_SP["Effect_Score"] = (np.abs(ind_SP["dPSI_2_minus_1"]) * ind_SP["TU"] * ind_SP["FS"].astype(float))
                     # ind_SP["Effect_Score"] = (np.abs(ind_SP["dPSI_2_minus_1"]) * Ps * ind_SP["TU"] * ind_SP["FS"].astype(float))
+                    ind_SP["Effect_Score"] = (ind_SP["FS"].astype(float) * ind_SP["TU"] * Ps * abs(ind_SP["dPSI_2_minus_1"]) * ind_SP["ORF"].astype(float))
+                    
                     if k == 0:
                         final_df = ind_SP
                     else:
@@ -280,7 +282,25 @@ if __name__ == "__main__":
     merged_df = merged_df[merged_df["Domain_integrity"]!="Frame loss"]
     merged_df["change_rate"] = merged_df["change_rate"].astype(float)
     merged_df["change_rate"] = merged_df["change_rate"].apply(lambda x : 1 if x > 1 else x)
-    merged_df["FS"] = merged_df["change_rate"] * merged_df["ORF"].astype(float)
+    
+    ## Normalization of ∆CDS
+    sub_data = merged_df[["Start","Stop","dAA"]]
+    sub_data["CDS_ref"] = sub_data["Stop"].str.split("-").str[0].astype(float)-sub_data["Start"].str.split("-").str[0].astype(float)
+    sub_data["CDS_sim"] = sub_data["Stop"].str.split("-").str[1].astype(float)-sub_data["Start"].str.split("-").str[1].astype(float)
+    sub_data["dCDS"] = sub_data["CDS_ref"] - sub_data["CDS_sim"]
+    
+    def norm_CDS(df):
+        if df["dCDS"] < 0:
+            nCDS = abs(df["dCDS"]) / df["CDS_sim"]
+        else:
+            nCDS = abs(df["dCDS"]) / df["CDS_ref"]
+    
+    
+        return nCDS
+    sub_data["norm_CDS"] = sub_data.apply(norm_CDS,
+                                          axis=1)
+    merged_df["norm_CDS"] = sub_data["norm_CDS"]
+    merged_df["FS"] = merged_df["change_rate"].astype(float) + merged_df["norm_CDS"].astype(float)
 
     ## Make TPM matrix
     if args.tu in ["Y","Y_own"]:

@@ -124,7 +124,7 @@
 
 ## Descriptions for Outputs
 *Example of important values of `Whole_DS_score_Whole.txt`*
-![image](https://github.com/user-attachments/assets/da4dca2d-7c94-4277-b155-8261bd57a8ad)
+<img width="1090" alt="image" src="https://github.com/user-attachments/assets/ef03e748-6fb3-4d07-9211-9a81b19e430b" />
 
 ### Key Metrics
 
@@ -133,7 +133,7 @@
 - **`Reference_transcript`**: Matched Transcript (==Ref_TX)
 - **`Simulated_event`**: Simulated event
 - **`Effect_Score`**: **A score to prioritize your DS events**
-- **`∆L (Functional_change_ratio)`**: Average rate of domain changes in Sim-TX compared to Ref-TX
+- **`Domain_change_rate`**: Average rate of domain changes in Sim-TX compared to Ref-TX
 - **`Probability_of_NMD`**: NMD **(-1)**, PTC removal **(1)**, No NMD related event **(0)**
 - **`Functional_class`**: It contains the following functional classes: GoD (Gain of Domain), LoD (Loss of Domain), NMD, CDS_alts, UTR_alts, and no_change
   

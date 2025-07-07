@@ -7,7 +7,7 @@
 #SBATCH --time=72:00:00
 
 ## Load conda
-source /projects/anczukow-lab/kangh/miniforge-pypy3/bin/activate base
+source "/projects/anczukow-lab/kangh/miniforge-pypy3/etc/profile.d/conda.sh"
 conda activate splice-decoder
 gtf=$1
 bam_list=$2	# It should have full path

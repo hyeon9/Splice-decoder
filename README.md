@@ -169,12 +169,14 @@
 
       conda activate splice-decoder
       python code/02-3_v3_Draw_consequence.py --input ${working directory} --splicing_event RI --gene ENSMUSG00000027470.9 --sim_splicing_event RI --transcript ENSMUST00000028970.7
-![image](https://github.com/user-attachments/assets/b802e3fa-3cd3-41e3-a46e-4cfd33e5d389)
+![RI;ENSMUSG00000027470 9;chr2;+;152919325;152919453;152919454;152920285;152920286;152920438_ENSMUST00000028970 7_splicing_map](https://github.com/user-attachments/assets/9a9e69b1-5ae7-4efb-9228-47c829a0ff40)
+
 
 * If you want to `remove some information` in figure space, using `ri` option (all categories should be separated by space)
 
       python code/02-3_v3_Draw_consequence.py --input ${working directory} --splicing_event A3SS --gene ENSMUSG00000028864.7 --sim_splicing_event Ori_A3SS --transcript ENSMUST00000195957.4 -ri proteome chain
-![image](https://github.com/user-attachments/assets/d31acbfc-4678-489c-a0d9-9ed0f2ca1a30)
+![image](https://github.com/user-attachments/assets/3306e051-8fa7-47c3-ab25-13c6df061da1)
+
 
 
 * All figures will be saved at `${input}/figure/consequence/`

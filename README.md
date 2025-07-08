@@ -168,7 +168,7 @@
 * Based on your Main_output file, you can pcik ceratin DS event to visualize it using this code
 
       cd ${SpliceDecoder_folder}
-  
+      conda activate splice-decoder
       python code/02-3_v3_Draw_consequence.py --input `pwd`/DS_input/ --splicing_event CA --gene SPG7 --sim_splicing_event EI --transcript ENST00000561911.5
 ![image](https://github.com/user-attachments/assets/d700e8c1-efb6-40a9-bb12-b6576b955ef1)
 
@@ -188,6 +188,7 @@
 * You can use `Make_aa_fa.py` to extract amino acid sequences from your interesting targets
 * You can find the ${input} variable in your `.config` file
 
+      conda activate splice-decoder
       python code/Make_aa_fa.py -i ${input} -r human -t ENST00000438015.6 -e ES
 
 * You can copy and paste the amino acid sequences into the Alphafold server (https://alphafoldserver.com) as input

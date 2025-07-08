@@ -66,7 +66,7 @@
       ? Enter your rMATS output path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data)
       > You just need to specify the rMATS output path
   
-      ? Enter your GTF file that you used in rMATS with its full path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/toy.gtf or /User/usr/Tool/Splice-decoder-main/toy_data/*.gtf))
+      ? Enter your GTF file that you used in rMATS with its full path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/toy.gtf or /User/usr/Tool/Splice-decoder-main/toy_data/*.gtf)
       > You just need to specify the full path + GTFfile
 
       ? Do you want to calculate the effect score? [yes/no]
@@ -81,7 +81,7 @@
       ? Enter a species of your data (e.g. human or mouse)
       > You just need to specify the species of your data
   
-      ? Enter a sequencing type of your data e.g., SR (short-read) or LR (long-read) (e.g. SR or LR)
+      ? Enter a sequencing type of your data (e.g. SR (short-read) or LR (long-read) )
       > You just need to specify the sequencing method of your data
   
       ? Enter a FDR cut off for your rMATS (float [0-1], default 0.05)

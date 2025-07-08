@@ -184,7 +184,7 @@
 
 <br>
 
-## Create 3D Protein structure based on simulated 
+## Create a 3D Protein structure based on simulated 
 * You can use `Make_aa_fa.py` to extract amino acid sequences from your interesting targets
 * You can find the ${input} variable in your `.config` file
 

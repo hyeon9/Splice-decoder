@@ -16,7 +16,6 @@ jobs:
           auto-update-conda: true
           use-mamba: false
           channels: conda-forge,bioconda
-          activate-environment: test_splice-decoder
 
       - name: Create environment and run install.sh
         shell: bash -l {0}
@@ -30,4 +29,5 @@ jobs:
         run: |
           conda activate splice-decoder
           which bedtools
+          which cpat
           python -c "import Bio; print(Bio.__version__)"

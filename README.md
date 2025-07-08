@@ -170,14 +170,15 @@
       cd ${SpliceDecoder_folder}
       conda activate splice-decoder
       python code/02-3_v3_Draw_consequence.py --input `pwd`/DS_input/ --splicing_event CA --gene SPG7 --sim_splicing_event EI --transcript ENST00000561911.5
-![image](https://github.com/user-attachments/assets/d700e8c1-efb6-40a9-bb12-b6576b955ef1)
-
+![image](https://github.com/user-attachments/assets/b802e3fa-3cd3-41e3-a46e-4cfd33e5d389)
 
 * If you want to `remove some information` in figure space, using `ri` option
   
-      python code/02-3_v3_Draw_consequence.py --input `pwd`/DS_input/ --splicing_event CA --gene SPG7 --sim_splicing_event EI --transcript ENST00000561911.5 -ri region
-![image](https://github.com/user-attachments/assets/f5866dfd-2ca5-4bf5-a40d-54ad3bf6e827)
+      python code/02-3_v3_Draw_consequence.py --input `pwd`/DS_input/ --splicing_event CA --gene SPG7 --sim_splicing_event EI --transcript ENST00000561911.5
+![image](https://github.com/user-attachments/assets/eeaf51bc-ff8b-42d3-9b82-3495a032cd48)
 
+      python code/02-3_v3_Draw_consequence.py --input `pwd`/DS_input/ --splicing_event CA --gene SPG7 --sim_splicing_event EI --transcript ENST00000561911.5 -ri proteome chain
+![image](https://github.com/user-attachments/assets/d31acbfc-4678-489c-a0d9-9ed0f2ca1a30)
 
 
 * All figures will be saved at `${input}/figure/consequence/`

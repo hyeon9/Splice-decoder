@@ -5,13 +5,13 @@ import sys
 
 config = {}
 
-output_prefix = questionary.text("Specify your config file name").ask()
-config['Main'] = questionary.text("Enter the path of SpliceDecoder").ask()+"/"
+output_prefix = questionary.text("Specify your config file name (e.g. HGjob)").ask()
+config['Main'] = questionary.text("Enter the path of SpliceDecoder (e.g. /User/usr/Tool/Splice-decoder-main/)").ask()+"/"
 config['code'] = os.path.join(config['Main'], "code/")
 config['cpatdb'] = os.path.join(config['Main'], "dat/")
-config['input'] = questionary.text("Enter your working directory").ask()+"/"
-config['Your_rMATS'] = questionary.text("Enter your rMATS output path").ask()+"/"
-config['Your_GTF'] = questionary.text("Enter your GTF file that you used in rMATS with its full path").ask()
+config['input'] = questionary.text("Enter your working directory (e.g. /User/usr/Tool/Splice-decoder-main/project1)").ask()+"/"
+config['Your_rMATS'] = questionary.text("Enter your rMATS output path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data)").ask()+"/"
+config['Your_GTF'] = questionary.text("Enter your GTF file that you used in rMATS with its full path\n(e.g. /User/usr/Tool/Splice-decoder-main/toy_data/toy.gtf or /User/usr/Tool/Splice-decoder-main/toy_data/*.gtf))").ask()
 
 ## Scoring
 if sys.argv[2] != "toy":
@@ -21,15 +21,15 @@ if sys.argv[2] != "toy":
 		config['bam_list'] = "N"
 		config['tpm'] = "N"
 	else:
-		config['Your_TPM'] = questionary.text("Enter your TPM matrix with full path. If you don't have one type N").ask()
+		config['Your_TPM'] = questionary.text("Enter your TPM matrix with full path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/tpm.tsv or N)").ask()
 		if config['Your_TPM'] == "N":	# SpliceDecoder will calculate TPM by using stringtie with the given bamfiles
-			config['bam_list'] = questionary.text("Enter your bamlist which should contains bamfile with their full path in each line").ask()
+			config['bam_list'] = questionary.text("Enter your bamlist which should contains bamfile with their full path in each line\n(e.g. /User/usr/Tool/Splice-decoder-main/toy_data/bam_list.txt or N)").ask()
 			config['tpm'] = "Y"
 		else:	# SpliceDecoder will use the given TPM matrix
 			config['bam_list'] = "N"
 			config['tpm'] = "Y_own"
-	config['species'] = questionary.text("Enter a species of your data").ask()
-	config['seq_type'] = questionary.text("Enter a sequencing type of your data e.g., SR (short-read) or LR (long-read)").ask()
+	config['species'] = questionary.text("Enter a species of your data (e.g. human or mouse)").ask()
+	config['seq_type'] = questionary.text("Enter a sequencing type of your data (e.g., SR (short-read) or LR (long-read) )").ask()
 
 
 else:	# For toy data set
@@ -40,9 +40,9 @@ else:	# For toy data set
 	config["species"] = "mouse"
 	config['seq_type'] = "LR"
 
-config['FDR'] = questionary.text("Enter a FDR cut off for your rMATS").ask()
-config['PSI'] = questionary.text("Enter a |dPSI| cut off for your rMATS").ask()
-config['njobs'] = questionary.text("Enter a number of cpu in splice-decoder job").ask()
+config['FDR'] = questionary.text("Enter a FDR cut off for your rMATS (float [0-1], default 0.05)").ask()
+config['PSI'] = questionary.text("Enter a |dPSI| cut off for your rMATS (float [0-1], default 0.1)").ask()
+config['njobs'] = questionary.text("Enter a number of cpu in splice-decoder job (int [0-?]").ask()
 
 ## Specify 3rd party tool path
 config['conda'] = sys.argv[1]

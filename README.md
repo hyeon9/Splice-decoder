@@ -167,17 +167,13 @@
 ## Visualize your DS simulation
 * Based on your Main_output file, you can pcik ceratin DS event to visualize it using this code
 
-      cd ${SpliceDecoder_folder}
       conda activate splice-decoder
-      python code/02-3_v3_Draw_consequence.py --input `pwd`/DS_input/ --splicing_event CA --gene SPG7 --sim_splicing_event EI --transcript ENST00000561911.5
+      python code/02-3_v3_Draw_consequence.py --input ${working directory} --splicing_event RI --gene ENSMUSG00000027470.9 --sim_splicing_event RI --transcript ENSMUST00000028970.7
 ![image](https://github.com/user-attachments/assets/b802e3fa-3cd3-41e3-a46e-4cfd33e5d389)
 
-* If you want to `remove some information` in figure space, using `ri` option
-  
-      python code/02-3_v3_Draw_consequence.py --input `pwd`/DS_input/ --splicing_event CA --gene SPG7 --sim_splicing_event EI --transcript ENST00000561911.5
-![image](https://github.com/user-attachments/assets/eeaf51bc-ff8b-42d3-9b82-3495a032cd48)
+* If you want to `remove some information` in figure space, using `ri` option (all categories should be separated by space)
 
-      python code/02-3_v3_Draw_consequence.py --input `pwd`/DS_input/ --splicing_event CA --gene SPG7 --sim_splicing_event EI --transcript ENST00000561911.5 -ri proteome chain
+      python code/02-3_v3_Draw_consequence.py --input ${working directory} --splicing_event A3SS --gene ENSMUSG00000028864.7 --sim_splicing_event Ori_A3SS --transcript ENSMUST00000195957.4 -ri proteome chain
 ![image](https://github.com/user-attachments/assets/d31acbfc-4678-489c-a0d9-9ed0f2ca1a30)
 
 

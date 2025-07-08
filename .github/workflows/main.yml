@@ -21,8 +21,6 @@ jobs:
         shell: bash -l {0}
         run: |
           conda config --add channels conda-forge
-          conda config --add channels bioconda
-          conda config --remove channels defaults
           bash install.sh For_Linux_user.yml
 
       - name: Verify installation

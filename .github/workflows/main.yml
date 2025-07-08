@@ -15,12 +15,11 @@ jobs:
         with:
           auto-update-conda: true
           use-mamba: false
-          channels: conda-forge,bioconda
+          channels: conda-forge
 
       - name: Create environment and run install.sh
         shell: bash -l {0}
         run: |
-          conda config --add channels conda-forge
           bash install.sh For_Linux_user.yml
 
       - name: Verify installation

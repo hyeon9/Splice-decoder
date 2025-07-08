@@ -1,7 +1,7 @@
 name: splice-decoder
 channels:
-  - bioconda
   - conda-forge
+  - bioconda
 dependencies:
   - _r-mutex
   - bedtools

@@ -10,12 +10,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Miniconda
+      - name: Set up Miniforge
         uses: conda-incubator/setup-miniconda@v3
         with:
-          auto-update-conda: true
-          use-mamba: false
-          channels: conda-forge
+        miniforge-variant: Mambaforge
+        miniforge-version: latest
+        use-mamba: true
+        channels: conda-forge,bioconda
 
       - name: Create environment and run install.sh
         shell: bash -l {0}

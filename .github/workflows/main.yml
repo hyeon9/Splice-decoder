@@ -13,7 +13,7 @@ jobs:
       - name: Set up Miniforge
         uses: conda-incubator/setup-miniconda@v3
         with:
-          miniforge-variant: Miniforge
+          miniforge-variant: Miniforge3
           miniforge-version: latest
           use-mamba: true
           channels: conda-forge,bioconda

@@ -1,0 +1,33 @@
+name: Test Install
+
+on: [push, pull_request]
+
+jobs:
+  conda-install-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          use-mamba: false
+          channels: conda-forge,bioconda
+          activate-environment: test_splice-decoder
+
+      - name: Create environment and run install.sh
+        shell: bash -l {0}
+        run: |
+          conda config --add channels conda-forge
+          conda config --add channels bioconda
+          bash install.sh For_Linux_user.yml
+
+      - name: Verify installation
+        shell: bash -l {0}
+        run: |
+          conda activate splice-decoder
+          which bedtools
+          python -c "import Bio; print(Bio.__version__)"

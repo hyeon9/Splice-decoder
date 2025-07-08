@@ -186,6 +186,7 @@
 
 ## Create a 3D Protein structure based on simulated 
 * You can use `Make_aa_fa.py` to extract amino acid sequences from your interesting targets
+* !! This function requires the `Effect_score.tsv`, Toy data is not eligible for this function
 * You can find the ${input} variable in your `.config` file
 
       conda activate splice-decoder

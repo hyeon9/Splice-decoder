@@ -94,8 +94,10 @@ case ${input_var} in
 	## Check exon number tag
 	if [ ${seq_type} == "LR" ]
 	then
-		awk -F "\t" '{if ($2 != "PacBio" && $2 != "StringTie" && $2 != "HAVANA") print }' ${input}exon_only.gtf > ${input}non_pacbio_exon_only.gtf
-		awk -F "\t" '{if ($2 == "PacBio" || $2 == "StringTie" || $2 == "HAVANA") print }' ${input}exon_only.gtf > ${input}LR_exon_only.gtf
+ 		cat ${input}exon_only.gtf | grep -v exon_number > ${input}LR_exon_only.gtf
+                cat ${input}exon_only.gtf | grep exon_number > ${input}non_pacbio_exon_only.gtf
+		#awk -F "\t" '{if ($2 != "PacBio" && $2 != "StringTie" && $2 != "HAVANA") print }' ${input}exon_only.gtf > ${input}non_pacbio_exon_only.gtf
+		#awk -F "\t" '{if ($2 == "PacBio" || $2 == "StringTie" || $2 == "HAVANA") print }' ${input}exon_only.gtf > ${input}LR_exon_only.gtf
 		#awk -F "\t" '{if ($2 != "PacBio") print }' ${input}exon_only.gtf > ${input}non_pacbio_exon_only.gtf
                 #awk -F "\t" '{if ($2 == "PacBio") print }' ${input}exon_only.gtf > ${input}LR_exon_only.gtf
 	
@@ -185,8 +187,10 @@ case ${input_var} in
 	## Long-read RNAseq
         if [ ${seq_type} == "LR" ]
         then
-		awk -F "\t" '{if ($2 != "PacBio" && $2 != "StringTie" && $2 != "HAVANA") print }' ${input}exon_only.gtf > ${input}non_pacbio_exon_only.gtf
-                awk -F "\t" '{if ($2 == "PacBio" || $2 == "StringTie" || $2 == "HAVANA") print }' ${input}exon_only.gtf > ${input}LR_exon_only.gtf
+		cat ${input}exon_only.gtf | grep -v exon_number > ${input}LR_exon_only.gtf
+                cat ${input}exon_only.gtf | grep exon_number > ${input}non_pacbio_exon_only.gtf
+		#awk -F "\t" '{if ($2 != "PacBio" && $2 != "StringTie" && $2 != "HAVANA") print }' ${input}exon_only.gtf > ${input}non_pacbio_exon_only.gtf
+                #awk -F "\t" '{if ($2 == "PacBio" || $2 == "StringTie" || $2 == "HAVANA") print }' ${input}exon_only.gtf > ${input}LR_exon_only.gtf
                 #awk -F "\t" '{if ($2 != "PacBio") print }' ${input}exon_only.gtf > ${input}non_pacbio_exon_only.gtf
                 #awk -F "\t" '{if ($2 == "PacBio") print }' ${input}exon_only.gtf > ${input}LR_exon_only.gtf
 

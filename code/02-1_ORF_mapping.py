@@ -44,9 +44,9 @@ Description
                         type=str)
     
     ## Optional
-    parser.add_argument("--threads", "-t", help="number of threads to use, default: 9", 
+    parser.add_argument("--threads", "-t", help="number of threads to use, default: 1", 
                         type=int,
-                        default="9")
+                        default="1")
 
     args = parser.parse_args(cmd_args, namespace)
     

@@ -3,7 +3,7 @@ config_file=$1
 splicing_type=$2
 source ${config_file}
 
-if [ ${species} == "human" ]
+if [ ${species} = "human" ]
 then
 	pfam=${cpatdb}"/domain_info/small_modified_uniprot.bed"
 else

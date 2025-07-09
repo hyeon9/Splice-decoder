@@ -28,7 +28,7 @@ source ${config}
 
 ## Prepare log
 timestamp=$(date +%Y%m%d_%H%M%S)
-logfile="SD_${timestamp}.log"
+logfile="${input}/SD_${timestamp}.log"
 exec > >(tee -a "$logfile") 2>&1
 
 ## Prepare working dir

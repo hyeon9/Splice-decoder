@@ -42,7 +42,7 @@ else:	# For toy data set
 
 config['FDR'] = questionary.text("Enter a FDR cut off for your rMATS (float [0-1], default 0.05)").ask()
 config['PSI'] = questionary.text("Enter a |dPSI| cut off for your rMATS (float [0-1], default 0.1)").ask()
-config['njobs'] = questionary.text("Enter a number of cpu in splice-decoder job (int [0-?]").ask()
+config['njobs'] = questionary.text("Enter a number of cpu in splice-decoder job (int [5-?], default 5").ask()
 
 ## Specify 3rd party tool path
 config['conda'] = sys.argv[1]

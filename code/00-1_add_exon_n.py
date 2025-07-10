@@ -117,13 +117,14 @@ def Make_gene_dict(DIR):
                 if read_line[2] == "transcript":
                     if "transcript_id" in read_line[8].split(" "):
                         tx = read_line[8].split(" ")[read_line[8].split(" ").index("transcript_id")+1].split("\"")[1]
-                    if "gene_name" in read_line[8].split(" "):
-                        gene = read_line[8].split(" ")[read_line[8].split(" ").index("gene_name")+1].split("\"")[1]
-                    elif "gene_id" in read_line[8].split(" "):
-                        gene = read_line[8].split(" ")[read_line[8].split(" ").index("gene_id")+1].split("\"")[1]
-                    else:
-                        gene = ""
-                    o.write(tx+"\t"+gene+"\n")
+                    if "gene_id" in read_line[8].split(" "):
+                        gene_id = read_line[8].split(" ")[read_line[8].split(" ").index("gene_id")+1].split("\"")[1]
+                        if "gene_name" in read_line[8].split(" "):
+                            gene_sym = read_line[8].split(" ")[read_line[8].split(" ").index("gene_name")+1].split("\"")[1]
+                        else:
+                            gene_sym = ""
+                    
+                    o.write(tx+"\t"+gene_id+"\t"+gene_sym+"\n")
         f.close()
         o.close()
 

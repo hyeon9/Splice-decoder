@@ -56,11 +56,12 @@ for header,matsfile in enumerate(files):
     event_type = matsfile.split(".")[0]
     df = pd.read_csv(f"{dir}{matsfile}",
                     sep="\t")
-    if len(df[df.columns[2]].unique()) == 1:    # BUG fixed 250122
-        geneid_type = df.columns[1]
-    else:
-        geneid_type = df.columns[2]
-
+    # if len(df[df.columns[2]].unique()) == 1:    # BUG fixed 250122
+    #     geneid_type = df.columns[1]
+    # else:
+    #     geneid_type = df.columns[2]
+    geneid_type = df.columns[1] ## Updated 250710, Using GeneID as default key
+    
     df["Event_type"] = event_type
     df[[geneid_type]] = df[[geneid_type]].astype(str)   # BUG fixed 241120
     if event_type == "SE" or event_type == "RI":

@@ -138,7 +138,7 @@
 - **`Functional_class`**: It contains the following functional classes: GoD (Gain of Domain), LoD (Loss of Domain), NMD, CDS_alts, and UTR_alts
   
 ### Supplementary Metrics
-- `Delta_PSI`: PSI difference (group2 - group1), it came from rMATS
+- `Delta_PSI`: PSI difference (group2 - group1)
 - `Transcript_usage`: Proportion of expression of reference transcript for each gene
 - `ORF`: Used ORF (This file only contains pORF1 which has the highest coding potential)
 - `AUG (Ref-Sim)`: Start codon position on the Ref TX and Sim TX (Ref-Sim)

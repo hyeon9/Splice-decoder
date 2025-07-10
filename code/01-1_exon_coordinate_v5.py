@@ -336,7 +336,8 @@ def Exon_comp(temp, gene, event_type):
                 
 
     #annot = gtf[gtf["gene_symbol"]==gene]   # Consider matched gene
-    annot = gtf[(gtf["gene_symbol"]==gene) | (gtf["ENSGID"]==gene)]   # Consider matched gene
+    # annot = gtf[(gtf["gene_symbol"]==gene) | (gtf["ENSGID"]==gene)]   # Consider matched gene
+    annot = gtf[(gtf["ENSGID"]==gene)]   # Consider matched gene
     for tx in annot["ENSTID"].unique(): # Collect all isoform in each gene from comprehensive gtf
         tx_annot = annot[annot["ENSTID"]==tx].sort_values(by="exon_number")   # Consider one isoform at once, We MUST start from exon 1
         if tx_annot.shape[0]==2:  # A transcript has less than 2 exons

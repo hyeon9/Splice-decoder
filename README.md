@@ -131,7 +131,7 @@
 - **`LongID`**: DS event ID
 - **`gene`**: Gene Symbol
 - **`Reference_transcript`**: Matched Transcript (==Ref_TX)
-- **`Simulated_event`**: Simulated event
+- **`Simulated_event`**: Simulated event (ES = Exon skipping, EI = Exon inclusion, SI = Skipped intron, RI = Retained intron, Can A3/5SS = canonical 3/5' splice site, Alt A3/5SS = alternative 3/5' splice site)
 - **`Effect_Score`**: **A score to prioritize your DS events**
 - **`Domain_change_rate`**: Average rate of domain changes in Sim-TX compared to Ref-TX
 - **`Probability_of_NMD`**: NMD **(-1)**, PTC removal **(1)**, No NMD related event **(0)**

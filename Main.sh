@@ -39,8 +39,8 @@ mkdir -p ${input}/tpm/
 if [ -f "${input}/rmat.csv" ]; then
         echo "rmats file already exists"
 else
-        echo "Processed rmats file does not exist"
-        echo "Making rmats file..."
+        # echo "Processed rmats file does not exist"
+        echo "Making a processed rmats file..."
         python ${code}/NEW_make_input_from_rmats.py -r ${Your_rMATS} -i ${input} -fdr ${FDR} -psi ${PSI}
 fi
 

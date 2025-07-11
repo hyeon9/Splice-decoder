@@ -26,14 +26,14 @@ esac
 config=$2
 source ${config} 
 
+## Prepare working dir
+mkdir -p ${input}
+mkdir -p ${input}/tpm/
+
 ## Prepare log
 timestamp=$(date +%Y%m%d_%H%M%S)
 logfile="${input}/SD_${timestamp}.log"
 exec > >(tee -a "$logfile") 2>&1
-
-## Prepare working dir
-mkdir -p ${input}
-mkdir -p ${input}/tpm/
 
 ## Check rmat.csv
 if [ -f "${input}/rmat.csv" ]; then

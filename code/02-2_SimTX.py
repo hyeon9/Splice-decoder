@@ -249,7 +249,7 @@ if __name__ == "__main__":
     #                 "\t"+"5'UTR"+"\t"+"dAA"+"\t"+"3'UTR"+"\t"+"Domain_integrity"+"\t"+"Domain_change_ratio"+\
     #                 "\t"+"Ref_domain_length"+"\t"+"Sim_domain_length"+"\t"+"Functional_class"+"\t"+"pNMD"+"\n")
     main_output.write("LongID"+"\t"+"Reference_transcript"+"\t"+"Simulated_event"+"\t"+"ORF"+"\t"+"AUG (Ref-Sim)"+"\t"+"Stop (Ref-Sim)"+\
-                    "\t"+"5'UTR_difference"+"\t"+"Delta_Amino_acid"+"\t"+"3'UTR_difference"+"\t"+"Domain_integrity"+"\t"+"Domain_change_rate"+\
+                    "\t"+"5'UTR_difference"+"\t"+"CDS_difference"+"\t"+"3'UTR_difference"+"\t"+"Domain_integrity"+"\t"+"Domain_change_rate"+\
                     "\t"+"Length_of_reference_tx_domain"+"\t"+"Length_of_simulated_tx_domain"+"\t"+"Functional_class"+"\t"+"Probability_of_NMD"+"\n")
     
     now = datetime.now()

@@ -178,6 +178,7 @@
 
       conda activate splice-decoder
       python code/02-3_v3_Draw_consequence.py --input ${working directory} --splicing_event RI --gene ENSMUSG00000027470.9 --sim_splicing_event RI --transcript ENSMUST00000028970.7
+      python code/02-3_v3_Draw_consequence.py -h  # You can get more details
 ![RI;ENSMUSG00000027470 9;chr2;+;152919325;152919453;152919454;152920285;152920286;152920438_ENSMUST00000028970 7_splicing_map](https://github.com/user-attachments/assets/9a9e69b1-5ae7-4efb-9228-47c829a0ff40)
 
 

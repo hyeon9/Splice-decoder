@@ -93,6 +93,15 @@
       ? Enter a number of cpu in splice-decoder job (int [0-?])
       > Specify a number of cpu will be used in your job
 
+* You can reuse a pre-existing config file by copying it:
+
+      cp ${existing_config} project2.config
+
+* Then, update the following fields in the new config: `input`, `Your_GTF`, and `Your_rMATS`
+
+      
+  
+
 <br>
 
 ## Summary stats for DES mapping and annotation

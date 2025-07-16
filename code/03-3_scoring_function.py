@@ -159,12 +159,12 @@ def Add_TU(tpm, query_df):
                             if i.startswith("transcript_id"):
                                 txID = i.split("\"")[1]
                                 gene_tx[txID] = []
-                            if i.startswith("gene_name"):
-                                gene_name = i.split("\"")[1]
-                        try:
-                            gene_tx[txID].append(gene_name)
-                        except:
-                            gene_tx[txID].append(gene)
+                            # if i.startswith("gene_name"):
+                            #     gene_name = i.split("\"")[1]
+                        # try:
+                        #     gene_tx[txID].append(gene_name)
+                        # except:
+                        gene_tx[txID].append(gene)
 
         gene_tx = pd.DataFrame.from_dict(gene_tx,
                                          orient="index")

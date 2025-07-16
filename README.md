@@ -143,7 +143,7 @@
 - `ORF`: Used ORF (This file only contains pORF1 which has the highest coding potential)
 - `AUG (Ref-Sim)`: Start codon position on the Ref TX and Sim TX (Ref-Sim)
 - `Stop_codon (Ref-Sim)`: Stop codon position on the Ref TX and Sim TX (Ref-Sim)
-- `Delta_Amino_acid`: Amino acid length difference (Ref TX - Sim TX)
+- `CDS_difference`: Coding sequence length difference (Ref TX - Sim TX)
 - `5'UTR_difference`: 5' UTR length difference (Ref TX - Sim TX)
 - `3'UTR_difference`: 3' UTR length difference (Ref TX - Sim TX)
 - `Domain_integrity`: (Sim_domain_length / Ref_domain_length) * 100

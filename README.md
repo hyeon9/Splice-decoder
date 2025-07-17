@@ -142,21 +142,21 @@
 - **`Gene symbol`**: Gene symbol
 - **`Reference_transcript`**: Matched Transcript (==Ref_TX)
 - **`Simulated_event`**: Simulated event (ES = Exon skipping, EI = Exon inclusion, SI = Skipped intron, RI = Retained intron, Can A3/5SS = canonical 3/5' splice site, Alt A3/5SS = alternative 3/5' splice site)
-- **`Effect_Score [0-2]`**: **A score to prioritize your DS events**
-- **`Domain_change_rate [0-1]`**: Average rate of domain changes in Sim-TX compared to Ref-TX
+- **`Effect_Score`**: A score to prioritize your DS events [0,2]
+- **`Domain_change_rate`**: Average rate of domain changes in Sim-TX compared to Ref-TX [0,1]
 - **`Probability_of_NMD`**: NMD **(-1)**, PTC removal **(1)**, No NMD related event **(0)**
 - **`Functional_class`**: It contains the following functional classes: GoD (Gain of Domain), LoD (Loss of Domain), NMD, CDS_alts, and UTR_alts
   
 ### Supplementary Metrics
-- `Delta_PSI`: PSI difference (group2 - group1)
-- `Transcript_usage [0-1]`: Proportion of expression of reference transcript for each gene
+- `Delta_PSI`: PSI difference (group2 - group1) [-1,1]
+- `Transcript_usage`: Proportion of expression of reference transcript for each gene [0,1]
 - `ORF`: Used ORF (This file only contains pORF1 which has the highest coding potential)
 - `AUG (Ref-Sim)`: Start codon position on the Ref TX and Sim TX (Ref-Sim)
 - `Stop_codon (Ref-Sim)`: Stop codon position on the Ref TX and Sim TX (Ref-Sim)
 - `Nucleotide_difference`: Coding sequence length difference (Ref TX - Sim TX)
 - `5'UTR_difference`: 5' UTR length difference (Ref TX - Sim TX)
 - `3'UTR_difference`: 3' UTR length difference (Ref TX - Sim TX)
-- `Domain_integrity [0-inf]`: (Sim_domain_length / Ref_domain_length) * 100
+- `Domain_integrity`: (Sim_domain_length / Ref_domain_length) * 100 [0,inf]
 - `Length_of_simulated_tx_domain`: Total domain length of Sim TX
 - `Length_of_referece_tx_domain`: Total domain length of Ref TX
 - `rMATS_FDR(-log10)`: -Log10 scale FDR, it came from rMATS

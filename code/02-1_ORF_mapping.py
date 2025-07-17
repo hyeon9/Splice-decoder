@@ -184,7 +184,7 @@ def Estimate(id, final_set, key):
                 ups = ups.iloc[:-1,:]   # Remove frist exon
                 ups = pd.concat([ups, new_line.T])  # Add first exon with A5SS
                 output = pd.concat([ups, dos])
-                sim_form = "Ori_A5SS"   # simulated event
+                sim_form = "Can_A5SS"   # simulated event
 
             elif form == "Alt_A3SS":  # A3SS is ref > simulate first exon to O3SS 
                 if insert[index_num][3] == "+":
@@ -198,7 +198,7 @@ def Estimate(id, final_set, key):
                 dos = dos.iloc[1:,:]    # Remove second exon
                 dos = pd.concat([new_line.T, dos])  # Add second exon with A3SS
                 output = pd.concat([ups, dos])
-                sim_form = "Ori_A3SS"   # simulated event
+                sim_form = "Can_A3SS"   # simulated event
 
         else:   # MXE cases
             insert = temp[temp["best match tx"]==tx]["ID"].str.split(";")

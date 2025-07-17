@@ -120,7 +120,8 @@ case ${input_var} in
 
 	## Final input processing
 	python ${code}/00-2_processing_gtf.py -e ${input}exon_only.gtf -o ${input}
-
+	python ${code}/00-3_make_dict.py -i ${input}
+ 
 	echo "Finished input processing"
 	;;
 
@@ -213,6 +214,8 @@ case ${input_var} in
 
         ## Final input processing
         python ${code}/00-2_processing_gtf.py -e ${input}exon_only.gtf -o ${input}
+	python ${code}/00-3_make_dict.py -i ${input}
+ 
         echo "Finished input processing"
 
        

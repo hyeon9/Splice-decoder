@@ -7,7 +7,8 @@
 * Currently, we only support hg38 (hg19 will be supported soon)
 
 ## Workflow overview
-<img width="1401" alt="image" src="https://github.com/user-attachments/assets/bf9fcb4d-d8ae-499c-8a1c-25eb232f520d" />
+<img width="1407" height="509" alt="image" src="https://github.com/user-attachments/assets/ef6b3535-982c-483c-b30f-d2f486092c4d" />
+
 
 1. Generate All Possible Splicing Cases (Processing input) : This step makes proper format of input data from the output of event-based splicing tools
 2. Map Splicing Cases (Mapping DSEs and ORFs): This step explores the given transcriptome (.GTF) to find Ref-TX (Reference transcript, it contains perfectly matched exon structure for the given DSE) and assign the best three open reading frames (ORFs)

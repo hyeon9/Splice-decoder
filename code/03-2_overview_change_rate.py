@@ -51,10 +51,10 @@ def Load(stype):
     ref_result = pd.read_csv(args.input+f"all_{stype}_Main_output.txt",
                             sep="\t", 
                             skiprows=1)
-    ref_result.columns = ["LongID","ref_tx","event","ORF","Start","Stop","5'UTR","dAA","3'UTR","Domain_integrity","change_rate","Ref_Domain","Sim_Domain","DOA_direction","pNMD"]
+    ref_result.columns = ["LongID","Gene symbol","ref_tx","event","ORF","Start","Stop","5'UTR","dAA","3'UTR","Domain_integrity","change_rate","Ref_Domain","Sim_Domain","DOA_direction","pNMD"]
     ref_result["pair_ID"] = ref_result["LongID"] + "|" + ref_result["ref_tx"]
     ref_result["ComplexID"] = ref_result["LongID"] + "|" + ref_result["ref_tx"] + "|" + ref_result["event"]
-    ref_result["gene"] = ref_result["LongID"].str.split(";").str[1]
+    # ref_result["gene"] = ref_result["LongID"].str.split(";").str[1]
     ref_result_nmd = ref_result[["pNMD","pair_ID","ORF"]].drop_duplicates()
 
     return ref_result
@@ -160,7 +160,7 @@ if __name__ == "__main__":
     stats["pNMD"] = stats["pNMD"].apply(lambda x: "NMD" if x == "-1" else ("PTC remove" if x == "1" else x))
     stats = stats.dropna(subset="Domain_integrity") # Nan represents ref and sim has no domain
     stats["change_rate"] = stats.apply(Add_UTR2, axis=1)
-    stats = stats[["LongID","Key","pNMD","gene","Domain_integrity","change_rate","ref_tx","ORF","event"]]
+    stats = stats[["LongID","Key","pNMD","Gene symbol","Domain_integrity","change_rate","ref_tx","ORF","event"]]
     stats["NMD"] = stats.apply(Cal, axis=1)
     stats["domain"] = stats.apply(Cal2, axis=1)
     fin = stats[["LongID","NMD","domain"]]

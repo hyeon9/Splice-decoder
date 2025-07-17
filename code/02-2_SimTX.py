@@ -94,13 +94,16 @@ def Load_data(key):
                        sep="\t", header=None)
     wo_pfam["coreID"] = wo_pfam[14]+"|"+wo_pfam[11]+"|"+wo_pfam[13]
 
+    tx_dict_file = pd.read_csv(args.input+"tx_gene_dict",
+                               sep="\t", header=None)
+
     ################################################
     if interesting_target != "all":
         w_pfam = w_pfam[w_pfam[4]==interesting_target]
         wo_pfam = wo_pfam[wo_pfam[4]==interesting_target]
     ################################################
 
-    return sim_tx, ref, w_pfam, wo_pfam
+    return sim_tx, ref, w_pfam, wo_pfam, tx_dict_file
 
 
 def Make_query(final_bed, pfam):
@@ -222,7 +225,7 @@ if __name__ == "__main__":
     now = datetime.now()
     print(f"Making and Loading input from {args.splicing_event}")
     print("TIME:", now.strftime("%Y-%m-%d %H:%M:%S"))
-    sim_bed, ref_bed, sim_fam, ref_fam = Load_data(args.splicing_event)
+    sim_bed, ref_bed, sim_fam, ref_fam, tx_dict_file = Load_data(args.splicing_event)
     ref_cds = pd.read_csv(args.input+"wo_event_bestorf_{}.txt".format(args.splicing_event),
                           sep="\t", header=None)
     sim_cds = pd.read_csv(args.input+"w_event_bestorf_{}.txt".format(args.splicing_event),
@@ -248,7 +251,7 @@ if __name__ == "__main__":
     # main_output.write("LongID"+"\t"+"Target_TX"+"\t"+"occurred_event"+"\t"+"ORF_priority"+"\t"+"Start"+"\t"+"Stop"+\
     #                 "\t"+"5'UTR"+"\t"+"dAA"+"\t"+"3'UTR"+"\t"+"Domain_integrity"+"\t"+"Domain_change_ratio"+\
     #                 "\t"+"Ref_domain_length"+"\t"+"Sim_domain_length"+"\t"+"Functional_class"+"\t"+"pNMD"+"\n")
-    main_output.write("LongID"+"\t"+"Reference_transcript"+"\t"+"Simulated_event"+"\t"+"ORF"+"\t"+"AUG (Ref-Sim)"+"\t"+"Stop (Ref-Sim)"+\
+    main_output.write("LongID"+"\t"+"Gene symbol"+"\t"+"Reference_transcript"+"\t"+"Simulated_event"+"\t"+"ORF"+"\t"+"AUG (Ref-Sim)"+"\t"+"Stop (Ref-Sim)"+\
                     "\t"+"5'UTR_difference"+"\t"+"Nucleotide_difference"+"\t"+"3'UTR_difference"+"\t"+"Domain_integrity"+"\t"+"Domain_change_rate"+\
                     "\t"+"Length_of_reference_tx_domain"+"\t"+"Length_of_simulated_tx_domain"+"\t"+"Functional_class"+"\t"+"Probability_of_NMD"+"\n")
     
@@ -568,8 +571,6 @@ if __name__ == "__main__":
                 sim_dom_length = sim_dom_per_orf[:3].iloc[n]
                 if sim_start[n]!="Loss":
                     utr5_diff = float(ref_start.tolist()[n] - sim_start[n])
-                    # AA_diff = (sim_stop[n] - sim_start[n]) / \
-                    #           (ref_stop.tolist()[n] - ref_start.tolist()[n])    # SimTX / RefTX AA length 
                     AA_diff = float(ref_stop.tolist()[n] - ref_start.tolist()[n]) - \
                               float(sim_stop[n] - sim_start[n])  # RefTX AA - SimTX AA length 
                     utr3_diff = float(ref_total_length[n] - ref_stop.tolist()[n]) - \
@@ -612,8 +613,10 @@ if __name__ == "__main__":
                     dom_change_ratio = "Frame loss"
                     final_whole_doa_direction = "Frame loss"
                     nmd_diff = "Frame loss"
-                    
+
+                gene_symbol = tx_dict_file[tx_dict_file[0]==tx][2].unique()[0]
                 main_output.write(longid+"\t"+
+                                  gene_symbol+"\t"+
                                   tx+"\t"+
                                   occ_event+"\t"+
                                   "pORF{}".format(n+1)+"\t"+

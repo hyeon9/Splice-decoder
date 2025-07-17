@@ -114,13 +114,13 @@
   * `*Main_output.txt`
   * `*NMD_check.txt`
   * `*Domain_integrity_indi.txt`
-  * `Whole_DS_score_Whole.txt`
+  * `Effect_score.tsv`
 
-* First of all, check `Whole_DS_score_Whole.txt`, which contains [You can find more details here](#descriptions-for-outputs):
+* First of all, check `Effect_score.tsv`, which contains [You can find more details here](#descriptions-for-outputs):
   * `Effect_Score`
   * `Domain_change_rate`
   * `Probability_of_NMD`
-  * `DOA_direction`
+  * `Functional_class`
   
 
 * The `Domain_integrity_indi.txt` includes:
@@ -133,8 +133,8 @@
 <br>
 
 ## Descriptions for Outputs
-*Example of important values of `Whole_DS_score_Whole.txt`*
-<img width="1090" alt="image" src="https://github.com/user-attachments/assets/ef03e748-6fb3-4d07-9211-9a81b19e430b" />
+*Example of important values of `Effect_score.tsv`*
+<img width="1040" height="62" alt="image" src="https://github.com/user-attachments/assets/22dcc503-fb7e-4f89-8bfa-0d543e949c63" />
 
 ### Key Metrics
 

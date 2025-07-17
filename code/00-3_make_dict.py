@@ -51,4 +51,5 @@ def Make_gene_dict(DIR):
         o.close()
 
 
+args, parser = parse_args(sys.argv[1:])
 Make_gene_dict(args.input)

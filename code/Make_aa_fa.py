@@ -34,7 +34,10 @@ def parse_args(cmd_args=None, namespace=None):
                         help='simulation event type', 
                         required=True,
                         type=str)
-    
+    parser.add_argument('--dat', '-d',
+                        help='SpliceDeocder install point',
+                        required=True,
+                        type=str)
 
     args = parser.parse_args(cmd_args, namespace)
     
@@ -89,9 +92,9 @@ def Make_AA():
 
     ## Specify ref
     if args.ref == "human" or args.ref == "Human":
-        ref = "/projects/anczukow-lab/kangh/Tool/Splice-decoder_git/dat/reference/hg38.fa"
+        ref = f"{args.dat}/dat/reference/hg38.fa"
     else:
-        ref = "/projects/anczukow-lab/kangh/Tool/Splice-decoder_git/dat/reference/GRCm38.fa"
+        ref = f"{args.dat}/dat/reference/GRCm38.fa"
 
     ## Extract sequence
     def Get_Fasta(bed,d_type):

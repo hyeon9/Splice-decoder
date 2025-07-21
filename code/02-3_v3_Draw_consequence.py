@@ -91,7 +91,7 @@ def Run(key, input_gene_name, *sub_splicing):
         query = query[query["5'UTR_difference"]!="Frame loss"] # Filter out frame loss, because they donot have domain
         query = query[query["ORF"]=="pORF1"]
         query["ORF"] = query["ORF"].apply(lambda x : 3 if x =="pORF1" else (2 if x == "pORF2" else 1))
-        query = query[["LongID","Simulated_event","AUG (Ref-Sim)","Stop (Ref-Sim)","Nucleotide_difference","Reference_transcript","ORF","Domain_change_rate","Functional_class","Probability_of_NMD"]]
+        query = query[["LongID","Simulated_event","AUG (Ref-Sim)","Stop (Ref-Sim)","CDS_difference (nt)","Reference_transcript","ORF","Domain_change_rate","Functional_class","Probability_of_NMD"]]
         query["simStop"] = query["Stop (Ref-Sim)"].str.split("-").str[1]
         query["Stop (Ref-Sim)"] = query["Stop (Ref-Sim)"].str.split("-").str[0]
         query["simStart"] = query["AUG (Ref-Sim)"].str.split("-").str[1]

@@ -200,6 +200,6 @@
 * You can find the ${input} variable in your `.config` file
 
       conda activate splice-decoder
-      python code/Make_aa_fa.py -i ${input} -r human -t ENST00000438015.6 -e ES
+      python code/Make_aa_fa.py -i ${input} -r human -t ENST00000438015.6 -e ES -d ${SpliceDecoder_path}
 
 * You can copy and paste the amino acid sequences into the Alphafold server (https://alphafoldserver.com) as input

@@ -197,9 +197,9 @@
 ## Create a 3D Protein structure based on simulated 
 * You can use `Make_aa_fa.py` to extract amino acid sequences from your interesting targets
 * !! This function requires the `Effect_score.tsv`, Toy data is not eligible for this function
-* You can find the ${input} variable in your `.config` file
+* You can find the `${input}` and `${Main}` in your `.config` file
 
       conda activate splice-decoder
-      python code/Make_aa_fa.py -i ${input} -r human -t ENST00000438015.6 -e ES -d ${SpliceDecoder_path}
+      python code/Make_aa_fa.py -i ${input} -r human -t ENST00000438015.6 -e ES -d ${Main}
 
 * You can copy and paste the amino acid sequences into the Alphafold server (https://alphafoldserver.com) as input

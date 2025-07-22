@@ -169,7 +169,7 @@ def Add_TU(tpm, query_df):
         gene_tx = pd.DataFrame.from_dict(gene_tx,
                                          orient="index")
         gene_tx = gene_tx.dropna()  # Remove undefined transcripts
-        gene_tx = gene_tx[gene_tx[0].isin(query_df["gene"].unique())].copy()
+        gene_tx = gene_tx[gene_tx[0].isin(query_df["Gene symbol"].unique())].copy()
         print(f"Caldulated TU for {gene_tx.shape[0]} genes")
 
         tu_input = pd.merge(tpm, gene_tx, 

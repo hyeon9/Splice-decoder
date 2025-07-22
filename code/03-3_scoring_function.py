@@ -137,7 +137,7 @@ def Add_TU(tpm, query_df):
 
     path = "/".join(args.input.split("/")[:-2])+"/tpm/" # TPM folder
     tu_check = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f)) if f.endswith("TU.txt")]
-    if len(tu_check) > 0:
+    if len(tu_check) > 0:   # TU file sholud be refrehsed
         return print("\n\nTU file is already existed\n\n")
 
     else:
@@ -145,44 +145,23 @@ def Add_TU(tpm, query_df):
         tpm["mean"] = tpm.mean(axis=1)
         tpm = tpm[["mean"]]
         
-        with open("/".join(args.input.split("/")[:-2])+"/main.gtf", "r") as main_gtf:
-            print("Checking GTF...\n\n")
-            gene_tx = {}
-            for line in main_gtf:
-                if line.startswith("#"):
-                    pass
-                else:
-                    if line.split("\t")[2] == "transcript":
-                        for k,i in enumerate(line.split("\t")[8].split("; ")):
-                            if i.startswith("gene_id"):
-                                gene = i.split("\"")[1]
-                            if i.startswith("transcript_id"):
-                                txID = i.split("\"")[1]
-                                gene_tx[txID] = []
-                            # if i.startswith("gene_name"):
-                            #     gene_name = i.split("\"")[1]
-                        # try:
-                        #     gene_tx[txID].append(gene_name)
-                        # except:
-                        gene_tx[txID].append(gene)
-
-        gene_tx = pd.DataFrame.from_dict(gene_tx,
-                                         orient="index")
-        gene_tx = gene_tx.dropna()  # Remove undefined transcripts
-        gene_tx = gene_tx[gene_tx[0].isin(query_df["Gene symbol"].unique())].copy()
-        print(f"Caldulated TU for {gene_tx.shape[0]} genes")
-
+        gene_tx = pd.read_csv("/".join(args.input.split("/")[:-2])+"tx_gene_dict",
+                              sep="\t",
+                              header=None,
+                              index_col=0)
+        gene_tx = gene_tx[gene_tx[2].isin(query_df["Gene symbol"].unique())].copy()
         tu_input = pd.merge(tpm, gene_tx, 
                             left_index=True, 
-                            right_index=True).sort_values(by=0).reset_index()
+                            right_index=True).sort_values(by=2).reset_index()
+        print(f"Caldulated TU for {len(tu_input[2].unique())} genes")
 
         output_path = "/".join(args.input.split("/")[:-2]) + "/tpm/TU.txt"
         with open(output_path, 'w') as f:
             f.write("0"+"\t"+"1"+"\t"+"TU"+"\n")
-            for gene in tu_input[0].unique():
-                tx = tu_input[tu_input[0] == gene]
+            for gene in tu_input[2].unique():
+                tx = tu_input[tu_input[2] == gene]
                 tu_values = (tx["mean"] / tx["mean"].sum()).fillna(0.0).values
-                output_data = np.column_stack((tx[["index",0]].values, tu_values))
+                output_data = np.column_stack((tx[["index",2]].values, tu_values))
                 for row in output_data:
                     f.write("\t".join(map(str, row)) + "\n")
         
@@ -232,10 +211,6 @@ def Multi_splicing_prop(score_df, stype, mode):
     
                 for tx in each_SP["ref_tx"].unique():   # Calculate Effect_Score per TX in each DS
                     ind_SP = each_SP[each_SP["ref_tx"]==tx].copy()
-                    # ind_SP["Mean_PSI"] = Ps # Updated 25.05.07
-                    # ind_SP["Effect_Score"] = (Ps * ind_SP["TU"] * ind_SP["FS"].astype(float))
-                    # ind_SP["Effect_Score"] = (np.abs(ind_SP["dPSI_2_minus_1"]) * ind_SP["TU"] * ind_SP["FS"].astype(float))
-                    # ind_SP["Effect_Score"] = (np.abs(ind_SP["dPSI_2_minus_1"]) * Ps * ind_SP["TU"] * ind_SP["FS"].astype(float))
                     ind_SP["Effect_Score"] = (ind_SP["FS"].astype(float) * ind_SP["TU"] * Ps * abs(ind_SP["dPSI_2_minus_1"]) * ind_SP["ORF"].astype(float))
                     
                     if k == 0:
@@ -248,12 +223,8 @@ def Multi_splicing_prop(score_df, stype, mode):
             pass
 
     final_df = final_df.drop(["pair_ID", "ComplexID", "long_ID"], axis=1)
-    # final_df = final_df[["LongID","gene","ref_tx","event","Effect_Score","FS","pNMD","DOA_direction","dPSI_2_minus_1","TU","ORF","Start","Stop","dAA","5'UTR","3'UTR","Domain_integrity","Sim_Domain","Ref_Domain","-log10(q)","Mean_PSI"]]
-    # final_df = final_df[["LongID","gene","ref_tx","event","Effect_Score","FS","pNMD","DOA_direction","dPSI_2_minus_1","TU","ORF","Start","Stop","dAA","5'UTR","3'UTR","Domain_integrity","Sim_Domain","Ref_Domain","-log10(q)"]]
     final_df = final_df[["LongID","Gene symbol","ref_tx","event","Effect_Score","change_rate","pNMD","DOA_direction","dPSI_2_minus_1","TU","ORF","Start","Stop","dAA","5'UTR","3'UTR","Domain_integrity","Sim_Domain","Ref_Domain","-log10(q)"]]
-    # final_df.columns = ["LongID","gene","Reference_transcript","Simulated_event","Effect_Score","Domain_change_rate","Probability_of_NMD","DOA_direction","Delta_PSI","Transcript_usage","ORF","AUG (Ref-Sim)","Stop_codon (Ref-Sim)","CDS_difference","5'UTR_difference","3'UTR_difference","Domain_integrity","Length_of_simulated_tx_domain","Length_of_referece_tx_domain","rMATS_FDR(-log10)", "Mean_PSI"]
     final_df.columns = ["LongID","Gene symbol","Reference_transcript","Simulated_event","Effect_Score","Domain_change_rate","Probability_of_NMD","Functional_class","Delta_PSI","Transcript_usage","ORF","AUG (Ref-Sim)","Stop_codon (Ref-Sim)","CDS_difference (nt)","5'UTR_difference (nt)","3'UTR_difference (nt)","Domain_integrity","Length_of_simulated_tx_domain","Length_of_referece_tx_domain","rMATS_FDR(-log10)"]
-    # final_df.to_csv(args.input+"Whole_DS_score_{}.txt".format(stype),
     final_df.to_csv(args.input+"Effect_score.tsv".format(stype),
                     sep="\t",
                     index=False)

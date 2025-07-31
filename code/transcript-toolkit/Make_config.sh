@@ -7,4 +7,4 @@ conda_path=`conda info --envs | grep '*' | awk '{print $NF}'`
 export PATH="`pwd`:$PATH"
 toy_key="${1:-data}"
 
-config_maker.py ${conda_path} ${toy_key}
+config_maker.py ${conda_path}

@@ -8,7 +8,7 @@ conda activate splice-decoder &&
 pip install -r requirements_pip.txt
 unzip toy_data.zip
 
-## Prepara data source
+## Prepare data source
 unzip dat.zip
 cd dat/
 cd reference/

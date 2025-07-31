@@ -1,9 +1,11 @@
 #!/bin/bash
+
+yml=$1
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda config --add channels conda-forge
 conda config --add channels bioconda
 conda config --remove channels defaults
-conda env create --name splice-decoder -f SD.yml &&
+conda env create --name splice-decoder -f ${yml} &&
 conda activate splice-decoder &&
 pip install -r requirements_pip.txt
 unzip toy_data.zip

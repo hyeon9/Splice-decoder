@@ -4,7 +4,7 @@
 * Splice decoder provides functional annotation for your differential splicing events (DESs)
 * The functional annotation contains NMD probability, functional domain alteration (such as DNA binding, motif, regions, protein domain, and so on), CDS/UTR alterations, and effect score
 * You can use the effect score to prioritize your DSEs
-* Currently, we only support hg38 (hg19 will be supported soon)
+* Currently, Splice-decoder supports hg38 and mm10 genome
 
 ## Workflow overview
 <img width="1407" height="509" alt="image" src="https://github.com/user-attachments/assets/ef6b3535-982c-483c-b30f-d2f486092c4d" />

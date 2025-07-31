@@ -8,7 +8,7 @@
 * If you successfully created `Your.config`, now you can run transcript-toolkit
 * The steps are intended to be executed in order, so it is recommended to use `all`
 
-      bash Main.sh ${Your.config}
+      bash transcript-toolkit.sh ${Your.config}
 
 ## Guide for making config file
 * Make_config.sh will ask..
@@ -67,7 +67,7 @@
 * Based on your Main_output file, you can pick ceratin comparison to visualize it using this code
 
       conda activate splice-decoder
-      python code/02_Vis.py --input ${working directory} --cano_tx ${Canonical_transcript} --query_list ${Your_query_list}
+      python code/transcript-toolkit/02_Vis.py --input ${working directory} --cano_tx ${Canonical_transcript} --query_list ${Your_query_list}
 
 ## Create a 3D Protein structure based on simulated 
 * You can use `Make_aa_fa.py` to extract amino acid sequences from your interesting targets
@@ -75,6 +75,6 @@
 * You can find the `${input}` and `${Main}` in your `.config` file
 
       conda activate splice-decoder
-      python code/Make_aa.py -i ${input} -r human -rt ${ref_ENST}.6 -qt ${query_ENST} -d ${Main}
+      python code/transcript-toolkit/Make_aa.py -i ${input} -r human -rt ${ref_ENST}.6 -qt ${query_ENST} -d ${Main}
 
 * You can copy and paste the amino acid sequences into the Alphafold server (https://alphafoldserver.com) as input

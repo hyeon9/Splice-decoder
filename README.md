@@ -51,9 +51,7 @@
 * All your output will be saved to `${input}/result`
 
 
-* If you want to annotate a transcript-centric data,
-
-- [transcript-toolkit](./code/transcript-toolkit/README.md): Description of transcript-toolkit 
+* If you want to annotate a transcript-centric data, you can find description [here](./code/transcript-toolkit/README.md)
 
 <br>
 

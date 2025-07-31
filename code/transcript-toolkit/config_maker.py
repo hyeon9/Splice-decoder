@@ -7,7 +7,7 @@ config = {}
 
 output_prefix = questionary.text("Specify your config file name (e.g. HGjob)").ask()
 config['Main'] = questionary.text("Enter the path of Splice-decoder (e.g. /User/usr/Tool/Splice-decoder/)").ask()+"/"
-config['code'] = os.path.join(config['Main'], "code/")
+config['code'] = os.path.join(config['Main'], "code/transcript-toolkit/")
 config['cpatdb'] = os.path.join(config['Main'], "dat/")
 config['input'] = questionary.text("Enter your working directory (e.g. /User/usr/Tool/Splice-decoder/project1)").ask()+"/"
 config['query_list'] = questionary.text("Enter your query_list that have multiple comparison pairs\n(e.g. /User/usr/Tool/Splice-decoder/toy_data/query_list.txt))").ask()

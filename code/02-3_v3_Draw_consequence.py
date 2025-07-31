@@ -91,12 +91,12 @@ def Run(key, input_gene_name, *sub_splicing):
         query = query[query["5'UTR_difference (nt)"]!="Frame loss"] # Filter out frame loss, because they donot have domain
         query = query[query["ORF"]=="pORF1"]
         query["ORF"] = query["ORF"].apply(lambda x : 3 if x =="pORF1" else (2 if x == "pORF2" else 1))
-        query = query[["LongID","Simulated_event","AUG (Ref-Sim)","Stop (Ref-Sim)","CDS_difference (nt)","Reference_transcript","ORF","Domain_change_rate","Functional_class","Probability_of_NMD"]]
+        query = query[["LongID","Gene symbol","Simulated_event","AUG (Ref-Sim)","Stop (Ref-Sim)","CDS_difference (nt)","Reference_transcript","ORF","Domain_change_rate","Functional_class","Probability_of_NMD"]]
         query["simStop"] = query["Stop (Ref-Sim)"].str.split("-").str[1]
         query["Stop (Ref-Sim)"] = query["Stop (Ref-Sim)"].str.split("-").str[0]
         query["simStart"] = query["AUG (Ref-Sim)"].str.split("-").str[1]
         query["AUG (Ref-Sim)"] = query["AUG (Ref-Sim)"].str.split("-").str[0]
-        query.columns = ["ID","event_type","Start","STOP","dAA","ENST","ORF","delta L","DOA_types","pNMD","simSTOP","simStart"]
+        query.columns = ["ID","Gene symbol","event_type","Start","STOP","dAA","ENST","ORF","delta L","DOA_types","pNMD","simSTOP","simStart"]
         query["SID"] = query["ID"]
         query["ID"] = query["ID"]+"|"+query["ENST"]+"|"+query["Start"]+"|"+query["simStart"]
         query[["simSTOP","STOP","Start","simStart"]] = query[["simSTOP","STOP","Start","simStart"]].astype(float)
@@ -426,7 +426,7 @@ def Run(key, input_gene_name, *sub_splicing):
             if line > 0:    ## From 2nd exon
                 if strand == "+":
                     domain = pfam[(pfam[8]==final.iloc[line,1]) &
-                                  (pfam[9]==final.iloc[line,2])][[0,1,2,3]].drop_duplicates()
+                                  (pfam[9]==final.iloc[line,2])][[0,1,2,3,8,9]].drop_duplicates()
                     ## Previous exon end - current exon start
                     intron = np.abs(int(final.iloc[line-1,2] - int(final.iloc[line,1])))
                     diff.append(intron)
@@ -439,17 +439,30 @@ def Run(key, input_gene_name, *sub_splicing):
                     # print(int(final.iloc[line,1])-np.sum(diff)-zero,int(final.iloc[line,2])-np.sum(diff)-zero)
                     ###########
 
-                    if domain.shape[0] > 0: ## There are multi protein domains, it is not only one
-                        domain_line.append([int(domain.iloc[0,1])-np.sum(diff)-zero,
-                                            int(domain.iloc[0,2])-np.sum(diff)-zero,])
-                        if not domain.iloc[0,3] in domain_name:
-                            domain_name.append(domain.iloc[0,3])
-                        else:
+                    for n_domain in range(domain.shape[0]):
+                        mat_start = abs(domain.iloc[n_domain][8] - domain.iloc[n_domain][1])
+                        mat_end = abs(domain.iloc[n_domain][9] - domain.iloc[n_domain][2])
+                        
+                        if mat_start == 0 and mat_end == 0:
+                            domain_start = domain.iloc[n_domain][1]
+                            domain_end = domain.iloc[n_domain][2]
+                        else:   # Shared region between exon and domain
+                            domain_start = max(domain.iloc[n_domain][8], domain.iloc[n_domain][1])
+                            domain_end = min(domain.iloc[n_domain][9], domain.iloc[n_domain][2])
+                        
+                        domain_line.append([int(domain_start)-np.sum(diff)-zero,
+                                            int(domain_end)-np.sum(diff)-zero])
+                            
+                        if pre_domain == domain.iloc[n_domain,3]:
                             domain_name.append(" ")
+                            pre_domain = domain.iloc[n_domain,3]
+                        else:
+                            domain_name.append(domain.iloc[n_domain,3])
+                            pre_domain = domain.iloc[n_domain,3]
             
                 else:   # Start with -2, because first exon is -1
                     domain = pfam[(pfam[8]==final.iloc[line,1]) &
-                                  (pfam[9]==final.iloc[line,2])][[0,1,2,3]].drop_duplicates()
+                                  (pfam[9]==final.iloc[line,2])][[0,1,2,3,8,9]].drop_duplicates()
                     intron = np.abs(np.abs(int(final.iloc[line-1,1])-zero) - np.abs(int(final.iloc[line,2])-zero))
                     diff.append(intron)
                     new_line.append([np.abs(int(final.iloc[line,2])-zero)-np.sum(diff), 
@@ -460,49 +473,99 @@ def Run(key, input_gene_name, *sub_splicing):
                     # print(np.abs(int(final.iloc[line,2])-zero)-np.sum(diff),np.abs(int(final.iloc[line,1])-zero)-np.sum(diff))
                     ###########
                     
-                    if domain.shape[0] > 0: ## There are multi protein domains, it is not only one
-                        domain_line.append([np.abs(int(domain.iloc[0,2])-zero)-np.sum(diff),
-                                            np.abs(int(domain.iloc[0,1])-zero)-np.sum(diff),])
-                        if not domain.iloc[0,3] in domain_name:
-                            domain_name.append(domain.iloc[0,3])
-                        else:
+                    for n_domain in range(domain.shape[0]):
+                        mat_start = abs(domain.iloc[n_domain][8] - domain.iloc[n_domain][1])
+                        mat_end = abs(domain.iloc[n_domain][9] - domain.iloc[n_domain][2])
+                        
+                        if mat_start == 0 and mat_end == 0:
+                            domain_start = domain.iloc[n_domain][1]
+                            domain_end = domain.iloc[n_domain][2]
+                        else:   # Shared region between exon and domain
+                            domain_start = max(domain.iloc[n_domain][8], domain.iloc[n_domain][1])
+                            domain_end = min(domain.iloc[n_domain][9], domain.iloc[n_domain][2])
+                            
+                        domain_line.append([np.abs(int(domain_end)-zero)-np.sum(diff),
+                                            np.abs(int(domain_start)-zero)-np.sum(diff)])
+
+                        if pre_domain == domain.iloc[n_domain,3]:
                             domain_name.append(" ")
+                            pre_domain = domain.iloc[n_domain,3]
+                        else:
+                            domain_name.append(domain.iloc[n_domain,3])
+                            pre_domain = domain.iloc[n_domain,3]
 
             else:   ## For 1st exon
+                pre_domain = " "
                 if strand == "+":
                     zero = int(final.iloc[line,1])  # The most left exon's start site for align in figure
                     new_line.append([int(final.iloc[line,1])-zero,
                                     int(final.iloc[line,2])-zero])
                     domain = pfam[(pfam[8]==final.iloc[line,1]) &
-                                (pfam[9]==final.iloc[line,2])][[0,1,2,3]].drop_duplicates()
+                                  (pfam[9]==final.iloc[line,2])][[0,1,2,3,8,9]].drop_duplicates()
                     
-                    if domain.shape[0] > 0:
-                        domain_line.append([np.abs(int(domain.iloc[0,1])-zero),
-                                            np.abs(int(domain.iloc[0,2])-zero),])
-                        if not domain.iloc[0,3] in domain_name:
-                            domain_name.append(domain.iloc[0,3])
+                    for n_domain in range(domain.shape[0]):
+                        mat_start = abs(domain.iloc[n_domain][8] - domain.iloc[n_domain][1])
+                        mat_end = abs(domain.iloc[n_domain][9] - domain.iloc[n_domain][2])
+
+                        if mat_start == 0 and mat_end == 0:
+                            domain_start = domain.iloc[n_domain][1]
+                            domain_end = domain.iloc[n_domain][2]
+                        else:   # Shared region between exon and domain
+                            domain_start = max(domain.iloc[n_domain][8], domain.iloc[n_domain][1])
+                            domain_end = min(domain.iloc[n_domain][9], domain.iloc[n_domain][2])
+
+                        domain_line.append([int(domain_start)-zero,
+                                            int(domain_end)-zero])
+                        
+                        if n_domain == 0:
+                            domain_name.append(domain.iloc[n_domain,3])
+                            pre_domain = domain.iloc[n_domain,3]
                         else:
-                            domain_name.append(" ")
+                            if pre_domain == domain.iloc[n_domain,3]:
+                                domain_name.append(" ")
+                                pre_domain = domain.iloc[n_domain,3]
+                            else:
+                                domain_name.append(domain.iloc[n_domain,3])
+                                pre_domain = domain.iloc[n_domain,3]
+                
                 else:
                     zero = int(final.iloc[line,2])  # The most right exon's end site
                     new_line.append([np.abs(int(final.iloc[line,2])-zero),
                                     np.abs(int(final.iloc[line,1])-zero)])
                     domain = pfam[(pfam[8]==final.iloc[line,1]) &
-                                (pfam[9]==final.iloc[line,2])][[0,1,2,3]].drop_duplicates()
-                    if domain.shape[0] > 0:
-                        domain_line.append([np.abs(int(domain.iloc[0,2])-zero),
-                                            np.abs(int(domain.iloc[0,1])-zero),])
-                        if not domain.iloc[0,3] in domain_name:
-                            domain_name.append(domain.iloc[0,3])
+                                  (pfam[9]==final.iloc[line,2])][[0,1,2,3,8,9]].drop_duplicates()
+                    
+                    for n_domain in range(domain.shape[0]):
+                        mat_start = abs(domain.iloc[n_domain][8] - domain.iloc[n_domain][1])
+                        mat_end = abs(domain.iloc[n_domain][9] - domain.iloc[n_domain][2])
+                        
+                        if mat_start == 0 and mat_end == 0:
+                            domain_start = domain.iloc[n_domain][1]
+                            domain_end = domain.iloc[n_domain][2]
+                        else:   # Shared region between exon and domain
+                            domain_start = max(domain.iloc[n_domain][8], domain.iloc[n_domain][1])
+                            domain_end = min(domain.iloc[n_domain][9], domain.iloc[n_domain][2])
+                        
+                        domain_line.append([np.abs(int(domain_end)-zero),
+                                            np.abs(int(domain_start)-zero)])
+                            
+                        if n_domain == 0:
+                            domain_name.append(domain.iloc[n_domain,3])
+                            pre_domain = domain.iloc[n_domain,3]
                         else:
-                            domain_name.append(" ")
+                            if pre_domain == domain.iloc[n_domain,3]:
+                                domain_name.append(" ")
+                                pre_domain = domain.iloc[n_domain,3]
+                            else:
+                                domain_name.append(domain.iloc[n_domain,3])
+                                pre_domain = domain.iloc[n_domain,3]
         
         return new_line, domain_line, domain_name
 
 
     test_list = query.iloc[:,0].unique()
     sid = test_list[0].split("|")[0]
-    test_list = query[query["ID"].str.contains(input_gene_name)]["ID"].unique()
+    test_list = query[query["Gene symbol"] == input_gene_name]["ID"].unique()
     
     ################################ TEMP
     ## Remove Biding site in figures, it spends lots of space
@@ -522,7 +585,6 @@ def Run(key, input_gene_name, *sub_splicing):
     for id in test_list:    # Certain splicing event with one of the possible ORF
         LID = id.split("|")[0]
         sub = query[query["ID"]==id]
-        print(sub)
 
         ######## Functional Annotation
         doa_types = str(sub["DOA_types"].values[0])
@@ -551,13 +613,18 @@ def Run(key, input_gene_name, *sub_splicing):
                 
                 for num, kinds_domain in enumerate(range(len(n_domain))):   # Make Figure and dataframe "one domain at once"
                     ## Prepare figure params
-                    gene = fig_input["ID"].str.split(";").str[1].values[0]
+                    gene = fig_input["Gene symbol"].values[0]
                     tx = fig_input["ENST"].values[0]
                     eventid = fig_input["event_type"].values[0]
 
                     ## Make an input (bed) for visualization
                     ref_bed, ref_domain, ref_dname = Make_query(ref, wo_pfam[wo_pfam[3]==n_domain[kinds_domain]])
                     sim_bed, sim_domain, sim_dname = Make_query(sim_tx, w_pfam[w_pfam[3]==n_domain[kinds_domain]])
+                    print(n_domain[kinds_domain])
+                    print(ref_bed)
+                    print(ref_domain)
+                    print(sim_bed)
+                    print(sim_domain)
 
                     ## Check different exon block
                     if len(ref_bed) > 0:    # Markup changed regions

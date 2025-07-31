@@ -25,7 +25,7 @@
       cd ./Splice-decoder && bash install.sh ${appropriate.yml}
 
 * To perform a test run, you can use the provided toy_data
-* To to this you should build a toy configuration file through an interactive way [You can find more details here](#guide-for-making-config-file):
+* To to this you should build a toy configuration file through an interactive way [You can find more details here](#guide-for-making-config-file)
 
       cd code/
       bash Make_config.sh toy
@@ -49,9 +49,7 @@
       sbatch Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all} ${Your.config}
 
 * All your output will be saved to `${input}/result`
-
-
-* If you want to annotate a transcript-centric data, you can find description [here](./code/transcript-toolkit/README.md)
+* If you want to annotate a transcript-centric data [you can find more details here](./code/transcript-toolkit/README.md)
 
 <br>
 

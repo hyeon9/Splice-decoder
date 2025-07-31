@@ -20,7 +20,7 @@
 
 ## Quick start (conda is required)
 * Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
-* Install SpliceDecoder by using install script with a appropriate yml for your OS
+* Install SpliceDecoder by using the install script with the appropriate yml for your OS
   
       cd ./Splice-decoder && bash install.sh ${appropriate.yml}
 

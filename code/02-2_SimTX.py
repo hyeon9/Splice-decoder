@@ -128,15 +128,25 @@ def Make_query(final_bed, pfam):
             if strand == "+":
                 ## ADD strand specific domain assign and multiple domain case
                 domain = pfam[(pfam[8]==final_bed.iloc[line,1]) &
-                              (pfam[9]==final_bed.iloc[line,2])][[0,1,2,3]].drop_duplicates()
+                              (pfam[9]==final_bed.iloc[line,2])][[0,1,2,3,8,9]].drop_duplicates()
                 intron = np.abs(int(final_bed.iloc[line-1,2] - int(final_bed.iloc[line,1])))    # (N-1)th exon end - Nth exon start
                 diff.append(intron)
                 new_line.append([int(final_bed.iloc[line,1])-np.sum(diff)-zero, 
                                  int(final_bed.iloc[line,2])-np.sum(diff)-zero])
 
                 for n_domain in range(domain.shape[0]):
-                    domain_line.append([int(domain.iloc[n_domain,1])-np.sum(diff)-zero,
-                                        int(domain.iloc[n_domain,2])-np.sum(diff)-zero,])
+                    mat_start = abs(domain.iloc[n_domain][8] - domain.iloc[n_domain][1])
+                    mat_end = abs(domain.iloc[n_domain][9] - domain.iloc[n_domain][2])
+                    
+                    if mat_start == 0 and mat_end == 0:
+                        domain_start = domain.iloc[n_domain][1]
+                        domain_end = domain.iloc[n_domain][2]
+                    else:   # Shared region between exon and domain
+                        domain_start = max(domain.iloc[n_domain][8], domain.iloc[n_domain][1])
+                        domain_end = min(domain.iloc[n_domain][9], domain.iloc[n_domain][2])
+                        
+                    domain_line.append([int(domain_start)-np.sum(diff)-zero,
+                                        int(domain_end)-np.sum(diff)-zero])
                         
                     if pre_domain == domain.iloc[n_domain,3]:
                         domain_name.append(" ")
@@ -144,17 +154,29 @@ def Make_query(final_bed, pfam):
                     else:
                         domain_name.append(domain.iloc[n_domain,3])
                         pre_domain = domain.iloc[n_domain,3]
+
         
             else:   # Start with -2, because first exon is -1
                 domain = pfam[(pfam[8]==final_bed.iloc[line,1]) &
-                              (pfam[9]==final_bed.iloc[line,2])][[0,1,2,3]].drop_duplicates()
+                              (pfam[9]==final_bed.iloc[line,2])][[0,1,2,3,8,9]].drop_duplicates()
                 intron = np.abs(np.abs(int(final_bed.iloc[line-1,1])-zero) - np.abs(int(final_bed.iloc[line,2])-zero))
                 diff.append(intron)
                 new_line.append([np.abs(int(final_bed.iloc[line,2])-zero)-np.sum(diff), 
                                 np.abs(int(final_bed.iloc[line,1])-zero)-np.sum(diff)])    # 2*zero, represents to zero and then direction change
+                
                 for n_domain in range(domain.shape[0]):
-                    domain_line.append([np.abs(int(domain.iloc[n_domain,2])-zero)-np.sum(diff),
-                                        np.abs(int(domain.iloc[n_domain,1])-zero)-np.sum(diff),])
+                    mat_start = abs(domain.iloc[n_domain][8] - domain.iloc[n_domain][1])
+                    mat_end = abs(domain.iloc[n_domain][9] - domain.iloc[n_domain][2])
+                    
+                    if mat_start == 0 and mat_end == 0:
+                        domain_start = domain.iloc[n_domain][1]
+                        domain_end = domain.iloc[n_domain][2]
+                    else:   # Shared region between exon and domain
+                        domain_start = max(domain.iloc[n_domain][8], domain.iloc[n_domain][1])
+                        domain_end = min(domain.iloc[n_domain][9], domain.iloc[n_domain][2])
+                        
+                    domain_line.append([np.abs(int(domain_end)-zero)-np.sum(diff),
+                                        np.abs(int(domain_start)-zero)-np.sum(diff)])
 
                     if pre_domain == domain.iloc[n_domain,3]:
                         domain_name.append(" ")
@@ -162,6 +184,7 @@ def Make_query(final_bed, pfam):
                     else:
                         domain_name.append(domain.iloc[n_domain,3])
                         pre_domain = domain.iloc[n_domain,3]
+
 
         else:   # First line
             pre_domain = " "
@@ -170,11 +193,21 @@ def Make_query(final_bed, pfam):
                 new_line.append([int(final_bed.iloc[line,1])-zero,
                                  int(final_bed.iloc[line,2])-zero])
                 domain = pfam[(pfam[8]==final_bed.iloc[line,1]) &
-                              (pfam[9]==final_bed.iloc[line,2])][[0,1,2,3]].drop_duplicates()
+                              (pfam[9]==final_bed.iloc[line,2])][[0,1,2,3,8,9]].drop_duplicates()
                 
                 for n_domain in range(domain.shape[0]):
-                    domain_line.append([int(domain.iloc[n_domain,1])-zero,
-                                        int(domain.iloc[n_domain,2])-zero,])
+                    mat_start = abs(domain.iloc[n_domain][8] - domain.iloc[n_domain][1])
+                    mat_end = abs(domain.iloc[n_domain][9] - domain.iloc[n_domain][2])
+                    
+                    if mat_start == 0 and mat_end == 0:
+                        domain_start = domain.iloc[n_domain][1]
+                        domain_end = domain.iloc[n_domain][2]
+                    else:   # Shared region between exon and domain
+                        domain_start = max(domain.iloc[n_domain][8], domain.iloc[n_domain][1])
+                        domain_end = min(domain.iloc[n_domain][9], domain.iloc[n_domain][2])
+                    
+                    domain_line.append([int(domain_start)-zero,
+                                        int(domain_end)-zero])
                     if n_domain == 0:
                         domain_name.append(domain.iloc[n_domain,3])
                         pre_domain = domain.iloc[n_domain,3]
@@ -191,11 +224,22 @@ def Make_query(final_bed, pfam):
                 new_line.append([np.abs(int(final_bed.iloc[line,2])-zero),
                                  np.abs(int(final_bed.iloc[line,1])-zero)])
                 domain = pfam[(pfam[8]==final_bed.iloc[line,1]) &
-                              (pfam[9]==final_bed.iloc[line,2])][[0,1,2,3]].drop_duplicates()
+                              (pfam[9]==final_bed.iloc[line,2])][[0,1,2,3,8,9]].drop_duplicates()
                 
                 for n_domain in range(domain.shape[0]):
-                    domain_line.append([np.abs(int(domain.iloc[n_domain,2])-zero),
-                                        np.abs(int(domain.iloc[n_domain,1])-zero),])
+                    mat_start = abs(domain.iloc[n_domain][8] - domain.iloc[n_domain][1])
+                    mat_end = abs(domain.iloc[n_domain][9] - domain.iloc[n_domain][2])
+                    
+                    if mat_start == 0 and mat_end == 0:
+                        domain_start = domain.iloc[n_domain][1]
+                        domain_end = domain.iloc[n_domain][2]
+                    else:   # Shared region between exon and domain
+                        domain_start = max(domain.iloc[n_domain][8], domain.iloc[n_domain][1])
+                        domain_end = min(domain.iloc[n_domain][9], domain.iloc[n_domain][2])
+                    
+                    domain_line.append([np.abs(int(domain_end)-zero),
+                                        np.abs(int(domain_start)-zero)])
+                        
                     if n_domain == 0:
                         domain_name.append(domain.iloc[n_domain,3])
                         pre_domain = domain.iloc[n_domain,3]
@@ -244,7 +288,7 @@ if __name__ == "__main__":
 
     integrity_indi = open(OUT+"{}_{}_Domain_integrity_indi.txt".format(interesting_target, args.splicing_event), "w")
     nmd_check = open(OUT+"{}_{}_NMD_check.txt".format(interesting_target, args.splicing_event), "w")
-    main_output = open(OUT+"{}_{}_Main_output.txt".format(interesting_target,args.splicing_event), "w")
+    main_output = open(OUT+"{}_{}_Main_table.tsv".format(interesting_target,args.splicing_event), "w")
     
     integrity_indi.write("Pair_info"+"\t"+"pORF"+"\t"+"altered_domain"+"\t"+"Domain_change_ratio"+"\t"+"Change_direction"+"\n")
     main_output.write("##Every diff is calculated by Ref TX - Sim TX"+"\n")

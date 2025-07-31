@@ -20,9 +20,9 @@
 
 ## Quick start (conda is required)
 * Splice-decoder can be downloaded from https://github.com/hyeon9/Splice-decoder/
-* To install SpliceDecoder, you should specify proper yml file for your OS (`For_Mac_user.yml` or `For_Linux_user.yml`)
+* Install SpliceDecoder by using install script and SD.yml file
   
-      cd ./Splice-decoder && bash install.sh ${yml}
+      cd ./Splice-decoder && bash install.sh SD.yml
 
 * To perform a test run, you can use the provided toy_data
 * To to this you should build a toy configuration file through an interactive way [You can find more details here](#guide-for-making-config-file):

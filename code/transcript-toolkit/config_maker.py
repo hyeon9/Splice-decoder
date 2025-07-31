@@ -6,15 +6,15 @@ import sys
 config = {}
 
 output_prefix = questionary.text("Specify your config file name (e.g. HGjob)").ask()
-config['Main'] = questionary.text("Enter the path of TX-comp (e.g. /User/usr/Tool/TX-comp-main/)").ask()+"/"
+config['Main'] = questionary.text("Enter the path of Splice-decoder (e.g. /User/usr/Tool/Splice-decoder/)").ask()+"/"
 config['code'] = os.path.join(config['Main'], "code/")
 config['cpatdb'] = os.path.join(config['Main'], "dat/")
-config['input'] = questionary.text("Enter your working directory (e.g. /User/usr/Tool/TX-comp-main/project1)").ask()+"/"
-config['query_list'] = questionary.text("Enter your query_list that have multiple comparison pairs\n(e.g. /User/usr/Tool/TX-comp-main/toy_data/query_list.txt))").ask()
-config['Your_GTF'] = questionary.text("Enter your GTF file that you used in rMATS with its full path\n(e.g. /User/usr/Tool/TX-comp-main/toy_data/toy.gtf or /User/usr/Tool/TX-comp-main/toy_data/*.gtf))").ask()
+config['input'] = questionary.text("Enter your working directory (e.g. /User/usr/Tool/Splice-decoder-main/project1)").ask()+"/"
+config['query_list'] = questionary.text("Enter your query_list that have multiple comparison pairs\n(e.g. /User/usr/Tool/Splice-decoder-main/toy_data/query_list.txt))").ask()
+config['Your_GTF'] = questionary.text("Enter your GTF file that you used in rMATS with its full path\n(e.g. /User/usr/Tool/Splice-decoder-main/toy_data/toy.gtf or /User/usr/Tool/Splice-decoder-main/toy_data/*.gtf))").ask()
 config['species'] = questionary.text("Enter a species of your data (e.g. human or mouse)").ask()
 config['seq_type'] = questionary.text("Enter a sequencing type of your data (e.g., SR (short-read) or LR (long-read) )").ask()
-config['njobs'] = questionary.text("Enter a number of cpu in TX-comp job (int [0-?]").ask()
+config['njobs'] = questionary.text("Enter a number of cpu in Splice-decoder job (int [0-?]").ask()
 
 ## Specify 3rd party tool path
 config['conda'] = sys.argv[1]

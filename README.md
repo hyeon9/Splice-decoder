@@ -50,6 +50,11 @@
 
 * All your output will be saved to `${input}/result`
 
+
+* If you want to annotate a transcript-centric data,
+
+- [transcript-toolkit](./code/transcript-toolkit/README.md): Description of transcript-toolkit 
+
 <br>
 
 ## Guide for making config file

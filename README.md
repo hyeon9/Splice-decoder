@@ -85,6 +85,9 @@
   
       ? Enter a sequencing type of your data (e.g. SR (short-read) or LR (long-read) )
       > You just need to specify the sequencing method of your data
+
+      ? Specify a NMD definition method (e.g., default (55rule) or sensitive) )
+      > You just need to select one either "default" or "sensitive"
   
       ? Enter a FDR cut off for your rMATS (float [0-1], default 0.05)
       > Specify rMATS FDR cut off

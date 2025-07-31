@@ -48,7 +48,7 @@ def Load(stype):
     It adds the several types of ID for the given dataframe
     And remove duplicates based on this ID, pNMD, and ORF
     """
-    ref_result = pd.read_csv(args.input+f"all_{stype}_Main_output.txt",
+    ref_result = pd.read_csv(args.input+f"all_{stype}_Main_table.tsv",
                             sep="\t", 
                             skiprows=1)
     ref_result.columns = ["LongID","Gene symbol","ref_tx","event","ORF","Start","Stop","5'UTR","dAA","3'UTR","Domain_integrity","change_rate","Ref_Domain","Sim_Domain","DOA_direction","pNMD"]

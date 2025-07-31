@@ -658,7 +658,7 @@ if __name__ == "__main__":
                     final_whole_doa_direction = "Frame loss"
                     nmd_diff = "Frame loss"
 
-                gene_symbol = tx_dict_file[tx_dict_file[0]==tx][2].unique()[0]
+                gene_symbol = str(tx_dict_file[tx_dict_file[0]==tx][2].unique()[0])
                 main_output.write(longid+"\t"+
                                   gene_symbol+"\t"+
                                   tx+"\t"+

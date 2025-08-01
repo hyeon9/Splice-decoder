@@ -45,6 +45,9 @@ Description
                         type=str)
     
     ## Optional
+    parser.add_argument("--nmd_met", "-n", help="you can use other NMD finding method (default or sensitive), default: 55nt-rule", 
+                        type=str,
+                        default="default")
     parser.add_argument("--interesting_target", "-t", help="number of threads to use, default: all", 
                         type=str,
                         default="all")
@@ -290,7 +293,8 @@ if __name__ == "__main__":
     nmd_check = open(OUT+"{}_{}_NMD_check.txt".format(interesting_target, args.splicing_event), "w")
     main_output = open(OUT+"{}_{}_Main_table.tsv".format(interesting_target,args.splicing_event), "w")
     
-    integrity_indi.write("Pair_info"+"\t"+"pORF"+"\t"+"altered_domain"+"\t"+"Domain_change_ratio"+"\t"+"Change_direction"+"\n")
+    integrity_indi.write("Pair_info\tpORF\taltered_domain\tDomain_change_ratio\tChange_direction\n")
+    nmd_check.write("LongID\tAUG\tdistance(stop-last_exon_junction)\ttotal_domain_length\tkey(Ref/Sim)\tNMD_info\tpORF\n")
     main_output.write("##Every diff is calculated by Ref TX - Sim TX"+"\n")
     # main_output.write("LongID"+"\t"+"Target_TX"+"\t"+"occurred_event"+"\t"+"ORF_priority"+"\t"+"Start"+"\t"+"Stop"+\
     #                 "\t"+"5'UTR"+"\t"+"dAA"+"\t"+"3'UTR"+"\t"+"Domain_integrity"+"\t"+"Domain_change_ratio"+\
@@ -372,7 +376,7 @@ if __name__ == "__main__":
                     sim_stop.append(sub_sim_cds[sub_sim_cds[4]==sim_st][5].values[0])
 
                 elif sim_st == 'Loss':  # There are not matched start codon on the genomic position due to the AS 
-                    if temp_sim_stop[rank] in sub_sim_cds[5].tolist():   # different start, same end (altered frame)
+                    if temp_sim_stop[rank] in sub_sim_cds[5].tolist():   # different start, same end (partial frame)
                         sim_start.append(sub_sim_cds[sub_sim_cds[5]==temp_sim_stop[rank]][4].values[0])
                         sim_stop.append(sub_sim_cds[sub_sim_cds[5]==temp_sim_stop[rank]][5].values[0])
                     else:   # No matched start and stop in Sim TX
@@ -380,7 +384,7 @@ if __name__ == "__main__":
                         sim_stop.append(500)    # It is considered as NMD
 
                 else:   # Despite there are matched genomic postion, they lose their CP
-                    if temp_sim_stop[rank] in sub_sim_cds[5].tolist():   # different start, same end (altered frame)
+                    if temp_sim_stop[rank] in sub_sim_cds[5].tolist():   # different start, same end (partial frame)
                         if not i.startswith("MXE"): # Check length of DS event
                             l_DS = np.abs(int(i.split(";")[6]) - int(i.split(";")[7]))
                             if (l_DS+1)%3 == 0: ## Updated
@@ -424,16 +428,48 @@ if __name__ == "__main__":
                 total = pd.DataFrame()
                 nmd = 0
                 pre_nmd = 0
+                orf_num = 0
 
                 for start, stop in zip(start_list, stop_list):  # Consider top3 ORFs of the ref_TX
+                    orf_num += 1
                     result = {}
                     total_length.append(bed[-1][1])
-                    if (bed[-1][0] - stop) >= 55:   # NMD pred, it could be 50 as well
-                        nmd += 1
-                    else:
-                        nmd = nmd
-
+                    nmd_annot = "Loss"
                     if start != "Loss":
+                        start = int(start)
+                        stop = int(stop)
+                        
+                        if args.nmd_met == "default":   # It only consider 55 rule
+                            if (bed[-1][0] - stop) >= 55:   # NMD pred, it could be 50 as well
+                                nmd += 1
+                                nmd_annot = "NMD (50-55rule)"
+                            else:
+                                nmd = nmd   # No NMD
+                                nmd_annot = "No NMD"
+                        else:   # Applying Nat Genet paper criteria (sensitive)
+                            for exon_n in range(len(bed)):   # Find the exon that contains stop codon
+                                if bed[exon_n][0] <= stop and \
+                                    stop <= bed[exon_n][1]:   # If the given exon contains stop codon
+                                    Exon_PTC_contain = exon_n
+                                    break
+                            
+                            if stop < bed[-1][0]: # PTC is not in last exon
+                                if abs(start - stop) < 150: # Start-proximal evade NMD
+                                    nmd = nmd
+                                    nmd_annot = "No NMD (Start-proximal)"
+                                elif abs(bed[Exon_PTC_contain][1] - bed[Exon_PTC_contain][0]) > 407:   # Long exon evade NMD
+                                    nmd = nmd
+                                    nmd_annot = "No NMD (Long-exon)"
+                                elif (bed[-1][0] - stop) >= 55:   # NMD pred, it could be 50 as well
+                                    nmd += 1
+                                    nmd_annot = "NMD (50-55rule)"
+                                else:
+                                    nmd = nmd   # No NMD   
+                                    nmd_annot = "No NMD" 
+                            else:   # PTC in last exon
+                                nmd = nmd   # No NMD
+                                nmd_annot = "No NMD"
+                     
                         for block, domain_name in zip(domain, dname):   # Consider all domain in CDS region
                             ## Prunning domain that is out of CDS (start-stop)
                             if domain_name in result.keys():
@@ -458,6 +494,7 @@ if __name__ == "__main__":
                             
                             else:   # If it is NMD
                                 result[did].append(0.0)
+                                
                     result = pd.DataFrame.from_dict(result, orient="index")
                     result["sum"] = result.sum(axis=1)
                     result = result[["sum"]]    # make df that contains merged each same domain length (n*1) for each ORF
@@ -476,8 +513,8 @@ if __name__ == "__main__":
                                         right_index=True, 
                                         how="outer")
 
-                    ## pair ID, ORF, NMD_score, total_domain_length, key(Ref/Sim)
-                    nmd_check.write(i+"\t"+str(start)+"\t"+str((bed[-1][0] - stop))+"\t"+str(result.sum().values[0])+"\t"+key+"\n")
+                    ## NMD TABLE: pair ID, ORF, NMD_score, total_domain_length, key(Ref/Sim), and NMD_type
+                    nmd_check.write(i+"\t"+str(start)+"\t"+str((bed[-1][0] - stop))+"\t"+str(result.sum().values[0])+"\t"+key+"\t"+nmd_annot+"\t"+f'ORF{orf_num}'+"\n")
                     pre_nmd = nmd   # To skip NMD form during the protein domain merge step
                 
                 total["Sum"] = total.sum(axis=1)
@@ -550,14 +587,7 @@ if __name__ == "__main__":
                             if len(temp["key"].unique()) == 2:   # If they have same domain
                                 r = float(temp[temp["key"]=="Ref"][orf].values[0])  # Whole length of certain domain of refTX
                                 s = float(temp[temp["key"]=="Sim"][orf].values[0])  # Whole length of certain domain of simTX
-                                # if r > 0:
-                                #     ratio = abs(s-r) / r
-                                # elif r == 0:
-                                #     if s == r:  # no differences
-                                #         doa_dir = 0 # Direction of domain alteration
-                                #         ratio = 0.0
-                                #     else:
-                                #         ratio = 1.0
+   
                                 if r == 0 and s == 0:
                                     doa_dir = 0 # Direction of domain alteration
                                     ratio = 0.0
@@ -565,8 +595,6 @@ if __name__ == "__main__":
                                 else:
                                     ratio = abs(s-r) / max(r,s)
 
-                                # if ratio > 1:   # Maximum value will be set to 1
-                                #     ratio = 1.0
                                 indi_diff.append(ratio)
 
                                 if ratio >= 0:   # Only report changed cases    , it should be > 0

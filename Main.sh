@@ -153,7 +153,7 @@ case ${input_var} in
 	ls ${input}/sim_bed/ | grep merged | cut -f 2 -d "_" | sed 's/[0-9]\+$//g' | sort -u | \
 	parallel --jobs 5 '
 	    echo "Start {} Simulation"
-	    python -W ignore '${code}'02-2_SimTX.py -s {} -i '${input}' -t "all" -p '${Main}${config}' -c '${code}'
+	    python -W ignore '${code}'02-2_SimTX.py -s {} -i '${input}' -t "all" -p '${Main}${config}' -c '${code}' -n '${nmd_met}'
 	'
 	echo "Finished Splicing simulation"
 	;;
@@ -243,7 +243,7 @@ case ${input_var} in
         ls ${input}/sim_bed/ | grep merged | cut -f 2 -d "_" | sed 's/[0-9]\+$//g' | sort -u | \
         parallel --jobs 5 '
             echo "Start {} Simulation"
-            python -W ignore '${code}'02-2_SimTX.py -s {} -i '${input}' -t "all" -p '${Main}${config}' -c '${code}'
+            python -W ignore '${code}'02-2_SimTX.py -s {} -i '${input}' -t "all" -p '${Main}${config}' -c '${code}' -n '${nmd_met}'
         '
         echo "Finished Splicing simulation"
 

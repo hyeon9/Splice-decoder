@@ -449,7 +449,7 @@ if __name__ == "__main__":
                             else:
                                 nmd = nmd   # No NMD
                                 # nmd_annot = "No NMD"
-                                nmd_annot = "LOW"
+                                nmd_annot = "No"
                         else:   # Applying Nat Genet paper criteria (sensitive)
                             for exon_n in range(len(bed)):   # Find the exon that contains stop codon
                                 if bed[exon_n][0] <= stop and \
@@ -479,7 +479,7 @@ if __name__ == "__main__":
                                 ptc_contain = 0
                                 nmd = nmd   # No NMD
                                 # nmd_annot = "No NMD"
-                                nmd_annot = "LOW"
+                                nmd_annot = "No"
                      
                         for block, domain_name in zip(domain, dname):   # Consider all domain in CDS region
                             ## Prunning domain that is out of CDS (start-stop)

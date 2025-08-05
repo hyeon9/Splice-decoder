@@ -115,7 +115,7 @@
 ![image](https://github.com/user-attachments/assets/fdfff5a3-b923-45d7-b5aa-4dfcd932c767)
 
 * After running the entire process successfully, you can find several output files in your `${SpliceDecoder_folder}/DS_input/result`
-  * `*Main_output.txt`
+  * `*Main_table.tsv`
   * `*NMD_check.txt`
   * `*Domain_integrity_indi.txt`
   * `Effect_score.tsv`
@@ -179,7 +179,7 @@
 <br>
 
 ## Visualize your DS simulation
-* Based on your Main_output file, you can pcik ceratin DS event to visualize it using this code
+* Based on your Main_table file, you can pcik ceratin DS event to visualize it using this code
 
       conda activate splice-decoder
       python code/02-3_v3_Draw_consequence.py --input ${working directory} --splicing_event RI --gene ENSMUSG00000027470.9 --sim_splicing_event RI --transcript ENSMUST00000028970.7

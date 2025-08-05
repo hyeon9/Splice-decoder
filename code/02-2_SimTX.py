@@ -294,7 +294,7 @@ if __name__ == "__main__":
     main_output = open(OUT+"{}_{}_Main_table.tsv".format(interesting_target,args.splicing_event), "w")
     
     integrity_indi.write("Pair_info\tpORF\taltered_domain\tDomain_change_ratio\tChange_direction\n")
-    nmd_check.write("LongID\tAUG\tdistance(stop-last_exon_junction)\ttotal_domain_length\tkey(Ref/Sim)\tNMD_info\tpORF\n")
+    nmd_check.write("LongID\tAUG\tdistance(last_exon_junction-stop)\ttotal_domain_length\tkey(Ref/Sim)\tNMD_info\tpORF\n")
     main_output.write("##Every diff is calculated by Ref TX - Sim TX"+"\n")
     # main_output.write("LongID"+"\t"+"Target_TX"+"\t"+"occurred_event"+"\t"+"ORF_priority"+"\t"+"Start"+"\t"+"Stop"+\
     #                 "\t"+"5'UTR"+"\t"+"dAA"+"\t"+"3'UTR"+"\t"+"Domain_integrity"+"\t"+"Domain_change_ratio"+\

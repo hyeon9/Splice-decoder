@@ -294,7 +294,7 @@ if __name__ == "__main__":
     main_output = open(OUT+"{}_{}_Main_table.tsv".format(interesting_target,args.splicing_event), "w")
     
     integrity_indi.write("Pair_info\tpORF\taltered_domain\tDomain_change_ratio\tChange_direction\n")
-    nmd_check.write("LongID\tAUG\tdistance(last_exon_junction-stop)\ttotal_domain_length\tkey(Ref/Sim)\tNMD_info\tpORF\n")
+    nmd_check.write("LongID\tAUG\tpORF\tdistance(last_exon_junction-stop)\ttotal_domain_length\tkey(Ref/Sim)\tNMD_possibility\tcontain_PTC\n")
     main_output.write("##Every diff is calculated by Ref TX - Sim TX"+"\n")
     # main_output.write("LongID"+"\t"+"Target_TX"+"\t"+"occurred_event"+"\t"+"ORF_priority"+"\t"+"Start"+"\t"+"Stop"+\
     #                 "\t"+"5'UTR"+"\t"+"dAA"+"\t"+"3'UTR"+"\t"+"Domain_integrity"+"\t"+"Domain_change_ratio"+\
@@ -431,6 +431,7 @@ if __name__ == "__main__":
                 orf_num = 0
 
                 for start, stop in zip(start_list, stop_list):  # Consider top3 ORFs of the ref_TX
+                    ptc_contain = 0
                     orf_num += 1
                     result = {}
                     total_length.append(bed[-1][1])
@@ -442,10 +443,13 @@ if __name__ == "__main__":
                         if args.nmd_met == "default":   # It only consider 55 rule
                             if (bed[-1][0] - stop) >= 55:   # NMD pred, it could be 50 as well
                                 nmd += 1
-                                nmd_annot = "NMD (50-55rule)"
+                                # nmd_annot = "NMD (50-55rule)"
+                                nmd_annot = "HIGH"
+                                ptc_contain += 1
                             else:
                                 nmd = nmd   # No NMD
-                                nmd_annot = "No NMD"
+                                # nmd_annot = "No NMD"
+                                nmd_annot = "LOW"
                         else:   # Applying Nat Genet paper criteria (sensitive)
                             for exon_n in range(len(bed)):   # Find the exon that contains stop codon
                                 if bed[exon_n][0] <= stop and \
@@ -454,21 +458,28 @@ if __name__ == "__main__":
                                     break
                             
                             if stop < bed[-1][0]: # stop codon locates not in last exon == PTC
+                                ptc_contain += 1
                                 if abs(start - stop) < 150: # Start-proximal evade NMD
                                     nmd = nmd
-                                    nmd_annot = "No NMD (Start-proximal)"
+                                    # nmd_annot = "No NMD (Start-proximal)"
+                                    nmd_annot = "INTERMEDIATE"
                                 elif abs(bed[Exon_PTC_contain][1] - bed[Exon_PTC_contain][0]) > 407:   # Long exon evade NMD
                                     nmd = nmd
-                                    nmd_annot = "No NMD (Long-exon)"
+                                    # nmd_annot = "No NMD (Long-exon)"
+                                    nmd_annot = "INTERMEDIATE"
                                 elif (bed[-1][0] - stop) >= 55:   # NMD pred, it could be 50 as well
                                     nmd += 1
-                                    nmd_annot = "NMD (50-55rule)"
+                                    # nmd_annot = "NMD (50-55rule)"
+                                    nmd_annot = "HIGH"
                                 else:
                                     nmd = nmd   # No NMD   
-                                    nmd_annot = "No NMD" 
+                                    # nmd_annot = "No NMD"
+                                    nmd_annot = "LOW"
                             else:   # PTC in last exon
+                                ptc_contain = 0
                                 nmd = nmd   # No NMD
-                                nmd_annot = "No NMD"
+                                # nmd_annot = "No NMD"
+                                nmd_annot = "LOW"
                      
                         for block, domain_name in zip(domain, dname):   # Consider all domain in CDS region
                             ## Prunning domain that is out of CDS (start-stop)
@@ -514,7 +525,11 @@ if __name__ == "__main__":
                                         how="outer")
 
                     ## NMD TABLE: pair ID, ORF, NMD_score, total_domain_length, key(Ref/Sim), and NMD_type
-                    nmd_check.write(i+"\t"+str(start)+"\t"+str((bed[-1][0] - stop))+"\t"+str(result.sum().values[0])+"\t"+key+"\t"+nmd_annot+"\t"+f'ORF{orf_num}'+"\n")
+                    if ptc_contain > 0:
+                        ptc_class = 'Y'
+                    else:
+                        ptc_class = 'N'
+                    nmd_check.write(i+"\t"+str(start)+"\t"+f'ORF{orf_num}'+"\t"+str((bed[-1][0] - stop))+"\t"+str(result.sum().values[0])+"\t"+key+"\t"+nmd_annot+"\t"+str(ptc_class)+"\n")
                     pre_nmd = nmd   # To skip NMD form during the protein domain merge step
                 
                 total["Sum"] = total.sum(axis=1)

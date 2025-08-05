@@ -453,7 +453,7 @@ if __name__ == "__main__":
                                     Exon_PTC_contain = exon_n
                                     break
                             
-                            if stop < bed[-1][0]: # PTC is not in last exon
+                            if stop < bed[-1][0]: # stop codon locates not in last exon == PTC
                                 if abs(start - stop) < 150: # Start-proximal evade NMD
                                     nmd = nmd
                                     nmd_annot = "No NMD (Start-proximal)"

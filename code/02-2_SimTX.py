@@ -450,6 +450,7 @@ if __name__ == "__main__":
                                 nmd = nmd   # No NMD
                                 # nmd_annot = "No NMD"
                                 nmd_annot = "No"
+                                
                         else:   # Applying Nat Genet paper criteria (sensitive)
                             for exon_n in range(len(bed)):   # Find the exon that contains stop codon
                                 if bed[exon_n][0] <= stop and \

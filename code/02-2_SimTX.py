@@ -444,7 +444,7 @@ if __name__ == "__main__":
                             if (bed[-1][0] - stop) >= 55:   # NMD pred, it could be 50 as well
                                 nmd += 1
                                 # nmd_annot = "NMD (50-55rule)"
-                                nmd_annot = "HIGH"
+                                nmd_annot = "HIGH (55nt)"
                                 ptc_contain += 1
                             else:
                                 nmd = nmd   # No NMD
@@ -463,19 +463,19 @@ if __name__ == "__main__":
                                 if abs(start - stop) < 150: # Start-proximal evade NMD
                                     nmd = nmd
                                     # nmd_annot = "No NMD (Start-proximal)"
-                                    nmd_annot = "INTERMEDIATE"
+                                    nmd_annot = "INTERMEDIATE (Start-proximal)"
                                 elif abs(bed[Exon_PTC_contain][1] - bed[Exon_PTC_contain][0]) > 407:   # Long exon evade NMD
                                     nmd = nmd
                                     # nmd_annot = "No NMD (Long-exon)"
-                                    nmd_annot = "INTERMEDIATE"
+                                    nmd_annot = "INTERMEDIATE (Long-exon)"
                                 elif (bed[-1][0] - stop) >= 55:   # NMD pred, it could be 50 as well
                                     nmd += 1
                                     # nmd_annot = "NMD (50-55rule)"
-                                    nmd_annot = "HIGH"
+                                    nmd_annot = "HIGH (55nt)"
                                 else:
                                     nmd = nmd   # No NMD   
                                     # nmd_annot = "No NMD"
-                                    nmd_annot = "LOW"
+                                    nmd_annot = "LOW (less 55nt)"
                             else:   # PTC in last exon
                                 ptc_contain = 0
                                 nmd = nmd   # No NMD

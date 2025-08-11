@@ -665,12 +665,12 @@ if __name__ == "__main__":
                                 float(sim_total_length[n] - sim_stop[n])
                     dom_intig = dom_per_orf[n]
                     dom_change_ratio = whole_orf_diff[n]
-                    if str(sim_dom_list.columns.tolist()[n]).endswith("NMD"):
+                    if "|NMD" in str(sim_dom_list.columns.tolist()[n]):
                         sim_nmd = 1
                     else:
                         sim_nmd = 0
                     
-                    if str(ref_dom_list.columns.tolist()[n]).endswith("NMD"):
+                    if "|NMD" in str(ref_dom_list.columns.tolist()[n]):
                         ref_nmd = 1
                     else:
                         ref_nmd = 0

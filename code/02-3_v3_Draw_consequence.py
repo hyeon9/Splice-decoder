@@ -85,7 +85,7 @@ def Run(key, input_gene_name, *sub_splicing):
                                 sep="\t", header=None)
         ref = pd.read_csv(args.input+"merged_wo_"+key+".bed",
                                 sep="\t", header=None)
-        query = pd.read_csv(args.input+"result/all_{}_Main_output.txt".format(key),
+        query = pd.read_csv(args.input+"result/all_{}_Main_table.tsv".format(key),
                             sep="\t", skiprows=1)
         
         query = query[query["5'UTR_difference (nt)"]!="Frame loss"] # Filter out frame loss, because they donot have domain

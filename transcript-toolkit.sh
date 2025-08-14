@@ -44,8 +44,8 @@ do
 rm ${file}
 done
 
-## Make exon gtf from the given gtf
-cat ${input}*gtf | awk -F "\t" '{if ($3 == "exon") print }' > ${input}exon_only.gtf
+## Make subset of exon gtf from the given gtf
+python ${code}gtf_filter.py -i ${input} -g ${gene_list}
 
 ## Check ths existence of "exon_number" tag
 exon_n=`less ${input}exon_only.gtf | grep -v exon_number | wc -l`

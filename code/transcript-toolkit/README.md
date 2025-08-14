@@ -22,8 +22,8 @@
       ? Enter your working directory (e.g. /User/usr/Tool/transcript-toolkit-main/project1)
       > You just need to specify your new working directory
 
-      ? Enter your query list with its path (e.g. /User/usr/Tool/transcript-toolkit-main/query.tsv)
-      > You just need to specify the query list path
+      ? Enter your query gene list with its path (e.g. /User/usr/Tool/transcript-toolkit-main/gene_list.tsv)
+      > You just need to specify the query gene list path, it should contain geneID and their canonical transcript ID
 
       ? Enter your GTF file that you used in transcriptome assembly with its full path (e.g. /User/usr/Tool/transcript-toolkit-main/assem.gtf)
       > You just need to specify the full path + GTFfile

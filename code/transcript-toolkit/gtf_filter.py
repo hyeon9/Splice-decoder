@@ -59,8 +59,11 @@ with open(f"{args.input}main.gtf", 'r') as whole_gtf:
     filtered_gtf = open(f"{args.input}exon_only.gtf", 'w')
     for line in whole_gtf:
         lines = line.strip().split("\t")
-        gene = lines[-1].split("\"")[-2]
-        tx_id = lines[-1].split("\"")[1]
+        for k,key in enumerate(lines[-1].split("\"")):
+            if "gene_id" in key:    # ENSG
+                gene = lines[-1].split("\"")[k+1]
+            elif "transcript_id" in key:
+                tx_id = lines[-1].split("\"")[k+1]
         if gene in gene_list[0].tolist() and lines[2] == "exon":
             filtered_gtf.write(line)
             query_list.append(tx_id)

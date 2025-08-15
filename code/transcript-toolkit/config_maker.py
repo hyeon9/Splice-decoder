@@ -6,8 +6,8 @@ import sys
 config = {}
 
 output_prefix = questionary.text("Specify your config file name (e.g. HGjob)").ask()
-config['Main'] = questionary.text("Enter the path of TX-comp (e.g. /User/usr/Tool/TX-comp-main/)").ask()+"/"
-config['code'] = os.path.join(config['Main'], "code/")
+config['Main'] = questionary.text("Enter the path of Splice-decoder (e.g. /User/usr/Tool/Splice-decoder-main/)").ask()+"/"
+config['code'] = os.path.join(config['Main'], "code/transcript-toolkit/")
 config['cpatdb'] = os.path.join(config['Main'], "dat/")
 config['input'] = questionary.text("Enter your working directory (e.g. /User/usr/Tool/TX-comp-main/project1)").ask()+"/"
 config['gene_list'] = questionary.text("Enter your gene_list it should contain gene and canonical transcript ID (tab separated)\n(e.g. /User/usr/Tool/TX-comp-main/toy_data/gene_list.txt))").ask()

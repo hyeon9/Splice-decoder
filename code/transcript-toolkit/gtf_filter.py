@@ -76,6 +76,7 @@ query_table = pd.merge(gene_list, query_list_df,
                        left_on=[0], right_on=[0])
 query_table_df = query_table[['1_x','1_y']]
 query_table_df.columns = ["Major","query"]
+query_table_df = query_table_df.drop_duplicates()
 query_table_df.to_csv(f'{args.input}query_list.txt',
                       sep="\t",
                       index=None)

@@ -66,17 +66,15 @@ with open(f"{args.input}main.gtf", 'r') as whole_gtf:
                 tx_id = lines[-1].split("\"")[k+1]
         if gene in gene_list[0].tolist() and lines[2] == "exon":
             filtered_gtf.write(line)
-            query_list.append(tx_id)
+            query_list.append([gene,tx_id])
 
     filtered_gtf.close()
 
-query_table = []
-for cano_tx in cano:
-    query_list_df = pd.DataFrame(set(query_list))
-    query_list_df[1] = cano_tx
-    query_table.append(query_list_df)
-query_table_df = pd.concat(query_table)
-query_table_df = query_table_df[[1,0]]
+query_list_df = pd.DataFrame(query_list)
+query_list_df = query_list_df.drop_duplicates()
+query_table = pd.merge(gene_list, query_list_df,
+                       left_on=[0], right_on=[0])
+query_table_df = query_table[['1_x','1_y']]
 query_table_df.columns = ["Major","query"]
 query_table_df.to_csv(f'{args.input}query_list.txt',
                       sep="\t",

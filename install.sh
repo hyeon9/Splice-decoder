@@ -1,6 +1,6 @@
 #!/bin/bash
 
-yml=$1
+yml=pkgs.yml
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda config --add channels conda-forge
 conda config --add channels bioconda

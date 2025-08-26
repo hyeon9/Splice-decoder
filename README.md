@@ -109,11 +109,22 @@
 
 <br>
 
-## Summary stats for DES mapping and annotation
+## Summary stats for DES mapping and outputs
 * You can ckech Summary HTML in `${SpliceDecoder_folder}/DS_input/figure`
   
 ![image](https://github.com/user-attachments/assets/fdfff5a3-b923-45d7-b5aa-4dfcd932c767)
-
+```
+├── results
+│   ├── files: description
+│   ├── 
+│   ├── 
+│   ├── 
+├── figure
+│   ├── 
+│   └── 
+├── arg.log: The log file
+└── 
+```
 * After running the entire process successfully, you can find several output files in your `${SpliceDecoder_folder}/DS_input/result`
   * `*Main_table.tsv`
   * `*NMD_check.txt`

@@ -81,9 +81,9 @@ def Run(key, input_gene_name, *sub_splicing):
         Returns:
             _type_: _description_
         """
-        sim_tx = pd.read_csv(args.input+"merged_w_"+key+".bed",
+        sim_tx = pd.read_csv(args.input+"temp/merged_w_"+key+".bed",
                                 sep="\t", header=None)
-        ref = pd.read_csv(args.input+"merged_wo_"+key+".bed",
+        ref = pd.read_csv(args.input+"temp/merged_wo_"+key+".bed",
                                 sep="\t", header=None)
         query = pd.read_csv(args.input+"result/all_{}_Main_table.tsv".format(key),
                             sep="\t", skiprows=1)

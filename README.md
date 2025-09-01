@@ -122,6 +122,8 @@
 ├── figure
 │   ├── mapping_rate.pdf: Mapping rates for each splicing type
 │   ├── mat_tx_numbers.pdf: Distribution of Ref-TX for each splicing type
+│   ├── splicing_categories_stacked_plot.pdf: description
+│   ├── merged_stacked_plot.pdf: description
 │   └── Summary.html: HTML file to make summary pages (pdf_1_page_1.png, pdf_2_page_2.png, pdf_3_page_3.png, and pdf_4_page_4.png)
 ├── SD.log: The log file
 └── 

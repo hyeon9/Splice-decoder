@@ -121,8 +121,9 @@ if __name__ == "__main__":
         sys.exit(1)
     args, parser = parse_args(sys.argv[1:])
     if not args.input.endswith("/result/"):
+        OUT = args.input+"figure/"
         args.input = args.input+"/result/"
-    OUT = args.input+"figure/"
+        
     if not os.path.exists(OUT):
         os.mkdir(OUT)
     # args.organism = organism

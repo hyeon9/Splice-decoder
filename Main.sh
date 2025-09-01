@@ -96,10 +96,6 @@ case ${input_var} in
 	then
  		cat ${input}exon_only.gtf | grep -v exon_number > ${input}LR_exon_only.gtf
                 cat ${input}exon_only.gtf | grep exon_number > ${input}non_pacbio_exon_only.gtf
-		#awk -F "\t" '{if ($2 != "PacBio" && $2 != "StringTie" && $2 != "HAVANA") print }' ${input}exon_only.gtf > ${input}non_pacbio_exon_only.gtf
-		#awk -F "\t" '{if ($2 == "PacBio" || $2 == "StringTie" || $2 == "HAVANA") print }' ${input}exon_only.gtf > ${input}LR_exon_only.gtf
-		#awk -F "\t" '{if ($2 != "PacBio") print }' ${input}exon_only.gtf > ${input}non_pacbio_exon_only.gtf
-                #awk -F "\t" '{if ($2 == "PacBio") print }' ${input}exon_only.gtf > ${input}LR_exon_only.gtf
 	
 		if [ ${exon_n} -ne 0 ]	# If the exon gtf has exon number
 		then
@@ -140,9 +136,9 @@ case ${input_var} in
 	rm -r ${input}/sim_bed
 	rm -r ${input}/get_Fasta
 	rm -r ${input}/cpat
-        mkdir -p ${input}/sim_bed
-        mkdir -p ${input}/get_Fasta
-        mkdir -p ${input}/cpat
+    mkdir -p ${input}/sim_bed
+    mkdir -p ${input}/get_Fasta
+    mkdir -p ${input}/cpat
 	python ${code}02-1_ORF_mapping.py -i ${input} -t ${njobs} -cp ${cpat} -cpdb ${cpatdb} -b ${bedtools} -f ${genomefa} -p ${species}
 	echo "Finished ORF mapping"
 	;;
@@ -161,11 +157,16 @@ case ${input_var} in
     Scoring)
 	if [ ${get_score} == "Yes" ] || [ ${get_score} == "yes" ]
 	then
-	        echo "Calculated effect score"
+	    echo "Calculated effect score"
 		python ${code}03-2_overview_change_rate.py -i ${input}
 		python ${code}03-3_scoring_function.py -i ${input} -t ${tpm}
 		python ${code}Make_summary.py -i ${input}
-	        echo "Finished"
+	    echo "Finished"
+	    if [ -f "${input}/result/Effect_score.tsv" ] && [ $(wc -l < ${input}/result/Effect_score.tsv) -ge 5 ]; then
+				bash ${code}Clean_up.sh ${input}
+        fi
+    else
+        bash ${code}Clean_up.sh ${input}
 	fi
 	;;
 
@@ -190,10 +191,6 @@ case ${input_var} in
         then
 		cat ${input}exon_only.gtf | grep -v exon_number > ${input}LR_exon_only.gtf
                 cat ${input}exon_only.gtf | grep exon_number > ${input}non_pacbio_exon_only.gtf
-		#awk -F "\t" '{if ($2 != "PacBio" && $2 != "StringTie" && $2 != "HAVANA") print }' ${input}exon_only.gtf > ${input}non_pacbio_exon_only.gtf
-                #awk -F "\t" '{if ($2 == "PacBio" || $2 == "StringTie" || $2 == "HAVANA") print }' ${input}exon_only.gtf > ${input}LR_exon_only.gtf
-                #awk -F "\t" '{if ($2 != "PacBio") print }' ${input}exon_only.gtf > ${input}non_pacbio_exon_only.gtf
-                #awk -F "\t" '{if ($2 == "PacBio") print }' ${input}exon_only.gtf > ${input}LR_exon_only.gtf
 
                 if [ ${exon_n} != 0 ]   # If the exon gtf has exon number
                 then
@@ -214,7 +211,7 @@ case ${input_var} in
 
         ## Final input processing
         python ${code}/00-2_processing_gtf.py -e ${input}exon_only.gtf -o ${input}
-	python ${code}/00-3_make_dict.py -i ${input}
+		python ${code}/00-3_make_dict.py -i ${input}
  
         echo "Finished input processing"
 
@@ -228,7 +225,7 @@ case ${input_var} in
 
         echo "Running ORF mapping"
         ## ORF mapping
-	rm -r ${input}/sim_bed
+		rm -r ${input}/sim_bed
         rm -r ${input}/get_Fasta
         rm -r ${input}/cpat
         mkdir -p ${input}/sim_bed
@@ -254,7 +251,13 @@ case ${input_var} in
 	        python ${code}03-3_scoring_function.py -i ${input} -t ${tpm}
 	        python ${code}Make_summary.py -i ${input}
 	        echo "Finished"
-	fi
+
+            if [ -f "${input}/result/Effect_score.tsv" ] && [ $(wc -l < ${input}/result/Effect_score.tsv) -ge 5 ]; then
+                    bash ${code}Clean_up.sh ${input}
+            fi
+        else
+            bash ${code}Clean_up.sh ${input}
+		fi
 	;;
 
     *)

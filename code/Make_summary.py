@@ -32,7 +32,7 @@ def pdfs_to_html_with_titles(pdf_paths, titles, output_dir, txt_file, output_htm
         output_html (str): out path
     """
     if len(pdf_paths) != len(titles):
-        raise ValueError("pdf_paths should have same length of titles)
+        raise ValueError("pdf_paths should have same length of titles")
 
     # Make html 
     with open(f"{output_dir}{output_html}", 'w') as f:

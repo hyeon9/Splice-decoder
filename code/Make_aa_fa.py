@@ -44,15 +44,6 @@ def parse_args(cmd_args=None, namespace=None):
     return args, parse_args
     
 
-    # ## Variables
-    # work_dir = "/home/kangh/lab-server/Tool/Splice-decoder/example/MYC_8h/"
-    # out_dir = f"{work_dir}AF2/"
-    # if not os.path.exists(out_dir):
-    #     os.mkdir(out_dir)
-    # target_tx = "MSTRG.33228.5"
-    # sim_event = "ES"
-    # ref_genome = "/home/kangh/lab-server/Tool/Splice-decoder/dat/reference/hg38.fa"
-
 def Make_AA():
     ## Make output dir
     out_dir = f"{args.input}AF2/"
@@ -72,7 +63,7 @@ def Make_AA():
 
     def Make_bed(in_bed):
         ## Load Sim bed
-        merged_bed = pd.read_csv(f"{args.input}{in_bed}",
+        merged_bed = pd.read_csv(f"{args.input}temp/{in_bed}",
                                 sep="\t",
                                 header=None)
         bed = merged_bed[merged_bed[4]==args.tx]
@@ -85,10 +76,6 @@ def Make_AA():
 
     ref_bed = Make_bed(f"merged_wo_{splicing_type}.bed")
     sim_bed = Make_bed(f"merged_w_{splicing_type}.bed")
-
-    ## Check
-    # print(ref_bed)
-    # print(sim_bed)
 
     ## Specify ref
     if args.ref == "human" or args.ref == "Human":

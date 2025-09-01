@@ -109,45 +109,32 @@
 
 <br>
 
-## Summary stats for DES mapping and outputs
-* You can ckech Summary HTML in `${SpliceDecoder_folder}/DS_input/figure`
-  
-![image](https://github.com/user-attachments/assets/fdfff5a3-b923-45d7-b5aa-4dfcd932c767)
+
+## Outputs
 ```
-├── results
+├── table/
+│   ├── *_w_Pfam.txt: Assigned domain information of simulated transcripts (Sim-TXs)
+│   └── *_wo_Pfam.txt: Assigned domain information of reference transcripts (Ref-TXs)
+├── results/
 │   ├── *Main_table.tsv: description
 │   ├── *Domain_alt.tsv: description
 │   ├── *NMD_check.tsv: description
-│   ├── Effect_score.tsv: description
-├── figure
+│   └── Effect_score.tsv: description
+├── figure/
 │   ├── mapping_rate.pdf: Mapping rates for each splicing type
 │   ├── mat_tx_numbers.pdf: Distribution of Ref-TX for each splicing type
 │   ├── splicing_categories_stacked_plot.pdf: description
 │   ├── merged_stacked_plot.pdf: description
-│   └── Summary.html: HTML file to make summary pages (pdf_1_page_1.png, pdf_2_page_2.png, pdf_3_page_3.png, and pdf_4_page_4.png)
-├── SD.log: The log file
-└── 
+│   ├── Summary.html: HTML file to make summary pages (pdf_1_page_1.png, pdf_2_page_2.png, pdf_3_page_3.png, and pdf_4_page_4.png)
+│   └── consequence: Output directory of visualization script
+├── temp: Contains all intermediate files
+├── mapping.stats: Mappeing rates for each splicing type
+└── SD.log: The log file
 ```
-* After running the entire process successfully, you can find several output files in your `${SpliceDecoder_folder}/DS_input/result`
-  * `*Main_table.tsv`
-  * `*NMD_check.txt`
-  * `*Domain_integrity_indi.txt`
-  * `Effect_score.tsv`
+* Example of summary HTML
+![image](https://github.com/user-attachments/assets/fdfff5a3-b923-45d7-b5aa-4dfcd932c767)
 
-* First of all, check `Effect_score.tsv`, which contains [You can find more details here](#descriptions-for-outputs):
-  * `Effect_Score`
-  * `Domain_change_rate`
-  * `Probability_of_NMD`
-  * `Functional_class`
   
-
-* The `Domain_integrity_indi.txt` includes:
-  * `DS-TX pair ID`
-  * `ORF priority`
-  * `Domain information`
-  * `Domain change ratio`
-  * `Change direction`
-
 <br>
 
 ## Descriptions for Outputs

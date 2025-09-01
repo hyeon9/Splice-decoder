@@ -115,14 +115,15 @@
 ![image](https://github.com/user-attachments/assets/fdfff5a3-b923-45d7-b5aa-4dfcd932c767)
 ```
 ├── results
-│   ├── files: description
-│   ├── 
-│   ├── 
-│   ├── 
+│   ├── *Main_table.tsv: description
+│   ├── *Domain_alt.tsv: description
+│   ├── *NMD_check.tsv: description
+│   ├── Effect_score.tsv: description
 ├── figure
-│   ├── 
-│   └── 
-├── arg.log: The log file
+│   ├── mapping_rate.pdf: Mapping rates for each splicing type
+│   ├── mat_tx_numbers.pdf: Distribution of Ref-TX for each splicing type
+│   └── Summary.html: HTML file to make summary pages (pdf_1_page_1.png, pdf_2_page_2.png, pdf_3_page_3.png, and pdf_4_page_4.png)
+├── SD.log: The log file
 └── 
 ```
 * After running the entire process successfully, you can find several output files in your `${SpliceDecoder_folder}/DS_input/result`

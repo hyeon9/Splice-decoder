@@ -127,6 +127,7 @@
 │   ├── merged_stacked_plot.pdf: description
 │   ├── Summary.html: HTML file to make summary pages (pdf_1_page_1.png, pdf_2_page_2.png, pdf_3_page_3.png, and pdf_4_page_4.png)
 │   └── consequence: Output directory of visualization script
+├── AF2: Contains AlphaFold2 input (amino acid FASTA)
 ├── temp: Contains all intermediate files
 ├── mapping.stats: Mappeing rates for each splicing type
 └── SD.log: The log file

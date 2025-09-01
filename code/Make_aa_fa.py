@@ -60,7 +60,7 @@ def Make_AA():
         os.mkdir(out_dir)
 
     ## Load output_table
-    table = pd.read_csv(f"{args.input}result/Whole_DS_score_Whole.txt",
+    table = pd.read_csv(f"{args.input}result/Effect_score.tsv",
                         sep="\t")
     sub_table = table[(table["Reference_transcript"]==args.tx) & \
                     (table["Simulated_event"]==args.event)]

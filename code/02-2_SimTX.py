@@ -24,7 +24,7 @@ Description
     This script estimate functional difference between Ref_TX and Sim_TX
     This work can be focused on certain functional categoriy 
     (e.g., binding, dna_bind, motif, domain, region, and all)
-    OUTPUT: _Domain_integrity_indi, _NMD_check, _Main_output
+    OUTPUT: _Domain_alts, _NMD_check, _Main_output
     #########################################################''',
     formatter_class=argparse.RawTextHelpFormatter)
     ## Positional
@@ -289,8 +289,8 @@ if __name__ == "__main__":
     if not os.path.exists(OUT):
         os.mkdir(OUT)
 
-    integrity_indi = open(OUT+"{}_{}_Domain_integrity_indi.txt".format(interesting_target, args.splicing_event), "w")
-    nmd_check = open(OUT+"{}_{}_NMD_check.txt".format(interesting_target, args.splicing_event), "w")
+    integrity_indi = open(OUT+"{}_{}_Domain_alts.tsv".format(interesting_target, args.splicing_event), "w")
+    nmd_check = open(OUT+"{}_{}_NMD.tsv".format(interesting_target, args.splicing_event), "w")
     main_output = open(OUT+"{}_{}_Main_table.tsv".format(interesting_target,args.splicing_event), "w")
     
     integrity_indi.write("Pair_info\tpORF\taltered_domain\tDomain_change_ratio\tChange_direction\n")

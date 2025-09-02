@@ -140,7 +140,7 @@
 <br>
 
 ## Details of Outputs
-*Example of important values of `Effect_score.tsv`*
+*Example of `Effect_score.tsv`*
 <img width="1040" height="62" alt="image" src="https://github.com/user-attachments/assets/22dcc503-fb7e-4f89-8bfa-0d543e949c63" />
 
 ### Key Metrics
@@ -169,7 +169,7 @@
 - `rMATS_FDR(-log10)`: -Log10 scale FDR, it came from rMATS
 
 ---
-*Example of important values of `Domain_alt.tsv`*
+*Example of `Domain_alt.tsv`*
 ![image](https://github.com/user-attachments/assets/266bcdec-d4aa-4e5b-a0bb-3bf0db247a14)
 
 ### Key Metrics

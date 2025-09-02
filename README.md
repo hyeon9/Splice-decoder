@@ -115,7 +115,7 @@
 ├── table/
 │   ├── *_w_Pfam.txt: Assigned domain information of simulated transcripts (Sim-TXs)
 │   └── *_wo_Pfam.txt: Assigned domain information of reference transcripts (Ref-TXs)
-├── results/
+├── result/
 │   ├── *Main_table.tsv: description
 │   ├── *Domain_alt.tsv: description
 │   ├── *NMD_check.tsv: description

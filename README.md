@@ -139,7 +139,7 @@
   
 <br>
 
-## Descriptions for Outputs
+## Details of Outputs
 *Example of important values of `Effect_score.tsv`*
 <img width="1040" height="62" alt="image" src="https://github.com/user-attachments/assets/22dcc503-fb7e-4f89-8bfa-0d543e949c63" />
 

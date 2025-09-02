@@ -59,6 +59,7 @@ args.input = args.input+"/"
 #         "--input", "/home/kangh/lab-server/KAIST/Tx_seq_compare",
 #         "--cano_tx", "ENST00000286186.11",
 #         "--query_list", "/home/kangh/lab-server/KAIST/Tx_seq_compare/Seq_comparison_template.tsv",
+#         "-ri", "region",
 #     ]
 #     args, parser = parse_args(test_args)
 #     args.input = args.input + "/"
@@ -72,7 +73,7 @@ def Run(key, input_gene_name):
         """ Load information data
             It could be smaller (perhaps using cmd?)
         Args:
-            key (_type_): Splicing category
+            key (_type_): Cano-TX
 
         Returns:
             _type_: _description_
@@ -81,6 +82,7 @@ def Run(key, input_gene_name):
         query_list = pd.read_csv(args.query_list,
                                  sep="\t")
         query_list.columns = ["Major","query"]
+        query_list = query_list[query_list["Major"]==key]   # Fix bug
         merged_bed = pd.read_csv(args.input+"merged.bed",
                                  sep="\t",
                                  header=None)
@@ -280,20 +282,41 @@ def Run(key, input_gene_name):
             else:
                 new_line.append([new_line[i-1][1], new_line[i-1][1] + exon_len])
 
-            domain = pfam[(pfam[8] == exon_start) & (pfam[9] == exon_end)][[0, 1, 2, 3]].drop_duplicates()
+            domain = pfam[(pfam[8] == exon_start) & (pfam[9] == exon_end)][[0, 1, 2, 3, 5]].drop_duplicates()
 
             if domain.shape[0] > 0:
-                domain_start = int(domain.iloc[0, 1])
-                domain_end = int(domain.iloc[0, 2])
+                n_domain_start = int(domain.iloc[0, 1])
+                n_domain_end = int(domain.iloc[0, 2])
                 domain_label = domain.iloc[0, 3]
 
                 exon_cum_start = new_line[i][0]
-
-                if domain_start != exon_start:
-                    rel_start = abs(domain_start - exon_start) + exon_cum_start
-                else:
-                    rel_start = exon_cum_start
                 
+                def make_domain(d_start, d_end, e_start, e_end, strand):
+                    mat_start = abs(d_start - e_start)
+                    mat_end = abs(d_end - e_end)
+                    
+                    if mat_start == 0 and mat_end == 0:
+                        domain_start = d_start
+                        domain_end = d_end
+                    else:   # Shared region between exon and domain
+                        domain_start = max(d_start, e_start)
+                        domain_end = min(d_end, e_end)
+                    
+                    if strand == "+":
+                        if domain_start != e_start:
+                            rel_start = abs(domain_start - e_start) + exon_cum_start
+                        else:
+                            rel_start = exon_cum_start
+                    
+                    else:    
+                        if domain_end != e_end:
+                            rel_start = abs(domain_end - e_end) + exon_cum_start
+                        else:
+                            rel_start = exon_cum_start
+                        
+                    return rel_start, domain_start, domain_end
+
+                rel_start, domain_start, domain_end = make_domain(n_domain_start, n_domain_end, exon_start, exon_end, domain[5].unique()[0])
                 rel_end = rel_start + abs(domain_start - domain_end)
                 domain_line.append([rel_start, rel_end])
 
@@ -309,11 +332,12 @@ def Run(key, input_gene_name):
     test_list = query.iloc[:,0].unique()
     comp_pair = test_list[0].split("|")[0]
     test_list = query[query["Major_tx"].str.contains(args.cano_tx)]["query_tx"].unique()   # Using Canonical TX ID to extract target results
+    
     ## Remove Biding site in figures, it spends lots of space
     ## Capture target domains which are contained in target transcript
-    w_pfam = w_pfam[(w_pfam[4]!="binding")]
-    wo_pfam = wo_pfam[(wo_pfam[4]!="binding")]
-    n_domain = wo_pfam[3].unique()
+    # w_pfam = w_pfam[(w_pfam[4]!="binding")]
+    # wo_pfam = wo_pfam[(wo_pfam[4]!="binding")]
+    n_domain = wo_pfam[3].unique()    # If the given Cano-tx has at lesat one domain, the figure will be generated
     
     OUT = args.input+"figure/"
     if not os.path.exists(OUT):
@@ -356,42 +380,6 @@ def Run(key, input_gene_name):
                     ref_bed, ref_domain, ref_dname = Make_query(ref, wo_pfam[wo_pfam[3]==n_domain[kinds_domain]])
                     sim_bed, sim_domain, sim_dname = Make_query(sim_tx, query_pfam[query_pfam[3]==n_domain[kinds_domain]])
 
-                    ################################################################
-                    ################################################################
-                    # ## Current work > It dosen't make sense, becuase major and query transcript can have multiple different exons.
-                    # ## This situation never be sovled by one Xs in mRNA sequence level
-                    # if ref[5].unique() == "+":
-                    #     Xs = abs(ref[1].min() - sim_tx[1].min())
-                    #     if sim_tx[1].min() > ref[1].min():  # if the query is longer
-                    #         fig_input["simStart"] = fig_input["simStart"] + Xs
-                    #         fig_input["simSTOP"] = fig_input["simSTOP"] + Xs
-                    #         sim_bed += Xs
-                    #         sim_domain += Xs
-                    #         ## reading frame also should be updated
-                        
-                    #     elif sim_tx[1].min() < ref[1].min():    # if the canonical is longer
-                    #         fig_input["Start"] = fig_input["Start"] + Xs
-                    #         fig_input["STOP"] = fig_input["STOP"] + Xs
-                    #         ref_bed += Xs
-                    #         ref_domain += Xs
-                    #         ## reading frame also should be updated
-                    # elif ref[5].unique()[0] == "-":
-                    #     Xs = ref[2].max() - sim_tx[2].max()
-                    #     if sim_tx[2].max() > ref[2].max():  # if the query is longer
-                    #         fig_input["simStart"] += Xs
-                    #         fig_input["simSTOP"] += Xs
-                    #         sim_bed += Xs
-                    #         sim_domain += Xs
-                    #     if sim_tx[2].max() < ref[2].max():  # if the query is longer
-                    #         fig_input["Start"] = fig_input["Start"] + Xs
-                    #         fig_input["STOP"] = fig_input["STOP"] + Xs
-                    #         ref_bed += Xs
-                    #         ref_domain += Xs
-                    ### Update for "-" transcripts
-                    
-                    ################################################################
-                    ################################################################
-                    
                     ################################
                     ## Make a prunned bed
                     ## Make a dataframe for subsequent analysis
@@ -495,11 +483,6 @@ def Run(key, input_gene_name):
                             bed1 = pybedtools.BedTool("\n".join(f"chr1\t{int(start)}\t{int(end)}" for start, end in p_ref_domain), from_string=True)
                             bed2 = pybedtools.BedTool("\n".join(f"chr1\t{int(start)}\t{int(end)}" for start, end in p_sim_domain), from_string=True)
                             
-                            # shared
-                            # overlap = bed1.intersect(bed2)
-
-                            # ref-sim
-                            # loss_of_domain = bed1.subtract(bed2)
                             lod = []
                             god = []
                             if len(p_ref_domain) >= len(p_sim_domain):
@@ -531,8 +514,6 @@ def Run(key, input_gene_name):
                                 lod_domain = [p_ref_domain[i] for i in lod]
                                 god_domain = [p_sim_domain[i] for i in god]
                             
-                            # Comp_plot(axs2, lod, "#E72B2B", [n_domain[kinds_domain]])    # Think about dict color map with domain name
-                            # Comp_plot(axs2, god, "#69EB89", [n_domain[kinds_domain]])    # Think about dict color map with domain name
                             Comp_plot(axs2, lod_domain, "#E72B2B", [n_domain[kinds_domain]])    # Think about dict color map with domain name
                             Comp_plot(axs2, god_domain, "#69EB89", [n_domain[kinds_domain]])    # Think about dict color map with domain name
 
@@ -549,7 +530,6 @@ def Run(key, input_gene_name):
                             Domain_plot(diff_dom)
 
                         fig.suptitle(f'{gene}; Delta L:{round(deltaL,3)}', y=1.1)
-                        # fig.suptitle(f'{gene}; Delta L:{round(deltaL,3)}\n{LID}', y=1.)
 
                     else:
                         print("refTX does not have domain")

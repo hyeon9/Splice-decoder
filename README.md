@@ -181,7 +181,7 @@
 
 <br>
 
-## Visualize your DS simulation
+## Visualize your alternative splicing simulation
 * Based on your Main_table file, you can pcik ceratin DS event to visualize it using this code
 
       conda activate splice-decoder

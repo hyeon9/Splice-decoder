@@ -169,7 +169,7 @@
 - `rMATS_FDR(-log10)`: -Log10 scale FDR, it came from rMATS
 
 ---
-*Example of important values of `Domain_integrity_indi.txt`*
+*Example of important values of `Domain_alt.tsv`*
 ![image](https://github.com/user-attachments/assets/266bcdec-d4aa-4e5b-a0bb-3bf0db247a14)
 
 ### Key Metrics

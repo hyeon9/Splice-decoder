@@ -63,7 +63,7 @@ def Make_AA():
 
     def Make_bed(in_bed):
         ## Load Sim bed
-        merged_bed = pd.read_csv(f"{args.input}temp/{in_bed}",
+        merged_bed = pd.read_csv(f"{args.input}post_input/{in_bed}",
                                 sep="\t",
                                 header=None)
         bed = merged_bed[merged_bed[4]==args.tx]

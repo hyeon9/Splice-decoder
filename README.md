@@ -226,4 +226,4 @@
              -e ES \
              -d ${Main}
 
-* You can copy and paste the amino acid sequences into the Alphafold server (https://alphafoldserver.com) as input
+* You can copy and paste the amino acid sequences to the Alphafold server (https://alphafoldserver.com) as input

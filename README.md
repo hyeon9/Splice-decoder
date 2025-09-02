@@ -129,6 +129,7 @@
 │   └── consequence: Output directory of visualization script
 ├── AF2/: Contains AlphaFold2 input (amino acid FASTA)
 ├── temp/: Contains all intermediate files
+├── post_input/: Contains files used in downstream analyiss e.g., visualization and 3D structure generation
 ├── mapping.stats: Mappeing rates for each splicing type
 └── SD.log: The log file
 ```

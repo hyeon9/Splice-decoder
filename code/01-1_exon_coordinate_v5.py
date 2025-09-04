@@ -25,6 +25,13 @@ Description
                         help='Input directory that contains exon gtf file and rmat file', 
                         required=True,
                         type=str)
+    
+    ## Optional
+    parser.add_argument('--target', '-t', 
+                        help='List of interesting gene IDs (ENSG) file (tsv)', 
+                        required=False,
+                        default="all",
+                        type=str)
 
     args = parser.parse_args(cmd_args, namespace)
     

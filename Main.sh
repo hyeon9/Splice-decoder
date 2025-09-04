@@ -124,8 +124,8 @@ case ${input_var} in
     DS_mapping)
 	echo "Running the DS Mapping"
 	## Mapping
-	python -W ignore ${code}/01-1_exon_coordinate_v5.py -i ${input}
-	python -W ignore ${code}/01-2_stat_exon_coor_result.py -i ${input}
+	python -W ignore ${code}/01-1_exon_coordinate_v5.py -i ${input} -t ${target_gene}
+	python -W ignore ${code}/01-2_stat_exon_coor_result.py -i ${input} -t ${target_gene}
 	
 	echo "Finished the DS Mapping"
 	;;
@@ -218,8 +218,8 @@ case ${input_var} in
        
         echo "Running the DS Mapping"
         ## Mapping
-        python -W ignore ${code}/01-1_exon_coordinate_v5.py -i ${input}
-        python -W ignore ${code}/01-2_stat_exon_coor_result.py -i ${input}
+        python -W ignore ${code}/01-1_exon_coordinate_v5.py -i ${input} -t ${target_gene}
+        python -W ignore ${code}/01-2_stat_exon_coor_result.py -i ${input} -t ${target_gene}
         echo "Finished the DS Mapping"
 
 

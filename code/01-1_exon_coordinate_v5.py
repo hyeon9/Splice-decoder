@@ -385,6 +385,15 @@ if __name__ == "__main__":
     gtf = pd.read_csv(args.input+"exon_only.final.gtf",
                   sep="\t")
     geneID = "Gene"
+    
+    if args.target != "all":
+        target_Genes = pd.read_csv(f"{args.target}",
+                                   sep="\t",
+                                   header=None)
+        rmat = rmat[rmat[geneID].isin(target_Genes[0])]
+    
+    else:
+        pass
 
     print("Significant DS: {}".format(rmat.shape[0]))
     event_exon = rmat[["long_ID","Event_type",geneID,"E1","E2","E3","E4","strand"]] # input header

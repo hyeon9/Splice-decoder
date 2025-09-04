@@ -204,10 +204,10 @@
       
       python code/02-3_v3_Draw_consequence.py \
              --input ${working directory} \
-             --splicing_event RI \
-             --gene ENSMUSG00000027470.9 \
-             --sim_splicing_event RI \
-             --transcript ENSMUST00000028970.7 \
+             --splicing_event A3SS \
+             --gene ENSMUSG00000028864.7 \
+             --sim_splicing_event Ori_A3SS \
+             --transcript ENSMUST00000195957.4 \
              -ri proteome chain
 ![image](https://github.com/user-attachments/assets/3306e051-8fa7-47c3-ab25-13c6df061da1)
 

@@ -34,6 +34,7 @@ Description
     parser.add_argument('--target', '-t', 
                         help='List of interesting gene IDs (ENSG) file (tsv)', 
                         required=False,
+                        nargs='?',
                         default="all",
                         type=str)
 

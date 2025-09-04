@@ -83,7 +83,7 @@ if __name__ == "__main__":
         args.input = args.input+"/"
     rmat = pd.read_csv(args.input+"rmat.csv",
                        sep=",")
-    geneID = "geneID"
+    geneID = "Gene"
     
     if args.target != "all":
         target_Genes = pd.read_csv(f"{args.target}",

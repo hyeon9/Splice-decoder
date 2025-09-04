@@ -69,7 +69,8 @@
       > You just need to specify the rMATS output path
 
       ? Enter your target gene list (e.g. /User/usr/Tool/Splice-decoder-main/target_genes.tsv)
-      > You just need to provide interesting gene list (target gene), SpliceDeocder will only consider there genes
+      > You just need to provide interesting gene list, or enter 'all' if you don’t have one
+      > SpliceDeocder will only consider there genes
 
       ? Enter your GTF file that you used in rMATS with its full path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/toy.gtf or /User/usr/Tool/Splice-decoder-main/toy_data/*.gtf)
       > You just need to specify the full path + GTFfile
@@ -90,7 +91,7 @@
       > You just need to specify the sequencing method of your data
 
       ? Specify a NMD definition method (e.g., default (55rule) or sensitive) )
-      > You just need to select one either "default" or "sensitive"
+      > You just need to select one either 'default' or 'sensitive'
   
       ? Enter a FDR cut off for your rMATS (float [0-1], default 0.05)
       > Specify rMATS FDR cut off

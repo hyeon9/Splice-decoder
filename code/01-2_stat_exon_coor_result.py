@@ -30,6 +30,13 @@ Description
                         required=True,
                         type=str)
 
+    ## Optional
+    parser.add_argument('--target', '-t', 
+                        help='List of interesting gene IDs (ENSG) file (tsv)', 
+                        required=False,
+                        default="all",
+                        type=str)
+
     args = parser.parse_args(cmd_args, namespace)
     
     return args, parse_args
@@ -76,6 +83,17 @@ if __name__ == "__main__":
         args.input = args.input+"/"
     rmat = pd.read_csv(args.input+"rmat.csv",
                        sep=",")
+    geneID = "geneID"
+    
+    if args.target != "all":
+        target_Genes = pd.read_csv(f"{args.target}",
+                                   sep="\t",
+                                   header=None)
+        rmat = rmat[rmat[geneID].isin(target_Genes[0])]
+    
+    else:
+        pass
+
         
     ## Run code
     OUT = args.input+"figure/"

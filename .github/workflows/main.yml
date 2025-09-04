@@ -23,7 +23,7 @@ jobs:
       - name: Create environment and run install.sh
         shell: bash -l {0}
         run: |
-          bash install.sh For_Linux_user.yml
+          bash install.sh
 
       - name: Verify installation
         shell: bash -l {0}

@@ -347,7 +347,7 @@ for major in query_list["Major"].unique():
             if orf.startswith("ORF"):   # Sometime ORF may not be 3
                 indi_orf = comp_df[[orf,"key","NMD"]]
                 if (indi_orf[indi_orf["key"]=="major"][orf].sum()) == 0 and \
-                   (indi_orf[indi_orf["key"]=="query"][orf].sum()) == 0:  # For NMD related cases, but no_change cases also could be here. it can be fixed by considering k (enumerate) or using NMD column
+                   (indi_orf[indi_orf["key"]=="query"][orf].sum()) == 0:
                     indi_diff = 1.0
                 
                 else:   # For DOA cases
@@ -357,7 +357,7 @@ for major in query_list["Major"].unique():
                         if len(temp["key"].unique()) == 2:   # If they have same domain
                             r = float(temp[temp["key"]=="major"][orf].values[0])
                             s = float(temp[temp["key"]=="query"][orf].values[0])
-                            if r == 0 and s == 0:
+                            if r == 0 and s == 0:	# CDS alt
                                 doa_dir = 0 # Direction of domain alteration
                                 ratio = 0.0
 
@@ -437,11 +437,18 @@ for major in query_list["Major"].unique():
                 if nmd_diff != 0:
                     final_whole_doa_direction = "NMD"
                 else:   # Non-NMD, load the saved functional category information,
-                    if dom_change_ratio != 0:    # If there are non-zero change ratio, domain (LoD and GoD)
-                        if whole_doa_direction_dict[n][0] == "no_changes":
-                            final_whole_doa_direction = "CDS_alt"
+                    if dom_change_ratio != 0:    # There are non-zero change ratio, LoD, GoD, CDS/UTR_alt/no_changes
+                        if whole_doa_direction_dict[n][0] == "no_changes":	# There are only CDS/UTR_alt/no_changes
+							if AA_diff != 0:
+								dom_change_ratio = 0	# Correction since it was defined as 1 in line 351
+                            	final_whole_doa_direction = "CDS_alt"
+							elif AA_diff == 0 and (utr5_diff != 0 or utr3_diff != 0):
+								dom_change_ratio = 0	# Correction since it was defined as 1 in line 351
+								final_whole_doa_direction = "UTR_alt"
+							else:
+								final_whole_doa_direction = "no_changes"
                         else:
-                            final_whole_doa_direction = whole_doa_direction_dict[n][0]
+                            final_whole_doa_direction = whole_doa_direction_dict[n][0]	# LoD or GoD
                     elif dom_change_ratio == 0 and AA_diff != 0: # CDS alt
                         final_whole_doa_direction = "CDS_alt"
                     elif dom_change_ratio == 0 and AA_diff == 0 and (utr5_diff != 0 or utr3_diff != 0): # UTR alt

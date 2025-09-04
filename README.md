@@ -67,7 +67,10 @@
   
       ? Enter your rMATS output path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data)
       > You just need to specify the rMATS output path
-  
+
+      ? Enter your target gene list (e.g. /User/usr/Tool/Splice-decoder-main/target_genes.tsv)
+      > You just need to provide interesting gene list (target gene), SpliceDeocder will only consider there genes
+
       ? Enter your GTF file that you used in rMATS with its full path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data/toy.gtf or /User/usr/Tool/Splice-decoder-main/toy_data/*.gtf)
       > You just need to specify the full path + GTFfile
 

@@ -347,7 +347,7 @@ for major in query_list["Major"].unique():
             if orf.startswith("ORF"):   # Sometime ORF may not be 3
                 indi_orf = comp_df[[orf,"key","NMD"]]
                 if (indi_orf[indi_orf["key"]=="major"][orf].sum()) == 0 and \
-                   (indi_orf[indi_orf["key"]=="query"][orf].sum()) == 0:  # For NMD related cases
+                   (indi_orf[indi_orf["key"]=="query"][orf].sum()) == 0:  # For NMD related cases, but no_change cases also could be here. it should be fixed
                     indi_diff = 1.0
                 
                 else:   # For DOA cases

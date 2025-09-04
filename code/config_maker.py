@@ -11,6 +11,7 @@ config['code'] = os.path.join(config['Main'], "code/")
 config['cpatdb'] = os.path.join(config['Main'], "dat/")
 config['input'] = questionary.text("Enter your working directory (e.g. /User/usr/Tool/Splice-decoder-main/project1)").ask()+"/"
 config['Your_rMATS'] = questionary.text("Enter your rMATS output path (e.g. /User/usr/Tool/Splice-decoder-main/toy_data)").ask()+"/"
+config['target_gene'] = questionary.text("Enter your target gene list (e.g. /User/usr/Tool/Splice-decoder-main/target_genes.tsv)").ask()+"/"
 config['Your_GTF'] = questionary.text("Enter your GTF file that you used in rMATS with its full path\n(e.g. /User/usr/Tool/Splice-decoder-main/toy_data/toy.gtf or /User/usr/Tool/Splice-decoder-main/toy_data/*.gtf))").ask()
 
 ## Scoring

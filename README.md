@@ -90,8 +90,8 @@
       ? Enter a sequencing type of your data (e.g. SR (short-read) or LR (long-read) )
       > You just need to specify the sequencing method of your data
 
-      ? Specify a NMD definition method (e.g., default (55rule) or sensitive) )
-      > You just need to select one either 'default' or 'sensitive'
+      ? Specify a NMD definition method (e.g., default (55rule) or advanced) )
+      > You just need to select one either 'default' or 'advanced'
   
       ? Enter a FDR cut off for your rMATS (float [0-1], default 0.05)
       > Specify rMATS FDR cut off
@@ -182,6 +182,21 @@
 - **`Domain information`**: A name of altered domain by the simulated alternative splicing event
 - **`Functional_change_ratio (∆L)`**: A difference of functional change ratio for simulated alternative splicing
 - **`Change direction`**: It indicates whether the altered domain is a gain (1) or a loss of domain (-1)
+
+
+---
+*Example of the `NMD.tsv`*
+<img width="1061" height="177" alt="image" src="https://github.com/user-attachments/assets/c14ca640-4ba6-4feb-a5cd-bef2be03bde2" />
+
+### Key Metrics
+- **`LongID`**: It contains, in order Long_ID, Ref-TX ID, and simulated event type
+- **`AUG`**: A relative position of AUG on the given transcript (Ref or Sim)
+- **`pORF`**: A priority of the used reading frame in simulation
+- **`distance(last_exon_junction-stop)`**: Distance between last exon-exon junction and stop codon (calculated by last_exon_junction - stop)
+- **`total_domain_length`**: Total domain length of the given transcript (Ref of Sim)
+- **`key(Ref/Sim)`**: A type of transcript (Ref of Sim)
+- **`NMD_possibility`**: It indicates a possibility of NMD and could have different values (in default mode: HIGH (55nt) or No, in advanced mode: HIGH (55nt), INTERMEDIATE (Long-exon), INTERMEDIATE (Start-proximal), LOW (less 55nt), and No)
+- **`contain_PTC`**: It indicates whether the given transcript contains PTC (Y) or not (N)
 
 <br>
 

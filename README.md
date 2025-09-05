@@ -185,7 +185,7 @@
 
 
 ---
-*Example of the `NMD.tsv`*
+*Example of the `NMD_check.tsv`*
 <img width="1061" height="177" alt="image" src="https://github.com/user-attachments/assets/c14ca640-4ba6-4feb-a5cd-bef2be03bde2" />
 
 ### Key Metrics

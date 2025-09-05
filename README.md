@@ -189,14 +189,14 @@
 <img width="1061" height="177" alt="image" src="https://github.com/user-attachments/assets/c14ca640-4ba6-4feb-a5cd-bef2be03bde2" />
 
 ### Key Metrics
-- **`LongID`**: It contains, in order Long_ID, Ref-TX ID, and simulated event type
+- **`LongID`**: Contains, in order Long_ID, Ref-TX ID, and simulated event type
 - **`AUG`**: A relative position of AUG on the given transcript (Ref or Sim)
 - **`pORF`**: A priority of the used reading frame in simulation
 - **`distance(last_exon_junction-stop)`**: Distance between last exon-exon junction and stop codon (calculated by last_exon_junction - stop)
 - **`total_domain_length`**: Total domain length of the given transcript (Ref of Sim)
 - **`key(Ref/Sim)`**: A type of transcript (Ref of Sim)
-- **`NMD_possibility`**: It indicates a possibility of NMD and could have different values (in default mode: HIGH (55nt) or No, in advanced mode: HIGH (55nt), INTERMEDIATE (Long-exon), INTERMEDIATE (Start-proximal), LOW (less 55nt), and No)
-- **`contain_PTC`**: It indicates whether the given transcript contains PTC (Y) or not (N)
+- **`NMD_possibility`**: Indicates the possibility of NMD. In default mode, values are HIGH (55nt) or No. In advanced mode, values can be HIGH (55nt), INTERMEDIATE (Long-exon), INTERMEDIATE (Start-proximal), LOW (less 55nt), or No. Only events tagged as HIGH are considered NMD-associated events
+- **`contain_PTC`**: Indicates whether the given transcript contains PTC (Y) or not (N)
 
 <br>
 

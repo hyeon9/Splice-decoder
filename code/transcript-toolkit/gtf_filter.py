@@ -51,6 +51,7 @@ args, parser = parse_args(sys.argv[1:])
 
 
 if args.canonical == "default":
+    print("Using Gencode canonical")
     gene_list = pd.read_csv(f"{args.gene_list}",
                             sep="\t",
                             header=None)
@@ -63,6 +64,7 @@ if args.canonical == "default":
     gene_list = gencode.copy()
     
 else:
+    print("Using user-defined canonical")
     gene_list = pd.read_csv(f"{args.gene_list}",
                             sep="\t",
                             header=None)

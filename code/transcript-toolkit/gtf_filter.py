@@ -27,9 +27,20 @@ Description
                         help='Input directory that contains rmat file', 
                         required=True,
                         type=str)
+    
+    parser.add_argument("--path", "-p", help="Gencode canonical path", 
+                        required=True,
+                        type=str)
+    
     parser.add_argument("--gene_list", "-g", help="Target gene list with full path", 
                         required=True,
                         type=str)
+    
+    ## Optional
+    parser.add_argument("--canonical", "-c", help="Way to define canonical transcripts (default: using Gencode based list)", 
+                        type=str,
+                        default="default")
+    
     
     args = parser.parse_args(cmd_args, namespace)
     
@@ -38,21 +49,24 @@ Description
 
 args, parser = parse_args(sys.argv[1:])
 
-################################################ TEST RUN
-# if __name__ == "__main__":
-#     test_args = [
-#         "--input", "/home/kangh/lab-server/KAIST/Tx_seq_compare/NF1_WTC",
-#         "--gene_list", "/home/kangh/lab-server/KAIST/Tx_seq_compare/test_gene.txt"
-#         ]
-#     args, parser = parse_args(test_args)
-#     args.input = args.input + "/"
 
-#     print(args)
-################################################
-# %%
-gene_list = pd.read_csv(f"{args.gene_list}",
-                        sep="\t",
-                        header=None)
+if args.canonical == "default":
+    gene_list = pd.read_csv(f"{args.gene_list}",
+                            sep="\t",
+                            header=None)
+    
+    gencode = pd.read_csv(f"{args.path}/dat/hg38_cano.txt",
+                          sep="\t",
+                          header=None)
+    
+    gencode = gencode[gencode[0].isin(gene_list[0])]
+    gene_list = gencode.copy()
+    
+else:
+    gene_list = pd.read_csv(f"{args.gene_list}",
+                            sep="\t",
+                            header=None)
+    
 cano = gene_list[1].tolist()
 query_list = []
 with open(f"{args.input}main.gtf", 'r') as whole_gtf:
@@ -80,3 +94,5 @@ query_table_df = query_table_df.drop_duplicates()
 query_table_df.to_csv(f'{args.input}query_list.txt',
                       sep="\t",
                       index=None)
+
+# %%

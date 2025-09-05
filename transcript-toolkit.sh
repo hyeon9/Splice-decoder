@@ -45,7 +45,7 @@ rm ${file}
 done
 
 ## Make subset of exon gtf from the given gtf
-python ${code}gtf_filter.py -i ${input} -g ${gene_list}
+python ${code}gtf_filter.py -i ${input} -g ${gene_list} -p ${Main} -c ${canonical}
 
 ## Check ths existence of "exon_number" tag
 exon_n=`less ${input}exon_only.gtf | grep -v exon_number | wc -l`

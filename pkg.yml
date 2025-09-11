@@ -98,3 +98,4 @@ dependencies:
   - mscorefonts
   - sed
   - r-nnet
+  - samtools

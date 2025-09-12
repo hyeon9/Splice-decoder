@@ -439,20 +439,16 @@ for major in query_list["Major"].unique():
                 else:   # Non-NMD, load the saved functional category information,
                     if dom_change_ratio != 0:    # There are non-zero change ratio, LoD, GoD, CDS/UTR_alt/no_changes
                         if whole_doa_direction_dict[n][0] == "no_changes":	# There are only CDS/UTR_alt/no_changes
-							if AA_diff != 0:
-								dom_change_ratio = 0	# Correction since it was defined as 1 in line 351
-                            	final_whole_doa_direction = "CDS_alt"
-							elif AA_diff == 0 and (utr5_diff != 0 or utr3_diff != 0):
-								dom_change_ratio = 0	# Correction since it was defined as 1 in line 351
-								final_whole_doa_direction = "UTR_alt"
-							else:
-								final_whole_doa_direction = "no_changes"
+                            if AA_diff != 0:
+                                dom_change_ratio = 0	# Correction since it was defined as 1 in line 351
+                                final_whole_doa_direction = "CDS_alt"
+                            elif AA_diff == 0 and (utr5_diff != 0 or utr3_diff != 0):
+                                dom_change_ratio = 0	# Correction since it was defined as 1 in line 351
+                                final_whole_doa_direction = "UTR_alt"
+                            else:
+                                final_whole_doa_direction = "no_changes"
                         else:
                             final_whole_doa_direction = whole_doa_direction_dict[n][0]	# LoD or GoD
-                    elif dom_change_ratio == 0 and AA_diff != 0: # CDS alt
-                        final_whole_doa_direction = "CDS_alt"
-                    elif dom_change_ratio == 0 and AA_diff == 0 and (utr5_diff != 0 or utr3_diff != 0): # UTR alt
-                        final_whole_doa_direction = "UTR_alt"
                     else:
                         final_whole_doa_direction = "no_changes"
 

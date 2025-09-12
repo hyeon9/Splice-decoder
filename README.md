@@ -1,7 +1,7 @@
 ## What is the Splice-decoder?
 <img width="2436" height="1359" alt="image" src="https://github.com/user-attachments/assets/6d2ba86c-181c-41da-aa0f-a6205cf87509" />
 
-* Splice decoder provides functional annotation for your differential splicing events (DESs)
+* Splice decoder provides functional annotation for your differential splicing events (DSEs)
 * The functional annotation contains NMD probability, alterations in functional domains (such as DNA binding, motif, regions, protein domain, and so on), CDS/UTR alterations, and effect score
 * You can use the effect score to prioritize your DSEs
 * Currently, Splice-decoder supports **hg38** and **mm10** genome
@@ -14,7 +14,7 @@
 2. Map Splicing Cases (Mapping DSEs and ORFs): This step explores the given transcriptome (.GTF) to find Ref-TX (Reference transcript, it contains perfectly matched exon structure for the given DSE) and assign the best three open reading frames (ORFs)
 3. Simulate Splicing Events (Simulation): Based on the Ref-TXs and their ORFs, this step perform simulation of alternative splicing (e.g., if the Ref-TX has exon inclusion (EI) form, this step makes a simulated transcript (Sim-TX) with exon skipped (ES) form)
 4. Functional Annotation (Annotation): Based on the Uniprot DB, SpliceDecoder assigns known functional domains and estimates functional changes between Ref-TX and Sim-TX
-5. DSEs with Effect Score (Scoring): SpliceDecoder assigns an effect score to each DSE based on multiple biological factors, enabling prioritization of your DESs
+5. DSEs with Effect Score (Scoring): SpliceDecoder assigns an effect score to each DSE based on multiple biological factors, enabling prioritization of your DSEs
 
 <br>
 

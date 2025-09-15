@@ -25,30 +25,32 @@
       cd ./Splice-decoder && bash install.sh
 
 * To perform a test run, you can use the provided toy_data
-* To to this you should build a toy configuration file through an interactive way [You can find more details here](#guide-for-making-config-file)
+* You can make a toy configuration file through an interactive way [You can find more details here](#guide-for-making-config-file)
 
       cd code/
       bash Make_config.sh toy
 
-* Alternatively, you can create a configuration file using your own data to analyze your own data
+* If you successfully created `Your_toy.config`, you can run SpliceDecoder [See the output structure](#outputs)
+* The steps are intended to be executed in order, so it is recommended to use `all`
+
+      bash Main.sh all ${Your_toy.config}
+
+* If your test run with the toy data finished successfully, you can run it with your data
+* You can create your own configuration file without the `toy` tag and run it
 
       cd code/
       bash Make_config.sh
-
-* If you successfully created `Your.config`, now you can run SpliceDecoder
-* The steps are intended to be executed in order, so it is recommended to use `all`
-
       bash Main.sh all ${Your.config}
-
-* If needed, you can run a specific step by selecting one of the following: `Make_input`, `DS_mapping`, `ORF_mapping`, `Simulation` and `Scoring`
-
-      bash Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring} ${Your.config}
 
 * If you use SLURM, use this command to submit your job
 
       sbatch Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring | all} ${Your.config}
 
-* All your output will be saved to `${input}/result`
+
+* If needed, you can run a specific step by selecting one of the following: `Make_input`, `DS_mapping`, `ORF_mapping`, `Simulation` and `Scoring`
+
+      bash Main.sh {Make_input | DS_mapping | ORF_mapping | Simulation | Scoring} ${Your.config}
+
 * If you want to annotate a transcript-centric data [you can find more details here](./code/transcript-toolkit/README.md)
 
 <br>

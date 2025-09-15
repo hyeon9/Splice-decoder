@@ -30,13 +30,14 @@
       cd code/
       bash Make_config.sh toy
 
-* If you successfully created `Your_toy.config`, you can run SpliceDecoder [See the output structure](#outputs)
+* If you successfully created `Your_toy.config`, you can run SpliceDecoder
 * The steps are intended to be executed in order, so it is recommended to use `all`
 
       bash Main.sh all ${Your_toy.config}
 
-* If your test run with the toy data finished successfully, you can run it with your data
-* You can create your own configuration file without the `toy` tag and run it
+* If your test run with the toy data finishes successfully, [you will see the following output files](#outputs) (except for the Effect_score.tsv)
+* After confirming this, you can proceed with your own data
+* To do this, create a configuration file without the `toy` tag and run SpliceDecoder with it
 
       cd code/
       bash Make_config.sh
@@ -124,7 +125,7 @@
 ├── result/
 │   ├── *Main_table.tsv: description
 │   ├── *Domain_alt.tsv: description
-│   ├── *NMD_check.tsv: description
+│   ├── *NMD.tsv: description
 │   └── Effect_score.tsv: description
 ├── figure/
 │   ├── mapping_rate.pdf: Mapping rates for each splicing type
@@ -187,7 +188,7 @@
 
 
 ---
-*Example of the `NMD_check.tsv`*
+*Example of the `NMD.tsv`*
 <img width="1061" height="177" alt="image" src="https://github.com/user-attachments/assets/c14ca640-4ba6-4feb-a5cd-bef2be03bde2" />
 
 ### Key Metrics

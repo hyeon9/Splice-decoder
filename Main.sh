@@ -70,7 +70,8 @@ if [[ ${tpm} == "Y" ]]; then
 elif [[ ${tpm} == "Y_own" ]]; then
 	cd ${input}/tpm/
 	if [[ ! -L "./tpm_matrix.tsv" ]]; then
-	    ln -s ${Your_TPM} ./tpm_matrix.tsv
+	    cat ${Your_TPM} | sed 's/,/\t/g' > ./tpm_matrix.tsv # Prevent to formatting issue
+        # ln -s ${Your_TPM} ./tpm_matrix.tsv
 	fi 
 fi
 

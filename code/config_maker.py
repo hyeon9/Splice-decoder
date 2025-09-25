@@ -42,8 +42,10 @@ else:	# For toy data set
 	config['seq_type'] = "LR"
 
 config['nmd_met'] = questionary.text("Specify a NMD definition method (e.g., default (55rule) or sensitive)").ask()
-config['FDR'] = questionary.text("Enter a FDR cut off for your rMATS (float [0-1], default 0.05)").ask()
-config['PSI'] = questionary.text("Enter a |dPSI| cut off for your rMATS (float [0-1], default 0.1)").ask()
+fdr_input = questionary.text("Enter a FDR cut off for your rMATS (float [0-1], default 0.05)").ask()
+config['FDR'] = float(fdr_input) if fdr_input else 0.05
+psi_input = questionary.text("Enter a |dPSI| cut off for your rMATS (float [0-1], default 0.1)").ask()
+config['PSI'] = float(psi_input) if psi_input else 0.1
 config['njobs'] = questionary.text("Enter a number of cpu in splice-decoder job (int [5-?], default 5").ask()
 
 ## Specify 3rd party tool path
